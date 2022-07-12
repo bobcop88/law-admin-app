@@ -15,7 +15,6 @@ class UserProfileDetails extends StatefulWidget {
 }
 
 class _UserProfileDetailsState extends State<UserProfileDetails> {
-
   var serviceName;
   bool updateFullName = false;
   bool updatePhoneNumber = false;
@@ -25,20 +24,18 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
   final _fullNameController = TextEditingController();
   final _phoneNumberController = TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<UserProfile>(
+    return StreamBuilder<UserCompleteProfile>(
       stream: DatabaseUserProfile(uid: widget.id).readUserProfile(),
-      builder: (context,snapshot){
-        if(!snapshot.hasData){
-          
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
           return Center(
             child: Text('Select user to show details'),
           );
-        }else{
+        } else {
           final user = snapshot.data!;
-          return  DecoratedBox(
+          return DecoratedBox(
             decoration: BoxDecoration(
               color: Colors.grey[100],
             ),
@@ -53,28 +50,32 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                           Expanded(
                             child: Card(
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 50.0),
+                                padding: const EdgeInsets.fromLTRB(
+                                    15.0, 10.0, 15.0, 50.0),
                                 child: Column(
                                   children: [
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           'User Profile',
                                           style: TextStyle(
-                                            fontSize: 20.0,
-                                            color: Colors.grey
-                                          ),
+                                              fontSize: 20.0,
+                                              color: Colors.grey),
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height: 20.0,),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
                                     Row(
                                       children: [
                                         CircleAvatar(
                                           child: Text(
-                                            user.fullName.split(' ')[0][0] +  user.fullName.split(' ')[1][0],
-                                          ),
+                                              user.firstName.split(' ')[0][0]
+                                              //+ user.fullName.split(' ')[1][0],
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -87,28 +88,36 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                                             color: Colors.grey,
                                           ),
                                         ),
-                                        updateFullName ? 
-                                        Expanded(
-                                          child: TextField(
-                                            controller: _fullNameController,
-                                            decoration: InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              hintText: 'New name',
-                                              isDense: true,
-                                              contentPadding: EdgeInsets.fromLTRB(5,10,10,0),
-                                              hintStyle: TextStyle(
-                                                fontSize: 14.0,
-                                              ),
-                                            ),
-                                            style: TextStyle(
-                                              fontSize: 14.0,
-                                            ),
-                                          ),
-                                        ) :
-                                        Expanded(child: Text(user.fullName)),
-                                        SizedBox(width: 5.0,),
+                                        updateFullName
+                                            ? Expanded(
+                                                child: TextField(
+                                                  controller:
+                                                      _fullNameController,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    hintText: 'New name',
+                                                    isDense: true,
+                                                    contentPadding:
+                                                        EdgeInsets.fromLTRB(
+                                                            5, 10, 10, 0),
+                                                    hintStyle: TextStyle(
+                                                      fontSize: 14.0,
+                                                    ),
+                                                  ),
+                                                  style: TextStyle(
+                                                    fontSize: 14.0,
+                                                  ),
+                                                ),
+                                              )
+                                            : Expanded(
+                                                child: Text(user.firstName)),
+                                        SizedBox(
+                                          width: 5.0,
+                                        ),
                                         InkWell(
-                                          child: Text( updateFullName ? 'Save' : 'Update',
+                                          child: Text(
+                                            updateFullName ? 'Save' : 'Update',
                                             style: TextStyle(
                                               color: Colors.blueAccent,
                                               fontSize: 14.0,
@@ -116,16 +125,27 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                                           ),
                                           onTap: () {
                                             setState(() {
-                                              updateFullName ? updateFullName = false : updateFullName = true;
-                                              if(updateFullName == false){
-                                                DatabaseUserProfile(uid: user.id).updateProfileUser(user.id, 'fullName', _fullNameController.text.trim());
+                                              updateFullName
+                                                  ? updateFullName = false
+                                                  : updateFullName = true;
+                                              if (updateFullName == false) {
+                                                DatabaseUserProfile(
+                                                        uid: user.id)
+                                                    .updateProfileUser(
+                                                        user.id,
+                                                        'fullName',
+                                                        _fullNameController.text
+                                                            .trim());
                                               }
                                             });
                                           },
                                         ),
-                                        SizedBox(width: 5.0,),
+                                        SizedBox(
+                                          width: 5.0,
+                                        ),
                                         InkWell(
-                                          child: Text( updateFullName ? 'Cancel' : '',
+                                          child: Text(
+                                            updateFullName ? 'Cancel' : '',
                                             style: TextStyle(
                                               color: Colors.blueAccent,
                                               fontSize: 14.0,
@@ -133,7 +153,9 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                                           ),
                                           onTap: () {
                                             setState(() {
-                                              updateFullName ? updateFullName = false : updateFullName = true;
+                                              updateFullName
+                                                  ? updateFullName = false
+                                                  : updateFullName = true;
                                             });
                                           },
                                         ),
@@ -148,7 +170,7 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                                             color: Colors.grey,
                                           ),
                                         ),
-                                        Expanded(child: Text(user.email)),
+                                        Expanded(child: Text(user.email!)),
                                       ],
                                     ),
                                     Divider(),
@@ -160,28 +182,39 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                                             color: Colors.grey,
                                           ),
                                         ),
-                                        updatePhoneNumber ? 
-                                        Expanded(
-                                          child: TextField(
-                                            controller: _phoneNumberController,
-                                            decoration: InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              hintText: 'New phone number',
-                                              isDense: true,
-                                              contentPadding: EdgeInsets.fromLTRB(5,10,10,0),
-                                              hintStyle: TextStyle(
-                                                fontSize: 14.0,
-                                              ),
-                                            ),
-                                            style: TextStyle(
-                                              fontSize: 14.0,
-                                            ),
-                                          ),
-                                        ) :
-                                        Expanded(child: Text(user.phoneNumber)),
-                                        SizedBox(width: 5.0,),
+                                        updatePhoneNumber
+                                            ? Expanded(
+                                                child: TextField(
+                                                  controller:
+                                                      _phoneNumberController,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    hintText:
+                                                        'New phone number',
+                                                    isDense: true,
+                                                    contentPadding:
+                                                        EdgeInsets.fromLTRB(
+                                                            5, 10, 10, 0),
+                                                    hintStyle: TextStyle(
+                                                      fontSize: 14.0,
+                                                    ),
+                                                  ),
+                                                  style: TextStyle(
+                                                    fontSize: 14.0,
+                                                  ),
+                                                ),
+                                              )
+                                            : Expanded(
+                                                child: Text(user.phoneNumber)),
+                                        SizedBox(
+                                          width: 5.0,
+                                        ),
                                         InkWell(
-                                          child: Text( updatePhoneNumber ? 'Save' : 'Update',
+                                          child: Text(
+                                            updatePhoneNumber
+                                                ? 'Save'
+                                                : 'Update',
                                             style: TextStyle(
                                               color: Colors.blueAccent,
                                               fontSize: 14.0,
@@ -189,16 +222,28 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                                           ),
                                           onTap: () {
                                             setState(() {
-                                              updatePhoneNumber ? updatePhoneNumber = false : updatePhoneNumber = true;
-                                              if(updatePhoneNumber == false){
-                                                DatabaseUserProfile(uid: user.id).updateProfileUser(user.id, 'phoneNumber', _phoneNumberController.text.trim());
+                                              updatePhoneNumber
+                                                  ? updatePhoneNumber = false
+                                                  : updatePhoneNumber = true;
+                                              if (updatePhoneNumber == false) {
+                                                DatabaseUserProfile(
+                                                        uid: user.id)
+                                                    .updateProfileUser(
+                                                        user.id,
+                                                        'phoneNumber',
+                                                        _phoneNumberController
+                                                            .text
+                                                            .trim());
                                               }
                                             });
                                           },
                                         ),
-                                        SizedBox(width: 5.0,),
+                                        SizedBox(
+                                          width: 5.0,
+                                        ),
                                         InkWell(
-                                          child: Text( updatePhoneNumber ? 'Cancel' : '',
+                                          child: Text(
+                                            updatePhoneNumber ? 'Cancel' : '',
                                             style: TextStyle(
                                               color: Colors.blueAccent,
                                               fontSize: 14.0,
@@ -206,7 +251,9 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                                           ),
                                           onTap: () {
                                             setState(() {
-                                              updatePhoneNumber ? updatePhoneNumber = false : updatePhoneNumber = true;
+                                              updatePhoneNumber
+                                                  ? updatePhoneNumber = false
+                                                  : updatePhoneNumber = true;
                                             });
                                           },
                                         ),
@@ -221,10 +268,23 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                                             color: Colors.grey,
                                           ),
                                         ),
-                                        Text(FirebaseAuth.instance.currentUser!.emailVerified ? 'Yes' : 'No'),
+                                        Text(FirebaseAuth.instance.currentUser!
+                                                .emailVerified
+                                            ? 'Yes'
+                                            : 'No'),
                                         Icon(
-                                          FirebaseAuth.instance.currentUser!.emailVerified == 'Yes' ? Icons.unpublished_outlined : Icons.verified_outlined,
-                                          color: FirebaseAuth.instance.currentUser!.emailVerified == 'Yes' ? Colors.red : Colors.green,
+                                          FirebaseAuth.instance.currentUser!
+                                                      .emailVerified ==
+                                                  'Yes'
+                                              ? Icons.unpublished_outlined
+                                              : Icons.verified_outlined,
+                                          color: FirebaseAuth
+                                                      .instance
+                                                      .currentUser!
+                                                      .emailVerified ==
+                                                  'Yes'
+                                              ? Colors.red
+                                              : Colors.green,
                                         ),
                                       ],
                                     ),
@@ -237,47 +297,63 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                                             color: Colors.grey,
                                           ),
                                         ),
-                                        updateIsVerified ? 
-                                        Expanded(
-                                          child: DropdownButtonHideUnderline(
-                                            child: ButtonTheme(
-                                              alignedDropdown: true,
-                                              child: Container(
-                                                height: 20.0,
-                                                child: DropdownButton<String>(
-                                                  isExpanded: true,
-                                                  isDense: false,
-                                                  value: isVerifiedStatus,
-                                                  style: TextStyle(
-                                                    fontSize: 14.0
-                                                  ),
-                                                  onChanged: (String? newValue) {
-                                                    setState(() {
-                                                      isVerifiedStatus = newValue!;
-                                                    });
-                                                  },
-                                                  items:  
-                                                  <String>['Verified', 'Pending', 'Not Verified', 'Rejected']
-                                                      .map<DropdownMenuItem<String>>((String value) {
-                                                    return DropdownMenuItem<String>(
-                                                      value: value,
-                                                      child: Text(
-                                                        value,
+                                        updateIsVerified
+                                            ? Expanded(
+                                                child:
+                                                    DropdownButtonHideUnderline(
+                                                  child: ButtonTheme(
+                                                    alignedDropdown: true,
+                                                    child: Container(
+                                                      height: 20.0,
+                                                      child: DropdownButton<
+                                                          String>(
+                                                        isExpanded: true,
+                                                        isDense: false,
+                                                        value: isVerifiedStatus,
                                                         style: TextStyle(
-                                                          fontSize: 14.0,
-                                                        ),
+                                                            fontSize: 14.0),
+                                                        onChanged:
+                                                            (String? newValue) {
+                                                          setState(() {
+                                                            isVerifiedStatus =
+                                                                newValue!;
+                                                          });
+                                                        },
+                                                        items: <String>[
+                                                          'Verified',
+                                                          'Pending',
+                                                          'Not Verified',
+                                                          'Rejected'
+                                                        ].map<
+                                                            DropdownMenuItem<
+                                                                String>>((String
+                                                            value) {
+                                                          return DropdownMenuItem<
+                                                              String>(
+                                                            value: value,
+                                                            child: Text(
+                                                              value,
+                                                              style: TextStyle(
+                                                                fontSize: 14.0,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }).toList(),
                                                       ),
-                                                    );
-                                                  }).toList(),
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                            ),
-                                          ),
-                                        ) :
-                                        Expanded(child: Text(user.isVerified)),
-                                        SizedBox(width: 5.0,),
+                                              )
+                                            : Expanded(
+                                                child: Text(user.firstName)),
+                                        SizedBox(
+                                          width: 5.0,
+                                        ),
                                         InkWell(
-                                          child: Text( updateIsVerified ? 'Save' : 'Update',
+                                          child: Text(
+                                            updateIsVerified
+                                                ? 'Save'
+                                                : 'Update',
                                             style: TextStyle(
                                               color: Colors.blueAccent,
                                               fontSize: 14.0,
@@ -285,16 +361,26 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                                           ),
                                           onTap: () {
                                             setState(() {
-                                              updateIsVerified ? updateIsVerified = false : updateIsVerified = true;
-                                              if(updateIsVerified == false){
-                                                DatabaseUserProfile(uid: user.id).updateProfileUser(user.id, 'isVerified', isVerifiedStatus);
+                                              updateIsVerified
+                                                  ? updateIsVerified = false
+                                                  : updateIsVerified = true;
+                                              if (updateIsVerified == false) {
+                                                DatabaseUserProfile(
+                                                        uid: user.id)
+                                                    .updateProfileUser(
+                                                        user.id,
+                                                        'isVerified',
+                                                        isVerifiedStatus);
                                               }
                                             });
                                           },
                                         ),
-                                        SizedBox(width: 5.0,),
+                                        SizedBox(
+                                          width: 5.0,
+                                        ),
                                         InkWell(
-                                          child: Text( updateIsVerified ? 'Cancel' : '',
+                                          child: Text(
+                                            updateIsVerified ? 'Cancel' : '',
                                             style: TextStyle(
                                               color: Colors.blueAccent,
                                               fontSize: 14.0,
@@ -302,7 +388,9 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                                           ),
                                           onTap: () {
                                             setState(() {
-                                              updateIsVerified ? updateIsVerified = false : updateIsVerified = true;
+                                              updateIsVerified
+                                                  ? updateIsVerified = false
+                                                  : updateIsVerified = true;
                                             });
                                           },
                                         ),
@@ -326,32 +414,38 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                           Expanded(
                             child: Card(
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+                                padding: const EdgeInsets.only(
+                                    top: 15.0, bottom: 15.0),
                                 child: Column(
                                   children: [
                                     Text(
                                       'Active Services',
                                       style: TextStyle(
-                                        fontSize: 20.0,
-                                        color: Colors.grey
-                                      ),
+                                          fontSize: 20.0, color: Colors.grey),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                                      padding: const EdgeInsets.only(
+                                          top: 10.0, bottom: 10.0),
                                       child: Divider(
                                         indent: 200.0,
                                         endIndent: 200.0,
                                       ),
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         StreamBuilder<List<ServiceDetails>>(
-                                          stream: DatabaseService(uid: user.id).readAllServices(),
-                                          builder: (context, snapshot){
-                                            if(!snapshot.hasData || snapshot.data!.length == 0){
-                                              return Center(child: Text('No Active Services'),);
-                                            }else{
+                                          stream: DatabaseService(uid: user.id)
+                                              .readAllServices(),
+                                          builder: (context, snapshot) {
+                                            if (!snapshot.hasData ||
+                                                snapshot.data!.length == 0) {
+                                              return Center(
+                                                child:
+                                                    Text('No Active Services'),
+                                              );
+                                            } else {
                                               final service = snapshot.data!;
                                               return SizedBox(
                                                 width: 200.0,
@@ -359,13 +453,21 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                                                   children: [
                                                     ListView.builder(
                                                       shrinkWrap: true,
-                                                      itemCount: snapshot.data!.length,
-                                                      itemBuilder: (context, index) {
+                                                      itemCount:
+                                                          snapshot.data!.length,
+                                                      itemBuilder:
+                                                          (context, index) {
                                                         return TextButton(
-                                                          child: Text(snapshot.data![index].serviceName),
+                                                          child: Text(snapshot
+                                                              .data![index]
+                                                              .serviceName),
                                                           onPressed: () {
                                                             setState(() {
-                                                              serviceName = snapshot.data![index].serviceName;
+                                                              serviceName =
+                                                                  snapshot
+                                                                      .data![
+                                                                          index]
+                                                                      .serviceName;
                                                             });
                                                           },
                                                         );
@@ -374,14 +476,14 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                                                   ],
                                                 ),
                                               );
-                                              
                                             }
                                           },
                                         ),
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                                      padding: const EdgeInsets.only(
+                                          top: 10.0, bottom: 10.0),
                                       child: Divider(
                                         indent: 200.0,
                                         endIndent: 200.0,
@@ -389,7 +491,10 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                                     ),
                                     Row(
                                       children: [
-                                        Expanded(child: ServiceSelectedDetails(id: widget.id, serviceName: serviceName)),
+                                        Expanded(
+                                            child: ServiceSelectedDetails(
+                                                id: widget.id,
+                                                serviceName: serviceName)),
                                       ],
                                     ),
                                   ],
@@ -410,4 +515,3 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
     );
   }
 }
-

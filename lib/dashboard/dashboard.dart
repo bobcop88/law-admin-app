@@ -18,41 +18,39 @@ class DashboardAdmin extends StatefulWidget {
 }
 
 class _DashboardAdminState extends State<DashboardAdmin> {
-
   final adminUser = FirebaseAuth.instance.currentUser!;
-  final verifiedUsers= [];
-
-
+  // final verifiedUsers = [];
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<UserProfile>>(
-      stream: DatabaseUsers().readAllUsers(),
-      builder: (context, snapshot) {
-        if(!snapshot.hasData){
-          return Center(child: CircularProgressIndicator());
-        }else{
-        
-        final users = snapshot.data!;
+    return StreamBuilder<List<UserCompleteProfile>>(
+        stream: DatabaseUsers().readAllUsers(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            final users = snapshot.data!;
 
-        users.forEach((user){
-          user.isVerified == 'Verified' ? verifiedUsers.add(user) : '';
-        });
+            // users.forEach((user) {
+            //   user.isVerified == 'Verified' ? verifiedUsers.add(user) : '';
+            // });
 
-        return Padding(
-          padding: const EdgeInsets.all(0.0),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Column(
+            return Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              SizedBox(height: 15.0,),
+                              SizedBox(
+                                height: 15.0,
+                              ),
                               Row(
                                 children: [
                                   Text(
@@ -64,7 +62,9 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 20.0,),
+                              SizedBox(
+                                height: 20.0,
+                              ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -108,43 +108,43 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                     ),
                                   ),
                                   Card(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.verified_rounded,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.verified_rounded,
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Verified Users',
+                                                style: TextStyle(
+                                                  fontSize: 17.0,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  'Verified Users',
-                                                  style: TextStyle(
-                                                    fontSize: 17.0,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Divider(),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  verifiedUsers.length.toString(),
-                                                  style: TextStyle(
-                                                    fontSize: 20.0,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
+                                              ),
+                                            ],
+                                          ),
+                                          Divider(),
+                                          // Row(
+                                          //   children: [
+                                          //     Text(
+                                          //       verifiedUsers.length.toString(),
+                                          //       style: TextStyle(
+                                          //         fontSize: 20.0,
+                                          //         fontWeight: FontWeight.bold,
+                                          //       ),
+                                          //     ),
+                                          //   ],
+                                          // ),
+                                        ],
                                       ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -154,7 +154,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                     flex: 3,
                                     child: Card(
                                       margin: EdgeInsets.all(20.0),
-                                      child:  Padding(
+                                      child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Column(
                                           children: [
@@ -164,23 +164,24 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                                   child: Text(
                                                     'Latest Users registered',
                                                     style: TextStyle(
-                                                      fontSize: 17.0,
-                                                      fontWeight: FontWeight.bold
-                                                    ),
+                                                        fontSize: 17.0,
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                   ),
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(height: 15.0,),
+                                            SizedBox(
+                                              height: 15.0,
+                                            ),
                                             Row(
                                               children: const [
                                                 Expanded(
                                                   child: Text(
                                                     'Date',
                                                     style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontSize: 14.0
-                                                    ),
+                                                        color: Colors.grey,
+                                                        fontSize: 14.0),
                                                     textAlign: TextAlign.start,
                                                   ),
                                                 ),
@@ -201,48 +202,73 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                                     'Name',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontSize: 14.0
-                                                    ),
+                                                        color: Colors.grey,
+                                                        fontSize: 14.0),
                                                   ),
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(height: 20.0,),
+                                            SizedBox(
+                                              height: 20.0,
+                                            ),
                                             ListView.separated(
                                               shrinkWrap: true,
                                               itemCount: users.length,
-                                              separatorBuilder: (BuildContext context, int index) => const Divider(),
-                                              itemBuilder: (context, index){
+                                              separatorBuilder:
+                                                  (BuildContext context,
+                                                          int index) =>
+                                                      const Divider(),
+                                              itemBuilder: (context, index) {
                                                 return InkWell(
                                                   hoverColor: Colors.grey[200],
                                                   onTap: () {
-                                                    Navigator.of(context).push(MaterialPageRoute(builder: ((context) => UserProfileNew(id: users[index].id))));
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: ((context) =>
+                                                                UserProfileNew(
+                                                                    id: users[
+                                                                            index]
+                                                                        .id))));
                                                   },
                                                   child: Column(
                                                     children: [
                                                       Padding(
-                                                        padding: const EdgeInsets.all(8.0),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
                                                         child: Row(
                                                           children: [
                                                             Expanded(
                                                               child: Text(
-                                                                DateFormat('dd/MM/yy').format(DateTime.fromMicrosecondsSinceEpoch(users[index].dateCreation)).toString(),
-                                                                textAlign: TextAlign.start,
+                                                                DateFormat(
+                                                                        'dd/MM/yy')
+                                                                    .format(DateTime.fromMicrosecondsSinceEpoch(
+                                                                        users[index]
+                                                                            .dateCreation))
+                                                                    .toString(),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .start,
                                                               ),
                                                             ),
                                                             Expanded(
                                                               flex: 3,
                                                               child: Text(
-                                                              users[index].email,
-                                                              textAlign: TextAlign.center,
+                                                                users[index]
+                                                                    .email!,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
                                                               ),
                                                             ),
                                                             Expanded(
                                                               flex: 2,
                                                               child: Text(
-                                                              users[index].fullName,
-                                                              textAlign: TextAlign.center,
+                                                                users[index]
+                                                                    .firstName,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
                                                               ),
                                                             ),
                                                           ],
@@ -266,7 +292,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                     flex: 3,
                                     child: Card(
                                       margin: EdgeInsets.all(20.0),
-                                      child:  Padding(
+                                      child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Column(
                                           children: [
@@ -276,23 +302,24 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                                   child: Text(
                                                     'Latest Services requested',
                                                     style: TextStyle(
-                                                      fontSize: 17.0,
-                                                      fontWeight: FontWeight.bold
-                                                    ),
+                                                        fontSize: 17.0,
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                   ),
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(height: 15.0,),
+                                            SizedBox(
+                                              height: 15.0,
+                                            ),
                                             Row(
                                               children: const [
                                                 Expanded(
                                                   child: Text(
                                                     'Date',
                                                     style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontSize: 14.0
-                                                    ),
+                                                        color: Colors.grey,
+                                                        fontSize: 14.0),
                                                     textAlign: TextAlign.start,
                                                   ),
                                                 ),
@@ -300,9 +327,8 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                                   child: Text(
                                                     'Service',
                                                     style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontSize: 14.0
-                                                    ),
+                                                        color: Colors.grey,
+                                                        fontSize: 14.0),
                                                     textAlign: TextAlign.start,
                                                   ),
                                                 ),
@@ -323,74 +349,106 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                                     'Status',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontSize: 14.0
-                                                    ),
+                                                        color: Colors.grey,
+                                                        fontSize: 14.0),
                                                   ),
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(height: 20.0,),
-                                            StreamBuilder<QuerySnapshot>(
-                                              stream: Dashboard().readAllServices(),
-                                              builder: (context, snapshot) {
-                                                if(!snapshot.hasData){
-                                                  return CircularProgressIndicator();
-                                                }else{
-                                                  return ListView.separated(
-                                                    shrinkWrap: true,
-                                                    itemCount: snapshot.data!.size,
-                                                    separatorBuilder: (BuildContext context, int index) => const Divider(),
-                                                    itemBuilder: (context, index){
-                                                      DocumentSnapshot service = snapshot.data!.docs[index];
-                                                      return InkWell(
-                                                        hoverColor: Colors.grey[200],
-                                                        onTap: (){
-                                                          Navigator.of(context).push(MaterialPageRoute(builder: ((context) => UserProfileNew(id: service.get('userId')))));
-                                                        },
-                                                        child: Column(
-                                                          children: [
-                                                            Padding(
-                                                              padding: const EdgeInsets.all(8.0),
-                                                              child: Row(
-                                                                children: [
-                                                                  Expanded(
-                                                                    child: Text(
-                                                                      DateFormat('dd MMMM yyyy').format(DateTime.fromMicrosecondsSinceEpoch(service.get('creationDate'))),
-                                                                      textAlign: TextAlign.start,
-                                                                    ),
-                                                                  ),
-                                                                  Expanded(
-                                                                    child: Text(
-                                                                      service.get('serviceName').toString(),
-                                                                      textAlign: TextAlign.start,
-                                                                    ),
-                                                                  ),
-                                                                  Expanded(
-                                                                    flex: 3,
-                                                                    child: Text(
-                                                                    service.get('emailUser').toString(),
-                                                                    textAlign: TextAlign.center,
-                                                                    ),
-                                                                  ),
-                                                                  Expanded(
-                                                                    flex: 2,
-                                                                    child: Text(
-                                                                    service.get('currentState'),
-                                                                    textAlign: TextAlign.center,
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      );
-                                                    },
-                                                  );
-                                                }
-                                              }
+                                            SizedBox(
+                                              height: 20.0,
                                             ),
+                                            StreamBuilder<QuerySnapshot>(
+                                                stream: Dashboard()
+                                                    .readAllServices(),
+                                                builder: (context, snapshot) {
+                                                  if (!snapshot.hasData) {
+                                                    return CircularProgressIndicator();
+                                                  } else {
+                                                    return ListView.separated(
+                                                      shrinkWrap: true,
+                                                      itemCount:
+                                                          snapshot.data!.size,
+                                                      separatorBuilder:
+                                                          (BuildContext context,
+                                                                  int index) =>
+                                                              const Divider(),
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        DocumentSnapshot
+                                                            service = snapshot
+                                                                .data!
+                                                                .docs[index];
+                                                        return InkWell(
+                                                          hoverColor:
+                                                              Colors.grey[200],
+                                                          onTap: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .push(MaterialPageRoute(
+                                                                    builder: ((context) =>
+                                                                        UserProfileNew(
+                                                                            id: service.get('userId')))));
+                                                          },
+                                                          child: Column(
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        8.0),
+                                                                child: Row(
+                                                                  children: [
+                                                                    Expanded(
+                                                                      child:
+                                                                          Text(
+                                                                        DateFormat('dd MMMM yyyy')
+                                                                            .format(DateTime.fromMicrosecondsSinceEpoch(service.get('creationDate'))),
+                                                                        textAlign:
+                                                                            TextAlign.start,
+                                                                      ),
+                                                                    ),
+                                                                    Expanded(
+                                                                      child:
+                                                                          Text(
+                                                                        service
+                                                                            .get('serviceName')
+                                                                            .toString(),
+                                                                        textAlign:
+                                                                            TextAlign.start,
+                                                                      ),
+                                                                    ),
+                                                                    Expanded(
+                                                                      flex: 3,
+                                                                      child:
+                                                                          Text(
+                                                                        service
+                                                                            .get('emailUser')
+                                                                            .toString(),
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                      ),
+                                                                    ),
+                                                                    Expanded(
+                                                                      flex: 2,
+                                                                      child:
+                                                                          Text(
+                                                                        service.get(
+                                                                            'currentState'),
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  }
+                                                }),
                                           ],
                                         ),
                                       ),
@@ -398,29 +456,26 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                   ),
                                 ],
                               ),
-                              
                             ],
                           ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            AdminColumn(),
-                          ],
                         ),
-                      ),
-                    ],
+                        Expanded(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              AdminColumn(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                
-              ],
-            ),
-        );
-        }
-      }
-    );
+                ],
+              ),
+            );
+          }
+        });
   }
 }
 

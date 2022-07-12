@@ -20,15 +20,6 @@ class DefaultFirebaseOptions {
       return web;
     }
     switch (defaultTargetPlatform) {
-      case TargetPlatform.android:
-        return android;
-      case TargetPlatform.iOS:
-        return ios;
-      case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -47,32 +38,10 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyA25ZJJjGarhG1_wPaFeQa6x1eRkbd1qUc',
-    appId: '1:926638809954:web:847a762bdeb29bead2023b',
-    messagingSenderId: '926638809954',
-    projectId: 'testapp-704e6',
-    authDomain: 'testapp-704e6.firebaseapp.com',
-    databaseURL: 'https://testapp-704e6-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'testapp-704e6.appspot.com',
-  );
-
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAYH2fq1qvisKoLWBPIvJ55qUgSiwPfPTM',
-    appId: '1:926638809954:android:eb9edc218d90323ed2023b',
-    messagingSenderId: '926638809954',
-    projectId: 'testapp-704e6',
-    databaseURL: 'https://testapp-704e6-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'testapp-704e6.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDJ4-XWpfGxDW1QAYmWrUutpd_Mf0Atiuc',
-    appId: '1:926638809954:ios:bd8361b753b52613d2023b',
-    messagingSenderId: '926638809954',
-    projectId: 'testapp-704e6',
-    databaseURL: 'https://testapp-704e6-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'testapp-704e6.appspot.com',
-    iosClientId: '926638809954-9kctcqda186gmld6ea30k7f99fmjh2bn.apps.googleusercontent.com',
-    iosBundleId: 'com.management.adminapp',
-  );
+      apiKey: "AIzaSyAiB8LoDt8BA04VdOa2czdrdzD3J-VShL4",
+      authDomain: "law-final.firebaseapp.com",
+      projectId: "law-final",
+      storageBucket: "law-final.appspot.com",
+      messagingSenderId: "986321652720",
+      appId: "1:986321652720:web:04df4f039774683f2c2b35");
 }

@@ -18,7 +18,7 @@ class _AdminColumnState extends State<AdminColumn> {
   Widget build(BuildContext context) {
     return Expanded(
       child: DecoratedBox(
-        decoration: BoxDecoration(color: Colors.white),
+        decoration: const BoxDecoration(color: Colors.white),
         child: Row(
           children: [
             Expanded(
@@ -29,14 +29,14 @@ class _AdminColumnState extends State<AdminColumn> {
                     children: [
                       Column(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 20.0,
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: TextButton(
                               child: Row(
-                                children: [
+                                children: const [
                                   Icon(
                                     Icons.logout_outlined,
                                   ),
@@ -48,7 +48,7 @@ class _AdminColumnState extends State<AdminColumn> {
                               },
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30.0,
                           ),
                         ],
@@ -65,7 +65,7 @@ class _AdminColumnState extends State<AdminColumn> {
                               .readAdminDetails(),
                           builder: (context, snapshot) {
                             if (!snapshot.hasData) {
-                              return Center(
+                              return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             } else {
@@ -80,25 +80,25 @@ class _AdminColumnState extends State<AdminColumn> {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 20.0,
                                   ),
                                   Row(
                                     children: [
                                       Text(
                                         admin.fullName,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 20.0,
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5.0,
                                   ),
                                   Text(
                                     admin.roleUser,
-                                    style: TextStyle(color: Colors.grey),
+                                    style: const TextStyle(color: Colors.grey),
                                   ),
                                 ],
                               );
@@ -106,13 +106,14 @@ class _AdminColumnState extends State<AdminColumn> {
                           }),
                     ],
                   ),
+                  Divider(),
                   Expanded(
                     child: StreamBuilder<QuerySnapshot>(
                       stream: DatabaseChat().readChats(),
                       builder: (context, snapshot) {
-                        // print(snapshot.data);
                         if (!snapshot.hasData) {
-                          return Center(
+                          print('here');
+                          return const Center(
                             child: CircularProgressIndicator(),
                           );
                         } else {
@@ -131,7 +132,7 @@ class _AdminColumnState extends State<AdminColumn> {
                                     DatabaseChat().fetchName(chat.get('user')),
                                 builder: (context, snapshot) {
                                   if (!snapshot.hasData) {
-                                    return CircularProgressIndicator();
+                                    return const CircularProgressIndicator();
                                   } else {
                                     final name = snapshot.data!.firstName;
                                     return Row(
@@ -141,27 +142,27 @@ class _AdminColumnState extends State<AdminColumn> {
                                         CircleAvatar(
                                           child: Text(name.split('')[0]),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 8.0,
                                         ),
                                         Expanded(
                                           child: Column(
                                             children: [
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 4.0,
                                               ),
                                               Row(
                                                 children: [
                                                   Text(
                                                     name,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
                                                   ),
                                                 ],
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 3.0,
                                               ),
                                               Row(
@@ -183,7 +184,7 @@ class _AdminColumnState extends State<AdminColumn> {
                                                       textAlign: TextAlign.end,
                                                     ),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 10.0,
                                                   ),
                                                 ],

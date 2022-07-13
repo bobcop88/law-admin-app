@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:adminapp/dashboard/admin_column.dart';
 import 'package:adminapp/users/new_users_pages/user_profile_new.dart';
 import 'package:adminapp/utils/database.dart';
@@ -27,7 +25,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
         stream: DatabaseUsers().readAllUsers(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else {
             final users = snapshot.data!;
 
@@ -48,11 +46,11 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 15.0,
                               ),
                               Row(
-                                children: [
+                                children: const [
                                   Text(
                                     'Dashboard',
                                     style: TextStyle(
@@ -62,7 +60,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20.0,
                               ),
                               Row(
@@ -74,14 +72,14 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                       child: Column(
                                         children: [
                                           Row(
-                                            children: [
+                                            children: const [
                                               Icon(
                                                 Icons.group_rounded,
                                               ),
                                             ],
                                           ),
                                           Row(
-                                            children: [
+                                            children: const [
                                               Text(
                                                 'Registered Users',
                                                 style: TextStyle(
@@ -91,12 +89,12 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                               ),
                                             ],
                                           ),
-                                          Divider(),
+                                          const Divider(),
                                           Row(
                                             children: [
                                               Text(
                                                 users.length.toString(),
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   fontSize: 20.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -113,14 +111,14 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                       child: Column(
                                         children: [
                                           Row(
-                                            children: [
+                                            children: const [
                                               Icon(
                                                 Icons.verified_rounded,
                                               ),
                                             ],
                                           ),
                                           Row(
-                                            children: [
+                                            children: const [
                                               Text(
                                                 'Verified Users',
                                                 style: TextStyle(
@@ -130,7 +128,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                               ),
                                             ],
                                           ),
-                                          Divider(),
+                                          const Divider(),
                                           // Row(
                                           //   children: [
                                           //     Text(
@@ -153,7 +151,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                   Expanded(
                                     flex: 3,
                                     child: Card(
-                                      margin: EdgeInsets.all(20.0),
+                                      margin: const EdgeInsets.all(20.0),
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Column(
@@ -171,7 +169,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 15.0,
                                             ),
                                             Row(
@@ -208,7 +206,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 20.0,
                                             ),
                                             ListView.separated(
@@ -291,7 +289,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                   Expanded(
                                     flex: 3,
                                     child: Card(
-                                      margin: EdgeInsets.all(20.0),
+                                      margin: const EdgeInsets.all(20.0),
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Column(
@@ -309,7 +307,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 15.0,
                                             ),
                                             Row(
@@ -355,7 +353,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 20.0,
                                             ),
                                             StreamBuilder<QuerySnapshot>(
@@ -363,7 +361,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                                     .readAllServices(),
                                                 builder: (context, snapshot) {
                                                   if (!snapshot.hasData) {
-                                                    return CircularProgressIndicator();
+                                                    return const CircularProgressIndicator();
                                                   } else {
                                                     return ListView.separated(
                                                       shrinkWrap: true,
@@ -456,18 +454,57 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                   ),
                                 ],
                               ),
+                              StreamBuilder<List<UserCompleteProfile>>(
+                                  stream: DatabaseUsers().readAllUsers(),
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return CircularProgressIndicator();
+                                    } else {
+                                      final user = snapshot.data!;
+                                      return DataTable(
+                                        columns: [
+                                          DataColumn(label: Text('Date')),
+                                          DataColumn(
+                                              label: Text('Email Address')),
+                                          DataColumn(label: Text('First Name')),
+                                          DataColumn(label: Text('Last Name')),
+                                        ],
+                                        rows: getRowsUsers(user),
+                                      );
+                                    }
+                                  }),
+                              // StreamBuilder<List<ServiceDetails>>(
+                              //     stream: DatabaseService().readAllServices(),
+                              //     builder: (context, snapshot) {
+                              //       if (!snapshot.hasData) {
+                              //         return CircularProgressIndicator();
+                              //       } else {
+                              //         final user = snapshot.data!;
+                              //         return DataTable(
+                              //           columns: [
+                              //             DataColumn(label: Text('Date')),
+                              //             DataColumn(
+                              //                 label: Text('Email Address')),
+                              //             DataColumn(label: Text('First Name')),
+                              //             DataColumn(label: Text('Last Name')),
+                              //           ],
+                              //           rows: getRowsUsers(user),
+                              //         );
+                              //       }
+                              //     }),
                             ],
                           ),
                         ),
-                        Expanded(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              AdminColumn(),
-                            ],
-                          ),
-                        ),
+
+                        // Expanded(
+                        //   child: Column(
+                        //     mainAxisSize: MainAxisSize.max,
+                        //     mainAxisAlignment: MainAxisAlignment.start,
+                        //     children: const [
+                        //       AdminColumn(),
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -479,60 +516,15 @@ class _DashboardAdminState extends State<DashboardAdmin> {
   }
 }
 
-
-
-// StreamBuilder<QuerySnapshot>(
-//                                                   stream: Dashboard().readUsersListDate(),
-//                                                   builder: (context, snapshot) {
-//                                                     if(!snapshot.hasData){
-//                                                       return Center(child: CircularProgressIndicator(),);
-//                                                     }else{
-                            
-//                                                       final user = snapshot.data!;
-//                                                       // print(user.docs.length);
-                                                      
-//                                                       return Expanded(
-//                                                         child: Column(
-//                                                           children: [
-//                                                             Expanded(
-//                                                               child: Row(
-//                                                                 children: [
-//                                                                   Expanded(
-//                                                                     // height: 400.0,
-//                                                                     // width: 400.0,
-//                                                                     child: ListView(
-//                                                                       shrinkWrap: true,
-//                                                                       children: snapshot.data!.docs
-//                                                                           .map((DocumentSnapshot document) {
-//                                                                             Map<String, dynamic> data =
-//                                                                                 document.data()! as Map<String, dynamic>;
-//                                                                             return Row(
-//                                                                               children: [
-//                                                                                 Text(
-//                                                                                   data['email']
-//                                                                                 ),
-//                                                                                 SizedBox(width: 5.0,),
-//                                                                                 Text(
-//                                                                                   DateFormat('dd MMMM yyyy').format(DateTime.fromMicrosecondsSinceEpoch(data['dateCreation']))
-//                                                                                 ),
-//                                                                               ],
-//                                                                             );
-                                                                            
-//                                                                             // ListTile(
-//                                                                             //   title: Text(data['email']),
-//                                                                             //   subtitle: Text(DateFormat('dd MMMM yyyy').format(DateTime.fromMicrosecondsSinceEpoch(data['dateCreation']))),
-//                                                                             // );
-//                                                                           })
-//                                                                           .toList()
-//                                                                           .cast(),
-//                                                                     ),
-//                                                                   ),
-//                                                                 ],
-//                                                               ),
-//                                                             ),
-//                                                           ],
-//                                                         ),
-//                                                       );
-//                                                     }
-//                                                   }
-//                                                 )
+List<DataRow> getRowsUsers(List<UserCompleteProfile> user) {
+  return user
+      .map((UserCompleteProfile user) => DataRow(cells: [
+            DataCell(Text(DateFormat('dd/MM/yy')
+                .format(DateTime.fromMicrosecondsSinceEpoch(user.dateCreation))
+                .toString())),
+            DataCell(Text(user.email!)),
+            DataCell(Text(user.firstName)),
+            DataCell(Text(user.lastName)),
+          ]))
+      .toList();
+}

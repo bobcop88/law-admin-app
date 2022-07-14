@@ -77,7 +77,7 @@ class DatabaseUserProfile {
         .snapshots();
   }
 
-  Future updateProfileUser(String uid, String doc, String newValue) async {
+  Future updateProfileUser(String uid, String doc, newValue) async {
     await FirebaseFirestore.instance.collection('clients').doc(uid).update({
       doc: newValue,
     });

@@ -22,13 +22,13 @@ class _UsersNewHomeState extends State<UsersNewHome> {
         stream: DatabaseUsers().readAllUsers(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else {
             List users = [];
 
-            if (_searchUser.length > 0) {
+            if (_searchUser.isNotEmpty) {
               users = snapshot.data!.where((element) {
                 return element.firstName
                         .toLowerCase()
@@ -52,13 +52,13 @@ class _UsersNewHomeState extends State<UsersNewHome> {
                         child: Card(
                           child: Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 40.0,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Users List',
                                     style: TextStyle(
                                       fontSize: 20.0,
@@ -72,14 +72,14 @@ class _UsersNewHomeState extends State<UsersNewHome> {
                                   SizedBox(
                                     width: 300.0,
                                     child: Padding(
-                                      padding: EdgeInsets.only(
+                                      padding: const EdgeInsets.only(
                                           left: 2.0, right: 2.0),
                                       child: TextField(
                                         controller: _userController,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 15.0,
                                         ),
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           isDense: true,
                                           contentPadding: EdgeInsets.fromLTRB(
                                               5.0, 5.0, 5.0, 0),
@@ -102,7 +102,7 @@ class _UsersNewHomeState extends State<UsersNewHome> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               Row(
@@ -114,17 +114,17 @@ class _UsersNewHomeState extends State<UsersNewHome> {
                                         children: [
                                           Row(
                                             children: [
-                                              Expanded(
+                                              const Expanded(
                                                 child: Text('Email Address'),
                                               ),
-                                              Expanded(
+                                              const Expanded(
                                                 child: Text('Name'),
                                               ),
-                                              Expanded(
+                                              const Expanded(
                                                 child:
                                                     Text('Date Registration'),
                                               ),
-                                              Expanded(
+                                              const Expanded(
                                                 child: Text('Phone Number'),
                                               ),
                                             ],
@@ -171,7 +171,8 @@ class _UsersNewHomeState extends State<UsersNewHome> {
                                                         Expanded(
                                                           child: Text(
                                                             users[index].email,
-                                                            style: TextStyle(
+                                                            style:
+                                                                const TextStyle(
                                                               color: Colors
                                                                   .blueAccent,
                                                             ),
@@ -183,9 +184,10 @@ class _UsersNewHomeState extends State<UsersNewHome> {
                                                                 .firstName,
                                                             textAlign:
                                                                 TextAlign.left,
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .grey),
+                                                            style:
+                                                                const TextStyle(
+                                                                    color: Colors
+                                                                        .grey),
                                                           ),
                                                         ),
                                                         Expanded(
@@ -198,9 +200,10 @@ class _UsersNewHomeState extends State<UsersNewHome> {
                                                                             .dateCreation)),
                                                             textAlign:
                                                                 TextAlign.left,
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .grey),
+                                                            style:
+                                                                const TextStyle(
+                                                                    color: Colors
+                                                                        .grey),
                                                           ),
                                                         ),
                                                         Expanded(
@@ -209,9 +212,10 @@ class _UsersNewHomeState extends State<UsersNewHome> {
                                                                 .phoneNumber,
                                                             textAlign:
                                                                 TextAlign.left,
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .grey),
+                                                            style:
+                                                                const TextStyle(
+                                                                    color: Colors
+                                                                        .grey),
                                                           ),
                                                         ),
                                                       ],

@@ -2,6 +2,7 @@ import 'package:adminapp/dashboard/dashboard.dart';
 import 'package:adminapp/old_pages/users_home.dart';
 import 'package:adminapp/services/services_page.dart';
 import 'package:adminapp/users/new_users_pages/users_new.dart';
+import 'package:adminapp/users/users_list_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   static const List<Widget> _pageSelected = [
     DashboardAdmin(),
-    UsersNewHome(),
+    UsersListPage(),
     ServicesPage(),
   ];
 

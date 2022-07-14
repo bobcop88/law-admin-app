@@ -1,49 +1,43 @@
-import 'package:adminapp/services/services_details_page.dart';
-import 'package:adminapp/services/utils/services_classes.dart';
-import 'package:adminapp/users/new_users_pages/user_profile_new.dart';
+import 'package:adminapp/users/utils/user_classes.dart';
 import 'package:adminapp/utils/database.dart';
-import 'package:adminapp/utils/service_details.dart';
 import 'package:adminapp/utils/users_profile_class.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-class ServicesPage extends StatefulWidget {
-  const ServicesPage({Key? key}) : super(key: key);
+class UsersListPage extends StatefulWidget {
+  const UsersListPage({Key? key}) : super(key: key);
 
   @override
-  State<ServicesPage> createState() => _ServicesPageState();
+  State<UsersListPage> createState() => _UsersListPageState();
 }
 
-class _ServicesPageState extends State<ServicesPage> {
+class _UsersListPageState extends State<UsersListPage> {
   final _userController = TextEditingController();
-  String _searchService = '';
-
+  String _searchUser = '';
+  var userId;
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<ServiceDetails>>(
-        stream: Dashboard().readAllServicesNew(),
+    return StreamBuilder<List<UserCompleteProfile>>(
+        stream: DatabaseUsers().readAllUsers(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+            return const CircularProgressIndicator();
           } else {
-            var service;
-
-            if (_searchService.isNotEmpty) {
-              service = snapshot.data!.where((element) {
-                return element.serviceName
+            var user;
+            if (_searchUser.isNotEmpty) {
+              user = snapshot.data!.where((element) {
+                return element.firstName
                         .toLowerCase()
-                        .contains(_searchService.toLowerCase()) ||
-                    element.emailUser
+                        .contains(_searchUser.toLowerCase()) ||
+                    element.email!
                         .toLowerCase()
-                        .contains(_searchService.toLowerCase());
+                        .contains(_searchUser.toLowerCase()) ||
+                    element.phoneNumber.contains(_searchUser.toLowerCase());
               }).toList();
             } else {
-              service = snapshot.data!;
+              user = snapshot.data!;
             }
 
+            // var user = snapshot.data!;
             return Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Column(
@@ -67,7 +61,7 @@ class _ServicesPageState extends State<ServicesPage> {
                                   contentPadding:
                                       EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 0),
                                   prefixIcon: Icon(Icons.search_outlined),
-                                  hintText: 'Search Service',
+                                  hintText: 'Search User',
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Colors.blueAccent,
@@ -76,7 +70,7 @@ class _ServicesPageState extends State<ServicesPage> {
                                 ),
                                 onChanged: (value) {
                                   setState(() {
-                                    _searchService = value;
+                                    _searchUser = value;
                                   });
                                 },
                               ),
@@ -94,15 +88,16 @@ class _ServicesPageState extends State<ServicesPage> {
                           child: DataTable(
                             headingTextStyle: const TextStyle(
                                 color: Colors.grey, fontSize: 12.0),
-                            columns: [
+                            columns: const [
+                              DataColumn(label: Text('First Name')),
+                              DataColumn(label: Text('Last Name')),
+                              DataColumn(label: Text('Email Address')),
+                              DataColumn(label: Text('Phone Number')),
                               DataColumn(label: Text('Date')),
-                              DataColumn(label: Text('Service')),
-                              DataColumn(label: Text('User')),
-                              DataColumn(label: Text('Status')),
                               DataColumn(label: Text('')),
                             ],
-                            rows: ServicesClass()
-                                .getRowsServices(service, context),
+                            rows:
+                                UserRows().getRowsUsersComplete(user, context),
                           ),
                         ),
                       ),

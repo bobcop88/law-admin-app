@@ -1,5 +1,7 @@
 import 'package:adminapp/dashboard/admin_column.dart';
+import 'package:adminapp/services/utils/services_classes.dart';
 import 'package:adminapp/users/new_users_pages/user_profile_new.dart';
+import 'package:adminapp/users/utils/user_classes.dart';
 import 'package:adminapp/utils/database.dart';
 import 'package:adminapp/utils/service_details.dart';
 import 'package:adminapp/utils/users_profile_class.dart';
@@ -146,352 +148,176 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                   ),
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    flex: 3,
-                                    child: Card(
-                                      margin: const EdgeInsets.all(20.0),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              children: const [
-                                                Expanded(
-                                                  child: Text(
-                                                    'Latest Users registered',
-                                                    style: TextStyle(
-                                                        fontSize: 17.0,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 15.0,
-                                            ),
-                                            Row(
-                                              children: const [
-                                                Expanded(
-                                                  child: Text(
-                                                    'Date',
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
-                                                        fontSize: 14.0),
-                                                    textAlign: TextAlign.start,
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 3,
-                                                  child: Text(
-                                                    'Email Address',
-                                                    style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontSize: 14.0,
-                                                    ),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Text(
-                                                    'Name',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
-                                                        fontSize: 14.0),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 20.0,
-                                            ),
-                                            ListView.separated(
-                                              shrinkWrap: true,
-                                              itemCount: users.length,
-                                              separatorBuilder:
-                                                  (BuildContext context,
-                                                          int index) =>
-                                                      const Divider(),
-                                              itemBuilder: (context, index) {
-                                                return InkWell(
-                                                  hoverColor: Colors.grey[200],
-                                                  onTap: () {
-                                                    Navigator.of(context).push(
-                                                        MaterialPageRoute(
-                                                            builder: ((context) =>
-                                                                UserProfileNew(
-                                                                    id: users[
-                                                                            index]
-                                                                        .id))));
-                                                  },
-                                                  child: Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Row(
-                                                          children: [
-                                                            Expanded(
-                                                              child: Text(
-                                                                DateFormat(
-                                                                        'dd/MM/yy')
-                                                                    .format(DateTime.fromMicrosecondsSinceEpoch(
-                                                                        users[index]
-                                                                            .dateCreation))
-                                                                    .toString(),
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 3,
-                                                              child: Text(
-                                                                users[index]
-                                                                    .email!,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 2,
-                                                              child: Text(
-                                                                users[index]
-                                                                    .firstName,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    flex: 3,
-                                    child: Card(
-                                      margin: const EdgeInsets.all(20.0),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              children: const [
-                                                Expanded(
-                                                  child: Text(
-                                                    'Latest Services requested',
-                                                    style: TextStyle(
-                                                        fontSize: 17.0,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 15.0,
-                                            ),
-                                            Row(
-                                              children: const [
-                                                Expanded(
-                                                  child: Text(
-                                                    'Date',
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
-                                                        fontSize: 14.0),
-                                                    textAlign: TextAlign.start,
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: Text(
-                                                    'Service',
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
-                                                        fontSize: 14.0),
-                                                    textAlign: TextAlign.start,
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 3,
-                                                  child: Text(
-                                                    'User',
-                                                    style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontSize: 14.0,
-                                                    ),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Text(
-                                                    'Status',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
-                                                        fontSize: 14.0),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 20.0,
-                                            ),
-                                            StreamBuilder<QuerySnapshot>(
-                                                stream: Dashboard()
-                                                    .readAllServices(),
-                                                builder: (context, snapshot) {
-                                                  if (!snapshot.hasData) {
-                                                    return const CircularProgressIndicator();
-                                                  } else {
-                                                    return ListView.separated(
-                                                      shrinkWrap: true,
-                                                      itemCount:
-                                                          snapshot.data!.size,
-                                                      separatorBuilder:
-                                                          (BuildContext context,
-                                                                  int index) =>
-                                                              const Divider(),
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        DocumentSnapshot
-                                                            service = snapshot
-                                                                .data!
-                                                                .docs[index];
-                                                        return InkWell(
-                                                          hoverColor:
-                                                              Colors.grey[200],
-                                                          onTap: () {
-                                                            Navigator.of(
-                                                                    context)
-                                                                .push(MaterialPageRoute(
-                                                                    builder: ((context) =>
-                                                                        UserProfileNew(
-                                                                            id: service.get('userId')))));
-                                                          },
-                                                          child: Column(
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        8.0),
-                                                                child: Row(
-                                                                  children: [
-                                                                    Expanded(
-                                                                      child:
-                                                                          Text(
-                                                                        DateFormat('dd MMMM yyyy')
-                                                                            .format(DateTime.fromMicrosecondsSinceEpoch(service.get('creationDate'))),
-                                                                        textAlign:
-                                                                            TextAlign.start,
-                                                                      ),
-                                                                    ),
-                                                                    Expanded(
-                                                                      child:
-                                                                          Text(
-                                                                        service
-                                                                            .get('serviceName')
-                                                                            .toString(),
-                                                                        textAlign:
-                                                                            TextAlign.start,
-                                                                      ),
-                                                                    ),
-                                                                    Expanded(
-                                                                      flex: 3,
-                                                                      child:
-                                                                          Text(
-                                                                        service
-                                                                            .get('emailUser')
-                                                                            .toString(),
-                                                                        textAlign:
-                                                                            TextAlign.center,
-                                                                      ),
-                                                                    ),
-                                                                    Expanded(
-                                                                      flex: 2,
-                                                                      child:
-                                                                          Text(
-                                                                        service.get(
-                                                                            'currentState'),
-                                                                        textAlign:
-                                                                            TextAlign.center,
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        );
-                                                      },
-                                                    );
-                                                  }
-                                                }),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
                               StreamBuilder<List<UserCompleteProfile>>(
                                   stream: DatabaseUsers().readAllUsers(),
                                   builder: (context, snapshot) {
                                     if (!snapshot.hasData) {
-                                      return CircularProgressIndicator();
+                                      return const CircularProgressIndicator();
                                     } else {
                                       final user = snapshot.data!;
-                                      return DataTable(
-                                        columns: [
-                                          DataColumn(label: Text('Date')),
-                                          DataColumn(
-                                              label: Text('Email Address')),
-                                          DataColumn(label: Text('First Name')),
-                                          DataColumn(label: Text('Last Name')),
-                                        ],
-                                        rows: getRowsUsers(user),
+                                      return Container(
+                                        margin: const EdgeInsets.all(20),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.5),
+                                              spreadRadius: 5,
+                                              blurRadius: 7,
+                                              offset: const Offset(0,
+                                                  3), // changes position of shadow
+                                            ),
+                                          ],
+                                        ),
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 10.0),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                children: const [
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 8.0),
+                                                    child: Text(
+                                                      'Latest Users registered',
+                                                      style: TextStyle(
+                                                        fontSize: 20.0,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: DataTable(
+                                                      headingTextStyle:
+                                                          const TextStyle(
+                                                              color:
+                                                                  Colors.grey,
+                                                              fontSize: 12.0),
+                                                      columns: const [
+                                                        DataColumn(
+                                                            label:
+                                                                Text('Date')),
+                                                        DataColumn(
+                                                            label: Text(
+                                                                'Email Address')),
+                                                        DataColumn(
+                                                            label: Text(
+                                                                'First Name')),
+                                                        DataColumn(
+                                                            label: Text(
+                                                                'Last Name')),
+                                                        DataColumn(
+                                                            label: Text('')),
+                                                      ],
+                                                      rows: UserRows()
+                                                          .getRowsUsers(
+                                                              user, context),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       );
                                     }
                                   }),
-                              // StreamBuilder<List<ServiceDetails>>(
-                              //     stream: DatabaseService().readAllServices(),
-                              //     builder: (context, snapshot) {
-                              //       if (!snapshot.hasData) {
-                              //         return CircularProgressIndicator();
-                              //       } else {
-                              //         final user = snapshot.data!;
-                              //         return DataTable(
-                              //           columns: [
-                              //             DataColumn(label: Text('Date')),
-                              //             DataColumn(
-                              //                 label: Text('Email Address')),
-                              //             DataColumn(label: Text('First Name')),
-                              //             DataColumn(label: Text('Last Name')),
-                              //           ],
-                              //           rows: getRowsUsers(user),
-                              //         );
-                              //       }
-                              //     }),
+                              StreamBuilder<List<ServiceDetails>>(
+                                  stream: Dashboard().readAllServicesNew(),
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return CircularProgressIndicator();
+                                    } else {
+                                      final service = snapshot.data!;
+                                      return Container(
+                                        margin: EdgeInsets.all(20),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.5),
+                                              spreadRadius: 5,
+                                              blurRadius: 7,
+                                              offset: const Offset(0,
+                                                  3), // changes position of shadow
+                                            ),
+                                          ],
+                                        ),
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 10.0),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                children: const [
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 8.0),
+                                                    child: Text(
+                                                      'Latest Services requested',
+                                                      style: TextStyle(
+                                                        fontSize: 20.0,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: DataTable(
+                                                      headingTextStyle:
+                                                          const TextStyle(
+                                                              color:
+                                                                  Colors.grey,
+                                                              fontSize: 12.0),
+                                                      columns: [
+                                                        DataColumn(
+                                                            label:
+                                                                Text('Date')),
+                                                        DataColumn(
+                                                            label: Text(
+                                                                'Service')),
+                                                        DataColumn(
+                                                            label:
+                                                                Text('User')),
+                                                        DataColumn(
+                                                            label:
+                                                                Text('Status')),
+                                                        DataColumn(
+                                                            label: Text('')),
+                                                      ],
+                                                      rows: ServicesClass()
+                                                          .getRowsServices(
+                                                              service, context),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  }),
                             ],
                           ),
                         ),
@@ -516,15 +342,50 @@ class _DashboardAdminState extends State<DashboardAdmin> {
   }
 }
 
-List<DataRow> getRowsUsers(List<UserCompleteProfile> user) {
-  return user
-      .map((UserCompleteProfile user) => DataRow(cells: [
-            DataCell(Text(DateFormat('dd/MM/yy')
-                .format(DateTime.fromMicrosecondsSinceEpoch(user.dateCreation))
-                .toString())),
-            DataCell(Text(user.email!)),
-            DataCell(Text(user.firstName)),
-            DataCell(Text(user.lastName)),
-          ]))
-      .toList();
-}
+// List<DataRow> getRowsUsers(List<UserCompleteProfile> user, context) {
+//   return user
+//       .map((UserCompleteProfile user) => DataRow(cells: [
+//             DataCell(
+//               Text(DateFormat('dd/MM/yy')
+//                   .format(
+//                       DateTime.fromMicrosecondsSinceEpoch(user.dateCreation))
+//                   .toString()),
+//             ),
+//             DataCell(Text(user.email!)),
+//             DataCell(Text(user.firstName)),
+//             DataCell(Text(user.lastName)),
+//             DataCell(ElevatedButton(
+//               style: ButtonStyle(visualDensity: VisualDensity.compact),
+//               onPressed: () {
+//                 Navigator.of(context).push(MaterialPageRoute(
+//                     builder: (context) => UserProfileNew(id: user.id)));
+//               },
+//               child: const Text('View Profile'),
+//             )),
+//           ]))
+//       .toList();
+// }
+
+// List<DataRow> getRowsServices(List<ServiceDetails> service, context) {
+//   return service
+//       .map((ServiceDetails service) => DataRow(cells: [
+//             DataCell(
+//               Text(DateFormat('dd/MM/yy')
+//                   .format(
+//                       DateTime.fromMicrosecondsSinceEpoch(service.creationDate))
+//                   .toString()),
+//             ),
+//             DataCell(Text(service.serviceName)),
+//             DataCell(Text(service.emailUser)),
+//             DataCell(Text(service.currentState)),
+//             DataCell(ElevatedButton(
+//               style: ButtonStyle(visualDensity: VisualDensity.compact),
+//               onPressed: () {
+//                 // Navigator.of(context).push(MaterialPageRoute(
+//                 //     builder: (context) => UserProfileNew(id: user.id)));
+//               },
+//               child: const Text('View Service'),
+//             )),
+//           ]))
+//       .toList();
+// }

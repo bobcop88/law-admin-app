@@ -139,6 +139,15 @@ class Dashboard {
     return FirebaseFirestore.instance.collectionGroup('myServices').snapshots();
   }
 
+  Stream<List<ServiceDetails>> readAllServicesNew() {
+    return FirebaseFirestore.instance
+        .collectionGroup('myServices')
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => ServiceDetails.fromJson(doc.data()))
+            .toList());
+  }
+
   Stream<QuerySnapshot> readAllServicesStarted() {
     return FirebaseFirestore.instance
         .collectionGroup('myServices')

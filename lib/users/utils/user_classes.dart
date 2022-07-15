@@ -102,8 +102,8 @@ class _UserProfileBioDetailsState extends State<UserProfileBioDetails> {
                     color: Colors.grey,
                   ),
                 ),
-                SizedBox(
-                  width: 200,
+                Expanded(
+                  // width: 200,
                   child: widget.updateObject
                       ? TextField(
                           autofocus: true,

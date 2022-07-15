@@ -48,7 +48,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             return Scaffold(
               appBar: AppBar(
                 title: Center(
-                  child: Text('Profile ${user.firstName}'),
+                  child: Text('Profile ${user.firstName} ${user.lastName}'),
                 ),
               ),
               body: Column(
@@ -58,7 +58,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       Container(
                         decoration: BoxDecoration(border: Border.all()),
                         width: MediaQuery.of(context).size.width / 2,
+                        height: MediaQuery.of(context).size.height / 2,
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const SizedBox(
                               height: 10.0,
@@ -70,6 +72,88 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             ),
                             const SizedBox(
                               height: 10.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 8.0),
+                                  child: Text(
+                                    'Registration date:',
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 12.0),
+                                  ),
+                                ),
+                                Text(
+                                  DateFormat('dd MMMM yyyy').format(
+                                      DateTime.fromMicrosecondsSinceEpoch(
+                                          user.dateCreation)),
+                                  style: TextStyle(fontSize: 12.0),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: const [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 8.0),
+                                  child: Text(
+                                    'Personal Details',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Divider(
+                              thickness: 2,
+                              color: Colors.black,
+                            ),
+                            Container(
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    const Text(
+                                      'Email Address: ',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      // width: 200,
+                                      child: TextField(
+                                        // autofocus: true,
+                                        readOnly: true,
+                                        enabled: false,
+                                        decoration: InputDecoration(
+                                          disabledBorder:
+                                              const OutlineInputBorder(),
+                                          hintText: user.email,
+                                          isDense: true,
+                                          contentPadding:
+                                              const EdgeInsets.fromLTRB(
+                                                  5, 10, 10, 0),
+                                          hintStyle: const TextStyle(
+                                              fontSize: 14.0,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                             UserProfileBioDetails(
                                 color: Colors.grey[100]!,
@@ -109,122 +193,139 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                 updateObjectError: updateDocumentError),
                             Container(
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: Colors.grey[100],
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Column(
+                                child: Row(
                                   children: [
-                                    Row(
-                                      children: [
-                                        const Text(
-                                          'Date of Birth: ',
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 200,
-                                          child: Text(
-                                            DateFormat('dd MMMM yyyy').format(
-                                                DateTime
-                                                    .fromMicrosecondsSinceEpoch(
-                                                        user.dateOfBirth)),
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 8.0,
-                                        ),
-                                        GestureDetector(
-                                          child: const Text(
-                                            'Update',
-                                            style: TextStyle(
-                                              color: Colors.blueAccent,
+                                    const Text(
+                                      'Date of Birth: ',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      // width: 200,
+                                      child: TextField(
+                                        // autofocus: true,
+                                        readOnly: true,
+                                        enabled: false,
+                                        decoration: InputDecoration(
+                                          disabledBorder:
+                                              const OutlineInputBorder(),
+                                          hintText: DateFormat('dd MMMM yyyy')
+                                              .format(DateTime
+                                                  .fromMicrosecondsSinceEpoch(
+                                                      user.dateOfBirth)),
+                                          isDense: true,
+                                          contentPadding:
+                                              const EdgeInsets.fromLTRB(
+                                                  5, 10, 10, 0),
+                                          hintStyle: const TextStyle(
                                               fontSize: 14.0,
-                                            ),
-                                          ),
-                                          onTap: () {
-                                            _selectDOB(user.id);
-
-                                            // setState(() {
-                                            //   updateNationality
-                                            //       ? updateNationality = false
-                                            //       : updateNationality = true;
-                                            // });
-                                            // if (updateNationality == false) {
-                                            //   DatabaseUserProfile(uid: user.id)
-                                            //       .updateProfileUser(
-                                            //           user.id,
-                                            //           'nationality',
-                                            //           'newvalue');
-                                            // }
-                                          },
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                      ],
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    GestureDetector(
+                                      child: const Text(
+                                        'Update',
+                                        style: TextStyle(
+                                          color: Colors.blueAccent,
+                                          fontSize: 14.0,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        _selectDOB(user.id);
+                                      },
                                     ),
                                   ],
                                 ),
                               ),
                             ),
                             Container(
-                              decoration: BoxDecoration(
-                                color: Colors.grey[100]!,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Column(
+                                child: Row(
                                   children: [
-                                    Row(
-                                      children: [
-                                        const Text(
-                                          'Nationality: ',
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 200,
-                                          child: Text(
-                                            user.nationality,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 8.0,
-                                        ),
-                                        GestureDetector(
-                                          child: const Text(
-                                            'Update',
-                                            style: TextStyle(
-                                              color: Colors.blueAccent,
+                                    const Text(
+                                      'Nationality: ',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: TextField(
+                                        // autofocus: true,
+                                        readOnly: true,
+                                        enabled: false,
+                                        decoration: InputDecoration(
+                                          disabledBorder:
+                                              const OutlineInputBorder(),
+                                          hintText: user.nationality,
+                                          isDense: true,
+                                          contentPadding:
+                                              const EdgeInsets.fromLTRB(
+                                                  5, 10, 10, 0),
+                                          hintStyle: const TextStyle(
                                               fontSize: 14.0,
-                                            ),
-                                          ),
-                                          onTap: () {
-                                            _showCountries(user.id);
-
-                                            // setState(() {
-                                            //   updateNationality
-                                            //       ? updateNationality = false
-                                            //       : updateNationality = true;
-                                            // });
-                                            // if (updateNationality == false) {
-                                            //   DatabaseUserProfile(uid: user.id)
-                                            //       .updateProfileUser(
-                                            //           user.id,
-                                            //           'nationality',
-                                            //           'newvalue');
-                                            // }
-                                          },
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                      ],
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    GestureDetector(
+                                      child: const Text(
+                                        'Update',
+                                        style: TextStyle(
+                                          color: Colors.blueAccent,
+                                          fontSize: 14.0,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        _showCountries(user.id);
+                                      },
                                     ),
                                   ],
                                 ),
                               ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(border: Border.all()),
+                        width: MediaQuery.of(context).size.width / 2,
+                        height: MediaQuery.of(context).size.height / 2,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Chat with ${user.firstName}'),
+                                ElevatedButton(
+                                  onPressed: () {},
+                                  child: Text('Show Chat'),
+                                ),
+                              ],
                             ),
                           ],
                         ),

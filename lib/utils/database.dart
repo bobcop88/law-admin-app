@@ -1,5 +1,6 @@
 import 'package:adminapp/dashboard/utils/admin_profile_class.dart';
 import 'package:adminapp/utils/chat_message_class.dart';
+import 'package:adminapp/utils/notifications_class.dart';
 import 'package:adminapp/utils/service_details.dart';
 import 'package:adminapp/utils/users_profile_class.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -257,5 +258,29 @@ class DatabaseChat {
         .doc(id)
         .snapshots()
         .map((snapshot) => UserCompleteProfile.fromJson(snapshot.data()!));
+  }
+}
+
+class Notifications {
+  Future newNotificationUser(
+      String userId, String userEmail, String notificationType) async {
+    final CollectionReference notificationFolder = FirebaseFirestore.instance
+        .collection('clients')
+        .doc(userId)
+        .collection('notificationsFromAdmin');
+
+    final notificationId = notificationFolder
+        .doc(DateTime.now().microsecondsSinceEpoch.toString());
+
+    final notification = NotificationAdminDetails(
+      userId: userId,
+      userEmail: userEmail,
+      notificationType: notificationType,
+      notificationDate: DateTime.now().microsecondsSinceEpoch,
+      isNew: true,
+    );
+
+    final json = notification.toJson();
+    await notificationId.set(json);
   }
 }

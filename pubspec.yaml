@@ -52,6 +52,7 @@ dependencies:
   url_launcher: ^6.1.2
   #Date format
   intl: ^0.17.0
+  badges: ^2.0.3
 
 dev_dependencies:
   flutter_test:

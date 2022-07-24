@@ -157,6 +157,8 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                                     widget.serviceName,
                                     'currentState',
                                     currentState);
+                            Notifications().newNotificationUser(widget.id,
+                                'don.calogero88@gmail.com', widget.serviceName);
                           }
                         });
                       },
@@ -179,6 +181,23 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                               : updateCurrentState = true;
                         });
                       },
+                    ),
+                  ],
+                ),
+                Divider(),
+                Row(
+                  children: [
+                    Text(
+                      'Doc 1: ',
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        _showDocPreview(service.doc1Url);
+                      },
+                      child: Text('Show'),
                     ),
                   ],
                 ),
@@ -386,5 +405,19 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
         }
       },
     );
+  }
+
+  Future _showDocPreview(docUrl) async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            children: [
+              Image.network(
+                docUrl,
+              ),
+            ],
+          );
+        });
   }
 }

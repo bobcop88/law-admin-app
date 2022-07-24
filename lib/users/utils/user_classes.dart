@@ -1,4 +1,3 @@
-import 'package:adminapp/users/new_users_pages/user_profile_new.dart';
 import 'package:adminapp/users/user_profile_page.dart';
 import 'package:adminapp/users/utils/country_class.dart';
 import 'package:adminapp/utils/database.dart';
@@ -48,7 +47,7 @@ class UserRows {
                 style: const ButtonStyle(visualDensity: VisualDensity.compact),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => UserProfileNew(id: user.id)));
+                      builder: (context) => UserProfilePage(id: user.id)));
                 },
                 child: const Text('View Profile'),
               )),

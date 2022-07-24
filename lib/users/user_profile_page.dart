@@ -1,6 +1,10 @@
+import 'package:adminapp/users/new_users_pages/user_chat.dart';
+import 'package:adminapp/users/service_details_page.dart';
 import 'package:adminapp/users/utils/user_classes.dart';
 import 'package:adminapp/utils/database.dart';
+import 'package:adminapp/utils/service_details.dart';
 import 'package:adminapp/utils/users_profile_class.dart';
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -16,8 +20,10 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   String serviceName = '';
+  String id = '';
   String userIdChat = '';
-  bool _chatVisible = false;
+  bool showServiceDetails = false;
+  // bool _chatVisible = false;
 
   bool updateFirstName = false;
   bool updateFirstNameError = false;
@@ -60,7 +66,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         width: MediaQuery.of(context).size.width / 2,
                         height: MediaQuery.of(context).size.height / 2,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          // mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const SizedBox(
                               height: 10.0,
@@ -76,19 +82,19 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 8.0),
-                                  child: Text(
-                                    'Registration date:',
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 12.0),
-                                  ),
-                                ),
                                 Text(
-                                  DateFormat('dd MMMM yyyy').format(
-                                      DateTime.fromMicrosecondsSinceEpoch(
-                                          user.dateCreation)),
-                                  style: TextStyle(fontSize: 12.0),
+                                  'Registration date:',
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 12.0),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: Text(
+                                    DateFormat('dd MMMM yyyy').format(
+                                        DateTime.fromMicrosecondsSinceEpoch(
+                                            user.dateCreation)),
+                                    style: TextStyle(fontSize: 12.0),
+                                  ),
                                 ),
                               ],
                             ),
@@ -307,6 +313,22 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                 ),
                               ),
                             ),
+                            SizedBox(
+                              height: 30.0,
+                            ),
+                            Row(
+                              children: [
+                                Badge(
+                                  badgeContent: Text('1'),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      _showChatUser(user.id);
+                                    },
+                                    child: Text('Show Chat'),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -317,19 +339,87 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Column(
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text('Chat with ${user.firstName}'),
-                                ElevatedButton(
-                                  onPressed: () {},
-                                  child: Text('Show Chat'),
+                                Text(
+                                  'Active Services',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            const Divider(
+                              indent: 100,
+                              endIndent: 100,
+                              thickness: 2,
+                              height: 20.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                StreamBuilder<List<ServiceDetails>>(
+                                  stream: DatabaseService(uid: user.id)
+                                      .readAllServices(),
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData ||
+                                        snapshot.data!.isEmpty) {
+                                      return Center(
+                                        child: Text('No Active Services'),
+                                      );
+                                    } else {
+                                      final service = snapshot.data!;
+                                      return SizedBox(
+                                        width: 200.0,
+                                        child: Column(
+                                          children: [
+                                            ListView.builder(
+                                              shrinkWrap: true,
+                                              itemCount: service.length,
+                                              itemBuilder: (context, index) {
+                                                return TextButton(
+                                                  child: Text(snapshot
+                                                      .data![index]
+                                                      .serviceName),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      showServiceDetails = true;
+                                                      id = user.id;
+                                                      serviceName = snapshot
+                                                          .data![index]
+                                                          .serviceName;
+                                                    });
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }
+                                  },
                                 ),
                               ],
                             ),
                           ],
                         ),
                       ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      showServiceDetails
+                          ? Container(
+                              width: MediaQuery.of(context).size.width / 2,
+                              child: ServiceSelectedDetails(
+                                  id: id, serviceName: serviceName),
+                            )
+                          : Text('Select an Active Service'),
                     ],
                   ),
                 ],
@@ -448,5 +538,19 @@ class _UserProfilePageState extends State<UserProfilePage> {
           user, 'dateOfBirth', dateOfBirth.microsecondsSinceEpoch);
       // Navigator.pop(context);
     }
+  }
+
+  Future _showChatUser(clientId) async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: Text('Chat'),
+            children: [
+              Container(
+                  width: 500, height: 500, child: UserChat(clientId: clientId)),
+            ],
+          );
+        });
   }
 }

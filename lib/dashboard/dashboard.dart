@@ -1,14 +1,10 @@
-import 'package:adminapp/dashboard/admin_column.dart';
 import 'package:adminapp/services/utils/services_classes.dart';
-import 'package:adminapp/users/new_users_pages/user_profile_new.dart';
 import 'package:adminapp/users/utils/user_classes.dart';
 import 'package:adminapp/utils/database.dart';
 import 'package:adminapp/utils/service_details.dart';
 import 'package:adminapp/utils/users_profile_class.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class DashboardAdmin extends StatefulWidget {
   const DashboardAdmin({Key? key}) : super(key: key);
@@ -340,52 +336,6 @@ class _DashboardAdminState extends State<DashboardAdmin> {
           }
         });
   }
+
+  void checkNewNotifications() {}
 }
-
-// List<DataRow> getRowsUsers(List<UserCompleteProfile> user, context) {
-//   return user
-//       .map((UserCompleteProfile user) => DataRow(cells: [
-//             DataCell(
-//               Text(DateFormat('dd/MM/yy')
-//                   .format(
-//                       DateTime.fromMicrosecondsSinceEpoch(user.dateCreation))
-//                   .toString()),
-//             ),
-//             DataCell(Text(user.email!)),
-//             DataCell(Text(user.firstName)),
-//             DataCell(Text(user.lastName)),
-//             DataCell(ElevatedButton(
-//               style: ButtonStyle(visualDensity: VisualDensity.compact),
-//               onPressed: () {
-//                 Navigator.of(context).push(MaterialPageRoute(
-//                     builder: (context) => UserProfileNew(id: user.id)));
-//               },
-//               child: const Text('View Profile'),
-//             )),
-//           ]))
-//       .toList();
-// }
-
-// List<DataRow> getRowsServices(List<ServiceDetails> service, context) {
-//   return service
-//       .map((ServiceDetails service) => DataRow(cells: [
-//             DataCell(
-//               Text(DateFormat('dd/MM/yy')
-//                   .format(
-//                       DateTime.fromMicrosecondsSinceEpoch(service.creationDate))
-//                   .toString()),
-//             ),
-//             DataCell(Text(service.serviceName)),
-//             DataCell(Text(service.emailUser)),
-//             DataCell(Text(service.currentState)),
-//             DataCell(ElevatedButton(
-//               style: ButtonStyle(visualDensity: VisualDensity.compact),
-//               onPressed: () {
-//                 // Navigator.of(context).push(MaterialPageRoute(
-//                 //     builder: (context) => UserProfileNew(id: user.id)));
-//               },
-//               child: const Text('View Service'),
-//             )),
-//           ]))
-//       .toList();
-// }

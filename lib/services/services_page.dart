@@ -1,12 +1,7 @@
-import 'package:adminapp/services/services_details_page.dart';
 import 'package:adminapp/services/utils/services_classes.dart';
-import 'package:adminapp/users/new_users_pages/user_profile_new.dart';
 import 'package:adminapp/utils/database.dart';
 import 'package:adminapp/utils/service_details.dart';
-import 'package:adminapp/utils/users_profile_class.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class ServicesPage extends StatefulWidget {
   const ServicesPage({Key? key}) : super(key: key);

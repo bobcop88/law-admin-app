@@ -8,6 +8,7 @@ class UserCompleteProfile {
   final String id;
   final String? email;
   final int dateCreation;
+  final String? token;
 
   UserCompleteProfile(
       {required this.firstName,
@@ -18,7 +19,8 @@ class UserCompleteProfile {
       required this.phoneNumber,
       required this.id,
       required this.email,
-      required this.dateCreation});
+      required this.dateCreation,
+      required this.token});
 
   Map<String, dynamic> toJson() => {
         'firstName': firstName,
@@ -42,7 +44,8 @@ class UserCompleteProfile {
           phoneNumber: json['phoneNumber'],
           id: json['id'],
           email: json['email'],
-          dateCreation: json['dateCreation']);
+          dateCreation: json['dateCreation'],
+          token: json['token']);
 }
 
 class UserAllDetails {

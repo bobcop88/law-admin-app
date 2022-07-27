@@ -336,6 +336,4 @@ class _DashboardAdminState extends State<DashboardAdmin> {
           }
         });
   }
-
-  void checkNewNotifications() {}
 }

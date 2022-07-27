@@ -1,4 +1,5 @@
 import 'package:adminapp/utils/database.dart';
+import 'package:adminapp/utils/send_notifications_class.dart';
 import 'package:adminapp/utils/service_details.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -6,9 +7,13 @@ import 'package:intl/intl.dart';
 class ServiceSelectedDetails extends StatefulWidget {
   final String id;
   final String serviceName;
+  final String token;
 
   const ServiceSelectedDetails(
-      {Key? key, required this.id, required this.serviceName})
+      {Key? key,
+      required this.id,
+      required this.serviceName,
+      required this.token})
       : super(key: key);
 
   @override
@@ -159,6 +164,10 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                                     currentState);
                             Notifications().newNotificationUser(widget.id,
                                 'don.calogero88@gmail.com', widget.serviceName);
+                            SendNotification(userDeviceToken: widget.token)
+                                .sendPushNotifications(
+                                    title: 'Inscale Media App',
+                                    body: 'New update on your service');
                           }
                         });
                       },

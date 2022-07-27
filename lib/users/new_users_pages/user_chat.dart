@@ -1,12 +1,19 @@
+import 'dart:convert';
+
 import 'package:adminapp/utils/chat_message_class.dart';
 import 'package:adminapp/utils/database.dart';
+import 'package:adminapp/utils/send_notifications_class.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 class UserChat extends StatefulWidget {
   final String clientId;
-  const UserChat({Key? key, required this.clientId}) : super(key: key);
+  final String userDeviceToken;
+  const UserChat(
+      {Key? key, required this.clientId, required this.userDeviceToken})
+      : super(key: key);
 
   @override
   State<UserChat> createState() => _UserChatState();
@@ -147,5 +154,47 @@ class _UserChatState extends State<UserChat> {
         'QeyX9YxNuUOqBMABs3QsoiTNdqR2', _messageController.text.trim());
 
     _messageController.clear();
+    SendNotification(userDeviceToken: widget.userDeviceToken)
+        .sendPushNotifications(
+            title: 'Inscale Media App',
+            body: 'You got a new chat message from admin');
   }
+
+  // Future<bool> callOnFcmApiSendPushNotifications(
+  //     {required String title, required String body}) async {
+  //   const postUrl = 'https://fcm.googleapis.com/fcm/send';
+  //   final data = {
+  //     "to": widget.userDeviceToken,
+  //     "notification": {
+  //       "title": title,
+  //       "body": body,
+  //     },
+  //     "data": {
+  //       "type": '0rder',
+  //       "id": '28',
+  //       // "click_action": 'FLUTTER_NOTIFICATION_CLICK',
+  //     }
+  //   };
+
+  //   final headers = {
+  //     'content-type': 'application/json',
+  //     'Authorization':
+  //         'key=AAAA5aVaC_A:APA91bHjAHukgqxDQ73rZWgx0b4u-KoTrj1h07HuV0_UfoKVnmanNr7W3jVTcnN5F482J_5J8hPVXgZsYws5e6Tm6i8phtAXimR-CC0fH3pEP-BeJHDxN-zSQNjOw7IYp6JGnopPaEUp' // 'key=YOUR_SERVER_KEY'
+  //   };
+
+  //   final response = await http.post(Uri.parse(postUrl),
+  //       body: json.encode(data),
+  //       encoding: Encoding.getByName('utf-8'),
+  //       headers: headers);
+
+  //   if (response.statusCode == 200) {
+  //     // on success do sth
+  //     // print('test ok push CFM');
+  //     return true;
+  //   } else {
+  //     // print(' CFM error');
+  //     // on failure do sth
+  //     return false;
+  //   }
+  // }
 }

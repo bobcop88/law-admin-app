@@ -493,8 +493,10 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                                       children: [
                                         Expanded(
                                             child: ServiceSelectedDetails(
-                                                id: widget.id,
-                                                serviceName: serviceName)),
+                                          id: widget.id,
+                                          serviceName: serviceName,
+                                          token: user.token!,
+                                        )),
                                       ],
                                     ),
                                   ],

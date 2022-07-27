@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:adminapp/users/new_users_pages/user_chat.dart';
 import 'package:adminapp/users/service_details_page.dart';
 import 'package:adminapp/users/utils/user_classes.dart';
@@ -5,10 +7,12 @@ import 'package:adminapp/utils/database.dart';
 import 'package:adminapp/utils/service_details.dart';
 import 'package:adminapp/utils/users_profile_class.dart';
 import 'package:badges/badges.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'utils/country_class.dart';
+import 'package:http/http.dart' as http;
 
 class UserProfilePage extends StatefulWidget {
   final String id;
@@ -22,6 +26,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   String serviceName = '';
   String id = '';
   String userIdChat = '';
+  String userDeviceToken = '';
   bool showServiceDetails = false;
   // bool _chatVisible = false;
 
@@ -35,11 +40,19 @@ class _UserProfilePageState extends State<UserProfilePage> {
   bool updateDocumentError = false;
   bool updateNationality = false;
   bool updateNationalityError = false;
+  bool showNewChatMessage = false;
 
   final _firstNameController = TextEditingController();
   final _surnameController = TextEditingController();
   final _phoneNumberController = TextEditingController();
   final _documentController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // checkNewChat(widget.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -320,9 +333,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               children: [
                                 Badge(
                                   badgeContent: Text('1'),
+                                  showBadge: showNewChatMessage,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      _showChatUser(user.id);
+                                      setState(() {
+                                        userDeviceToken = user.token!;
+                                      });
+                                      _showChatUser(user.id, userDeviceToken);
                                     },
                                     child: Text('Show Chat'),
                                   ),
@@ -387,6 +404,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                                       .serviceName),
                                                   onPressed: () {
                                                     setState(() {
+                                                      userDeviceToken =
+                                                          user.token!;
                                                       showServiceDetails = true;
                                                       id = user.id;
                                                       serviceName = snapshot
@@ -417,7 +436,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           ? Container(
                               width: MediaQuery.of(context).size.width / 2,
                               child: ServiceSelectedDetails(
-                                  id: id, serviceName: serviceName),
+                                id: id,
+                                serviceName: serviceName,
+                                token: userDeviceToken,
+                              ),
                             )
                           : Text('Select an Active Service'),
                     ],
@@ -540,7 +562,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     }
   }
 
-  Future _showChatUser(clientId) async {
+  Future _showChatUser(clientId, token) async {
     await showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -548,9 +570,29 @@ class _UserProfilePageState extends State<UserProfilePage> {
             title: Text('Chat'),
             children: [
               Container(
-                  width: 500, height: 500, child: UserChat(clientId: clientId)),
+                  width: 500,
+                  height: 500,
+                  child: UserChat(
+                    clientId: clientId,
+                    userDeviceToken: token,
+                  )),
             ],
           );
         });
   }
+
+  // void checkNewChat(id) {
+  //   FirebaseFirestore.instance.collection('chats').doc(id).get().then((value) {
+  //     if (value.data()!['isRead'] == false &&
+  //         value.data()!['senderLastMessage'] == widget.id) {
+  //       setState(() {
+  //         showNewChatMessage = true;
+  //       });
+  //     } else {
+  //       setState(() {
+  //         showNewChatMessage = false;
+  //       });
+  //     }
+  //   });
+  // }
 }

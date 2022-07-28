@@ -17,14 +17,14 @@ class _ServicesPageState extends State<ServicesPage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<ServiceDetails>>(
-        stream: Dashboard().readAllServicesNew(),
+        stream: DatabaseServiceList().readAllServicesNew(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(
               child: CircularProgressIndicator(),
             );
           } else {
-            var service;
+            List<ServiceDetails> service;
 
             if (_searchService.isNotEmpty) {
               service = snapshot.data!.where((element) {
@@ -38,6 +38,11 @@ class _ServicesPageState extends State<ServicesPage> {
             } else {
               service = snapshot.data!;
             }
+            serviceSorted() {
+              service.sort((a, b) => b.creationDate.compareTo(a.creationDate));
+            }
+
+            serviceSorted();
 
             return Padding(
               padding: const EdgeInsets.only(top: 10.0),

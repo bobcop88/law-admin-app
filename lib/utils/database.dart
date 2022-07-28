@@ -104,6 +104,18 @@ class DatabaseService {
   }
 }
 
+class DatabaseServiceList {
+  Stream<List<ServiceDetails>> readAllServicesNew() {
+    return FirebaseFirestore.instance
+        .collectionGroup('myServices')
+        // .orderBy('creationDate')
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => ServiceDetails.fromJson(doc.data()))
+            .toList());
+  }
+}
+
 //Get User Services
 
 class DatabaseServiceDetails {
@@ -136,6 +148,17 @@ class DatabaseServiceDetails {
 }
 
 class Dashboard {
+  Stream<List<UserCompleteProfile>> readAllUsers() {
+    return FirebaseFirestore.instance
+        .collection('clients')
+        .orderBy('dateCreation', descending: true)
+        .limit(5)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => UserCompleteProfile.fromJson(doc.data()))
+            .toList());
+  }
+
   Stream<QuerySnapshot> readAllServices() {
     return FirebaseFirestore.instance.collectionGroup('myServices').snapshots();
   }
@@ -143,6 +166,8 @@ class Dashboard {
   Stream<List<ServiceDetails>> readAllServicesNew() {
     return FirebaseFirestore.instance
         .collectionGroup('myServices')
+        .limit(5)
+        // .orderBy('creationDate')
         .snapshots()
         .map((snapshot) => snapshot.docs
             .map((doc) => ServiceDetails.fromJson(doc.data()))
@@ -178,15 +203,15 @@ class Dashboard {
         .snapshots();
   }
 
-  Stream<List<UserCompleteProfile>> readAllUsers() {
-    return FirebaseFirestore.instance
-        .collection('clients')
-        // .orderBy('creationDate', descending: true)
-        .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => UserCompleteProfile.fromJson(doc.data()))
-            .toList());
-  }
+  // Stream<List<UserCompleteProfile>> readAllUsers() {
+  //   return FirebaseFirestore.instance
+  //       .collection('clients')
+  //       // .orderBy('creationDate', descending: true)
+  //       .snapshots()
+  //       .map((snapshot) => snapshot.docs
+  //           .map((doc) => UserCompleteProfile.fromJson(doc.data()))
+  //           .toList());
+  // }
 }
 
 class DatabaseChat {

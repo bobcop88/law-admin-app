@@ -145,7 +145,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                 ],
                               ),
                               StreamBuilder<List<UserCompleteProfile>>(
-                                  stream: DatabaseUsers().readAllUsers(),
+                                  stream: Dashboard().readAllUsers(),
                                   builder: (context, snapshot) {
                                     if (!snapshot.hasData) {
                                       return const CircularProgressIndicator();
@@ -233,11 +233,17 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                   stream: Dashboard().readAllServicesNew(),
                                   builder: (context, snapshot) {
                                     if (!snapshot.hasData) {
-                                      return CircularProgressIndicator();
+                                      return const CircularProgressIndicator();
                                     } else {
                                       final service = snapshot.data!;
+                                      serviceSorted() {
+                                        service.sort((a, b) => b.creationDate
+                                            .compareTo(a.creationDate));
+                                      }
+
+                                      serviceSorted();
                                       return Container(
-                                        margin: EdgeInsets.all(20),
+                                        margin: const EdgeInsets.all(20),
                                         decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
@@ -286,19 +292,19 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                                                   Colors.grey,
                                                               fontSize: 12.0),
                                                       columns: [
-                                                        DataColumn(
+                                                        const DataColumn(
                                                             label:
                                                                 Text('Date')),
-                                                        DataColumn(
-                                                            label: Text(
+                                                        const DataColumn(
+                                                            label: const Text(
                                                                 'Service')),
-                                                        DataColumn(
-                                                            label:
-                                                                Text('User')),
-                                                        DataColumn(
-                                                            label:
-                                                                Text('Status')),
-                                                        DataColumn(
+                                                        const DataColumn(
+                                                            label: const Text(
+                                                                'User')),
+                                                        const DataColumn(
+                                                            label: const Text(
+                                                                'Status')),
+                                                        const DataColumn(
                                                             label: Text('')),
                                                       ],
                                                       rows: ServicesClass()

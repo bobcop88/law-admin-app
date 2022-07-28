@@ -1,4 +1,5 @@
 import 'package:adminapp/dashboard/dashboard.dart';
+import 'package:adminapp/dashboard/logs/log_page.dart';
 import 'package:adminapp/old_pages/users_home.dart';
 import 'package:adminapp/services/services_page.dart';
 import 'package:adminapp/users/users_list_page.dart';
@@ -20,6 +21,7 @@ class _HomePageState extends State<HomePage> {
     DashboardAdmin(),
     UsersListPage(),
     ServicesPage(),
+    LogsPage(),
   ];
 
   @override
@@ -169,6 +171,10 @@ class _HomePageState extends State<HomePage> {
                   NavigationRailDestination(
                     icon: Icon(Icons.verified_user_outlined),
                     label: Text('Services'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.folder_zip),
+                    label: Text('Logs'),
                   ),
                 ],
               ),

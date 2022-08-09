@@ -83,22 +83,18 @@ class _UsersListPageState extends State<UsersListPage> {
                   Row(
                     children: [
                       Expanded(
-                        child: FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: DataTable(
-                            headingTextStyle: const TextStyle(
-                                color: Colors.grey, fontSize: 12.0),
-                            columns: const [
-                              DataColumn(label: Text('First Name')),
-                              DataColumn(label: Text('Last Name')),
-                              DataColumn(label: Text('Email Address')),
-                              DataColumn(label: Text('Phone Number')),
-                              DataColumn(label: Text('Date')),
-                              DataColumn(label: Text('')),
-                            ],
-                            rows:
-                                UserRows().getRowsUsersComplete(user, context),
-                          ),
+                        child: DataTable(
+                          headingTextStyle: const TextStyle(
+                              color: Colors.grey, fontSize: 12.0),
+                          columns: const [
+                            DataColumn(label: Text('First Name')),
+                            DataColumn(label: Text('Last Name')),
+                            DataColumn(label: Text('Email Address')),
+                            DataColumn(label: Text('Phone Number')),
+                            DataColumn(label: Text('Date')),
+                            DataColumn(label: Text('')),
+                          ],
+                          rows: UserRows().getRowsUsersComplete(user, context),
                         ),
                       ),
                     ],

@@ -19,27 +19,34 @@ class _LogsPageState extends State<LogsPage> {
             return CircularProgressIndicator();
           } else {
             final log = snapshot.data!;
-            return Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: DataTable(
-                        headingTextStyle:
-                            const TextStyle(color: Colors.grey, fontSize: 12.0),
-                        columns: [
-                          DataColumn(label: Text('Date')),
-                          DataColumn(label: Text('Type User')),
-                          DataColumn(label: Text('Email address')),
-                          DataColumn(label: Text('Log Type')),
-                          DataColumn(label: Text('Action')),
-                        ],
-                        rows: DatabaseLogs().getRowsLogs(log, context),
+            serviceSorted() {
+              log.sort((a, b) => b.dateLog.compareTo(a.dateLog));
+            }
+
+            serviceSorted();
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DataTable(
+                          headingTextStyle: const TextStyle(
+                              color: Colors.grey, fontSize: 12.0),
+                          columns: [
+                            DataColumn(label: Text('Date')),
+                            DataColumn(label: Text('Type User')),
+                            DataColumn(label: Text('Email address')),
+                            DataColumn(label: Text('Log Type')),
+                            DataColumn(label: Text('Action')),
+                          ],
+                          rows: DatabaseLogs().getRowsLogs(log, context),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             );
           }
         });

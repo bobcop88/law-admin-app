@@ -89,21 +89,18 @@ class _ServicesPageState extends State<ServicesPage> {
                   Row(
                     children: [
                       Expanded(
-                        child: FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: DataTable(
-                            headingTextStyle: const TextStyle(
-                                color: Colors.grey, fontSize: 12.0),
-                            columns: [
-                              DataColumn(label: Text('Date')),
-                              DataColumn(label: Text('Service')),
-                              DataColumn(label: Text('User')),
-                              DataColumn(label: Text('Status')),
-                              DataColumn(label: Text('')),
-                            ],
-                            rows: ServicesClass()
-                                .getRowsServices(service, context),
-                          ),
+                        child: DataTable(
+                          headingTextStyle: const TextStyle(
+                              color: Colors.grey, fontSize: 12.0),
+                          columns: [
+                            DataColumn(label: Text('Date')),
+                            DataColumn(label: Text('Service')),
+                            DataColumn(label: Text('User')),
+                            DataColumn(label: Text('Status')),
+                            DataColumn(label: Text('')),
+                          ],
+                          rows:
+                              ServicesClass().getRowsServices(service, context),
                         ),
                       ),
                     ],

@@ -1,3 +1,4 @@
+import 'package:adminapp/users/user_profile_page.dart';
 import 'package:adminapp/utils/service_details.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -7,21 +8,44 @@ class ServicesClass {
     return service
         .map((ServiceDetails service) => DataRow(cells: [
               DataCell(
-                Text(DateFormat('dd/MM/yy')
-                    .format(DateTime.fromMicrosecondsSinceEpoch(
-                        service.creationDate))
-                    .toString()),
+                Text(
+                  DateFormat('dd/MM/yy')
+                      .format(DateTime.fromMicrosecondsSinceEpoch(
+                          service.creationDate))
+                      .toString(),
+                  style: TextStyle(fontSize: 12.0),
+                ),
               ),
-              DataCell(Text(service.serviceName)),
-              DataCell(Text(service.emailUser)),
-              DataCell(Text(service.currentState)),
+              DataCell(GestureDetector(
+                onTap: () {
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //     builder: (context) => UserProfilePage(id: user.id)));
+                },
+                child: Text(
+                  service.serviceName,
+                  style: TextStyle(fontSize: 12.0),
+                ),
+              )),
+              DataCell(
+                Text(
+                  service.emailUser,
+                  style: TextStyle(fontSize: 12.0),
+                ),
+              ),
+              DataCell(Text(
+                service.currentState,
+                style: TextStyle(fontSize: 12.0),
+              )),
               DataCell(ElevatedButton(
                 style: ButtonStyle(visualDensity: VisualDensity.compact),
                 onPressed: () {
                   // Navigator.of(context).push(MaterialPageRoute(
                   //     builder: (context) => UserProfileNew(id: user.id)));
                 },
-                child: const Text('View Service'),
+                child: const Text(
+                  'View Service',
+                  style: TextStyle(fontSize: 12.0),
+                ),
               )),
             ]))
         .toList();

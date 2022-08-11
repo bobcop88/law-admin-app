@@ -10,22 +10,46 @@ class UserRows {
     return user
         .map((UserCompleteProfile user) => DataRow(cells: [
               DataCell(
-                Text(DateFormat('dd/MM/yy')
-                    .format(
-                        DateTime.fromMicrosecondsSinceEpoch(user.dateCreation))
-                    .toString()),
+                Text(
+                  DateFormat('dd/MM/yy')
+                      .format(DateTime.fromMicrosecondsSinceEpoch(
+                          user.dateCreation))
+                      .toString(),
+                  style: TextStyle(fontSize: 12.0),
+                ),
               ),
-              DataCell(Text(user.email!)),
-              DataCell(Text(user.firstName)),
-              DataCell(Text(user.lastName)),
-              DataCell(ElevatedButton(
-                style: const ButtonStyle(visualDensity: VisualDensity.compact),
-                onPressed: () {
+              DataCell(GestureDetector(
+                onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => UserProfilePage(id: user.id)));
+                      builder: (context) => UserProfilePage(id: user.id, showNewChatMessage: false,)));
                 },
-                child: const Text('View Profile'),
+                child: Text(
+                  user.email!,
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.blue,
+                  ),
+                ),
               )),
+              DataCell(Text(
+                user.firstName,
+                style: TextStyle(fontSize: 12.0),
+              )),
+              DataCell(Text(
+                user.lastName,
+                style: TextStyle(fontSize: 12.0),
+              )),
+              // DataCell(ElevatedButton(
+              //   style: const ButtonStyle(visualDensity: VisualDensity.compact),
+              //   onPressed: () {
+              //     Navigator.of(context).push(MaterialPageRoute(
+              //         builder: (context) => UserProfilePage(id: user.id)));
+              //   },
+              //   child: const Text(
+              //     'View Profile',
+              //     style: TextStyle(fontSize: 12.0),
+              //   ),
+              // )),
             ]))
         .toList();
   }
@@ -47,7 +71,7 @@ class UserRows {
                 style: const ButtonStyle(visualDensity: VisualDensity.compact),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => UserProfilePage(id: user.id)));
+                      builder: (context) => UserProfilePage(id: user.id, showNewChatMessage: false,)));
                 },
                 child: const Text('View Profile'),
               )),

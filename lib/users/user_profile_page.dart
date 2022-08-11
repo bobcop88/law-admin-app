@@ -16,7 +16,10 @@ import 'package:http/http.dart' as http;
 
 class UserProfilePage extends StatefulWidget {
   final String id;
-  const UserProfilePage({Key? key, required this.id}) : super(key: key);
+  final bool showNewChatMessage;
+  const UserProfilePage(
+      {Key? key, required this.id, required this.showNewChatMessage})
+      : super(key: key);
 
   @override
   State<UserProfilePage> createState() => _UserProfilePageState();
@@ -40,7 +43,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   bool updateDocumentError = false;
   bool updateNationality = false;
   bool updateNationalityError = false;
-  bool showNewChatMessage = false;
+  // bool showNewChatMessage = false;
 
   final _firstNameController = TextEditingController();
   final _surnameController = TextEditingController();
@@ -333,7 +336,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               children: [
                                 Badge(
                                   badgeContent: Text('1'),
-                                  showBadge: showNewChatMessage,
+                                  showBadge: widget.showNewChatMessage,
                                   child: ElevatedButton(
                                     onPressed: () {
                                       setState(() {

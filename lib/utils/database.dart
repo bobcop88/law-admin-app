@@ -4,6 +4,7 @@ import 'package:adminapp/utils/notifications_class.dart';
 import 'package:adminapp/utils/service_details.dart';
 import 'package:adminapp/utils/users_profile_class.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DatabaseAdmin {
   final String uid;
@@ -166,8 +167,8 @@ class Dashboard {
   Stream<List<ServiceDetails>> readAllServicesNew() {
     return FirebaseFirestore.instance
         .collectionGroup('myServices')
+        // .orderBy('creationDate', descending: true)
         .limit(5)
-        // .orderBy('creationDate')
         .snapshots()
         .map((snapshot) => snapshot.docs
             .map((doc) => ServiceDetails.fromJson(doc.data()))
@@ -215,6 +216,7 @@ class Dashboard {
 }
 
 class DatabaseChat {
+  final user = FirebaseAuth.instance.currentUser!.uid;
   Future createChat(String userId, String adminId) async {
     final DocumentReference chatId =
         FirebaseFirestore.instance.collection('chats').doc(userId);
@@ -274,7 +276,21 @@ class DatabaseChat {
   }
 
   Stream<QuerySnapshot> readChats() {
-    return FirebaseFirestore.instance.collection('chats').snapshots();
+    return FirebaseFirestore.instance
+        .collection('chats')
+        .where('senderLastMessage',
+            isNotEqualTo: 'QeyX9YxNuUOqBMABs3QsoiTNdqR2')
+        .snapshots();
+  }
+
+  Stream<List<LastChatMessage>> readAllChats() {
+    return FirebaseFirestore.instance
+        .collection('chats')
+        .where('isRead', isEqualTo: false)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => LastChatMessage.fromJson(doc.data()))
+            .toList());
   }
 
   Stream<UserCompleteProfile> fetchName(id) {

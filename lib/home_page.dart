@@ -29,11 +29,14 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(19, 38, 63, 1),
+        elevation: 0,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Image.asset(
               'assets/logo.png',
+              color: Colors.white,
               // height: 70,
               width: 200,
             ),
@@ -87,59 +90,10 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(height: 200),
                   ],
                 ),
-                // leading: Column(
-                //   children: [
-                //     Row(
-                //       children: [
-                //         Padding(
-                //           padding: const EdgeInsets.all(8.0),
-                //           child: TextButton(
-                //             child: Row(
-                //               children: const [
-                //                 Icon(
-                //                   Icons.logout_outlined,
-                //                   color: Colors.white,
-                //                 ),
-                //                 Text(
-                //                   'Log out',
-                //                   style:
-                //                       TextStyle(color: Colors.white),
-                //                 ),
-                //               ],
-                //             ),
-                //             onPressed: () {
-                //               FirebaseAuth.instance.signOut();
-                //             },
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //     StreamBuilder(
-                //         stream: Stream.periodic(
-                //             const Duration(seconds: 1)),
-                //         builder: (context, snapshot) {
-                //           return Padding(
-                //             padding: const EdgeInsets.all(20.0),
-                //             child: Row(
-                //               children: [
-                //                 Expanded(
-                //                   child: Text(
-                //                     DateFormat('dd-MM-yyyy HH:mm:ss')
-                //                         .format(DateTime.now()),
-                //                     textAlign: TextAlign.center,
-                //                     style: TextStyle(
-                //                         color: Colors.white),
-                //                   ),
-                //                 ),
-                //               ],
-                //             ),
-                //           );
-                //         }),
-                //   ],
-                // ),
+
                 selectedIndex: _selectedIndex,
                 // minWidth: 250.0,
-                backgroundColor: Colors.blueAccent,
+                backgroundColor: Color.fromRGBO(19, 38, 63, 1),
                 labelType: NavigationRailLabelType.selected,
                 selectedLabelTextStyle:
                     const TextStyle(color: Colors.white, fontSize: 20.0),

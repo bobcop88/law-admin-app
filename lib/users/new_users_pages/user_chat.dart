@@ -32,20 +32,21 @@ class _UserChatState extends State<UserChat> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.max,
       children: [
         const SizedBox(
           height: 20.0,
         ),
-        Expanded(
-          child: StreamBuilder<List<ChatMessage>>(
-            stream: DatabaseChat().readChatMessages(widget.clientId),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return const Center(
-                  child: Text('No Messages'),
-                );
-              } else if (snapshot.data!.length >= 0) {
-                return ListView.separated(
+        StreamBuilder<List<ChatMessage>>(
+          stream: DatabaseChat().readChatMessages(widget.clientId),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: Text('No Messages'),
+              );
+            } else if (snapshot.data!.length >= 0) {
+              return Expanded(
+                child: ListView.separated(
                   reverse: true,
                   primary: false,
                   separatorBuilder: (BuildContext context, int index) =>
@@ -103,14 +104,14 @@ class _UserChatState extends State<UserChat> {
                       ),
                     );
                   },
-                );
-              } else {
-                return const Center(
-                  child: Text('No Messages'),
-                );
-              }
-            },
-          ),
+                ),
+              );
+            } else {
+              return const Center(
+                child: Text('No Messages'),
+              );
+            }
+          },
         ),
         Row(
           children: [

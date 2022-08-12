@@ -28,113 +28,210 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(19, 38, 63, 1),
-        elevation: 0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Image.asset(
-              'assets/logo.png',
-              color: Colors.white,
-              // height: 70,
-              width: 200,
-            ),
-            Row(
-              children: [
-                Icon(CupertinoIcons.bell),
-                const SizedBox(
-                  width: 20.0,
-                ),
-                CircleAvatar(
-                  child: Text('AC'),
-                ),
-                SizedBox(
-                  width: 50,
-                )
-              ],
-            ),
-          ],
-        ),
-        actions: [
-          Row(
-            children: [Icon(Icons.logout_outlined)],
-          ),
-        ],
-      ),
       body: SafeArea(
         child: Row(
           children: [
-            SizedBox(
-              width: 150,
-              child: NavigationRail(
-                leading: Column(
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Color.fromRGBO(19, 38, 63, 1),
+                    border: Border.all(color: Color.fromRGBO(19, 38, 63, 1))),
+                // width: 250,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    StreamBuilder(
-                        stream: Stream.periodic(const Duration(seconds: 1)),
-                        builder: (context, snapshot) {
-                          return Row(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
+                              'assets/logo.png',
+                              color: Colors.white,
+                              // height: 70,
+                              // width: 200,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        StreamBuilder(
+                            stream: Stream.periodic(const Duration(seconds: 1)),
+                            builder: (context, snapshot) {
+                              return Text(
+                                DateFormat('dd-MM-yyyy HH:mm:ss')
+                                    .format(DateTime.now()),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 12.0),
+                              );
+                            }),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 50.0,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedIndex = 0;
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: _selectedIndex == 0
+                                ? Color.fromARGB(46, 54, 102, 165)
+                                : Color.fromRGBO(19, 38, 63, 1)),
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(top: 12.0, bottom: 12.0),
+                          child: Row(
                             children: [
-                              Expanded(
-                                child: Text(
-                                  DateFormat('dd-MM-yyyy\nHH:mm:ss')
-                                      .format(DateTime.now()),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 14.0),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12.0),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.home_outlined,
+                                        color: Colors.white, size: 18.0),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Text(
+                                      'Dashboard',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
-                          );
-                        }),
-                    SizedBox(height: 200),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 50.0,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedIndex = 1;
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: _selectedIndex == 1
+                                ? Color.fromARGB(46, 54, 102, 165)
+                                : Color.fromRGBO(19, 38, 63, 1)),
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(top: 12.0, bottom: 12.0),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12.0),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.people,
+                                        color: Colors.white, size: 18.0),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Text(
+                                      'Users',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedIndex = 2;
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: _selectedIndex == 2
+                                ? Color.fromARGB(46, 54, 102, 165)
+                                : Color.fromRGBO(19, 38, 63, 1)),
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(top: 12.0, bottom: 12.0),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12.0),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.assignment,
+                                        color: Colors.white, size: 18.0),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Text(
+                                      'Services',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedIndex = 3;
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: _selectedIndex == 3
+                                ? Color.fromARGB(46, 54, 102, 165)
+                                : Color.fromRGBO(19, 38, 63, 1)),
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(top: 12.0, bottom: 12.0),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12.0),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.tune,
+                                        color: Colors.white, size: 18.0),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Text(
+                                      'Logs',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-
-                selectedIndex: _selectedIndex,
-                // minWidth: 250.0,
-                backgroundColor: Color.fromRGBO(19, 38, 63, 1),
-                labelType: NavigationRailLabelType.selected,
-                selectedLabelTextStyle:
-                    const TextStyle(color: Colors.white, fontSize: 20.0),
-                selectedIconTheme: const IconThemeData(color: Colors.white),
-                unselectedIconTheme: const IconThemeData(
-                  color: Colors.white,
-                ),
-                onDestinationSelected: (int index) {
-                  setState(() {
-                    _selectedIndex = index;
-                    if (_selectedIndex == 0) {}
-                  });
-                },
-                destinations: const [
-                  NavigationRailDestination(
-                    icon: Icon(
-                      Icons.home,
-                      size: 30.0,
-                    ),
-                    label: Text('Home'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(
-                      Icons.groups,
-                      size: 30.0,
-                    ),
-                    label: Text('Users'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.verified_user_outlined),
-                    label: Text('Services'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.folder_zip),
-                    label: Text('Logs'),
-                  ),
-                ],
               ),
             ),
             Expanded(
-              flex: 5,
+              flex: 6,
               child: _pageSelected.elementAt(_selectedIndex),
             ),
           ],

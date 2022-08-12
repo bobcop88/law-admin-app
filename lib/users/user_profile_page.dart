@@ -75,380 +75,1134 @@ class _UserProfilePageState extends State<UserProfilePage> {
               ),
               body: Column(
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(border: Border.all()),
-                        width: MediaQuery.of(context).size.width / 2,
-                        height: MediaQuery.of(context).size.height / 2,
-                        child: Column(
-                          // mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const SizedBox(
-                              height: 10.0,
-                            ),
-                            CircleAvatar(
-                              child: Text((user.firstName.split(' ')[0][0] +
-                                      user.lastName.split(' ')[0][0])
-                                  .toUpperCase()),
-                            ),
-                            const SizedBox(
-                              height: 10.0,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  'Registration date:',
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 12.0),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Text(
-                                    DateFormat('dd MMMM yyyy').format(
-                                        DateTime.fromMicrosecondsSinceEpoch(
-                                            user.dateCreation)),
-                                    style: TextStyle(fontSize: 12.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: const [
-                                Padding(
-                                  padding: EdgeInsets.only(left: 8.0),
-                                  child: Text(
-                                    'Personal Details',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Divider(
-                              thickness: 2,
-                              color: Colors.black,
-                            ),
-                            Container(
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    const Text(
-                                      'Email Address: ',
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      // width: 200,
-                                      child: TextField(
-                                        // autofocus: true,
-                                        readOnly: true,
-                                        enabled: false,
-                                        decoration: InputDecoration(
-                                          disabledBorder:
-                                              const OutlineInputBorder(),
-                                          hintText: user.email,
-                                          isDense: true,
-                                          contentPadding:
-                                              const EdgeInsets.fromLTRB(
-                                                  5, 10, 10, 0),
-                                          hintStyle: const TextStyle(
-                                              fontSize: 14.0,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8.0,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            UserProfileBioDetails(
-                                color: Colors.grey[100]!,
-                                textTitle: 'First Name: ',
-                                updateObject: updateFirstName,
-                                controller: _firstNameController,
-                                userId: user.id,
-                                object: 'firstName',
-                                dataUser: user.firstName,
-                                updateObjectError: updateFirstNameError),
-                            UserProfileBioDetails(
-                                color: Colors.white,
-                                textTitle: 'Surname: ',
-                                updateObject: updateSurname,
-                                controller: _surnameController,
-                                userId: user.id,
-                                object: 'lastName',
-                                dataUser: user.lastName,
-                                updateObjectError: updateSurnameError),
-                            UserProfileBioDetails(
-                                color: Colors.grey[100]!,
-                                textTitle: 'Phone number: ',
-                                updateObject: updatePhoneNumber,
-                                controller: _phoneNumberController,
-                                userId: user.id,
-                                object: 'phoneNumber',
-                                dataUser: user.phoneNumber,
-                                updateObjectError: updatePhoneNumberError),
-                            UserProfileBioDetails(
-                                color: Colors.white,
-                                textTitle: 'Document number: ',
-                                updateObject: updateDocument,
-                                controller: _documentController,
-                                userId: user.id,
-                                object: 'documentNumber',
-                                dataUser: user.documentNumber,
-                                updateObjectError: updateDocumentError),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.grey[100],
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    const Text(
-                                      'Date of Birth: ',
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      // width: 200,
-                                      child: TextField(
-                                        // autofocus: true,
-                                        readOnly: true,
-                                        enabled: false,
-                                        decoration: InputDecoration(
-                                          disabledBorder:
-                                              const OutlineInputBorder(),
-                                          hintText: DateFormat('dd MMMM yyyy')
-                                              .format(DateTime
-                                                  .fromMicrosecondsSinceEpoch(
-                                                      user.dateOfBirth)),
-                                          isDense: true,
-                                          contentPadding:
-                                              const EdgeInsets.fromLTRB(
-                                                  5, 10, 10, 0),
-                                          hintStyle: const TextStyle(
-                                              fontSize: 14.0,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    GestureDetector(
-                                      child: const Text(
-                                        'Update',
-                                        style: TextStyle(
-                                          color: Colors.blueAccent,
-                                          fontSize: 14.0,
-                                        ),
-                                      ),
-                                      onTap: () {
-                                        _selectDOB(user.id);
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Container(
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    const Text(
-                                      'Nationality: ',
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: TextField(
-                                        // autofocus: true,
-                                        readOnly: true,
-                                        enabled: false,
-                                        decoration: InputDecoration(
-                                          disabledBorder:
-                                              const OutlineInputBorder(),
-                                          hintText: user.nationality,
-                                          isDense: true,
-                                          contentPadding:
-                                              const EdgeInsets.fromLTRB(
-                                                  5, 10, 10, 0),
-                                          hintStyle: const TextStyle(
-                                              fontSize: 14.0,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    GestureDetector(
-                                      child: const Text(
-                                        'Update',
-                                        style: TextStyle(
-                                          color: Colors.blueAccent,
-                                          fontSize: 14.0,
-                                        ),
-                                      ),
-                                      onTap: () {
-                                        _showCountries(user.id);
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 30.0,
-                            ),
-                            Row(
-                              children: [
-                                Badge(
-                                  badgeContent: Text('1'),
-                                  showBadge: widget.showNewChatMessage,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        userDeviceToken = user.token!;
-                                      });
-                                      _showChatUser(user.id, userDeviceToken);
-                                    },
-                                    child: Text('Show Chat'),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(border: Border.all()),
-                        width: MediaQuery.of(context).size.width / 2,
-                        height: MediaQuery.of(context).size.height / 2,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            const SizedBox(
-                              height: 10.0,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Active Services',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            const Divider(
-                              indent: 100,
-                              endIndent: 100,
-                              thickness: 2,
-                              height: 20.0,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                StreamBuilder<List<ServiceDetails>>(
-                                  stream: DatabaseService(uid: user.id)
-                                      .readAllServices(),
-                                  builder: (context, snapshot) {
-                                    if (!snapshot.hasData ||
-                                        snapshot.data!.isEmpty) {
-                                      return Center(
-                                        child: Text('No Active Services'),
-                                      );
-                                    } else {
-                                      final service = snapshot.data!;
-                                      return SizedBox(
-                                        width: 200.0,
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Card(
+                                  child: Row(
+                                    children: [
+                                      Expanded(
                                         child: Column(
+                                          // mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            ListView.builder(
-                                              shrinkWrap: true,
-                                              itemCount: service.length,
-                                              itemBuilder: (context, index) {
-                                                return TextButton(
-                                                  child: Text(snapshot
-                                                      .data![index]
-                                                      .serviceName),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      userDeviceToken =
-                                                          user.token!;
-                                                      showServiceDetails = true;
-                                                      id = user.id;
-                                                      serviceName = snapshot
-                                                          .data![index]
-                                                          .serviceName;
-                                                    });
-                                                  },
-                                                );
-                                              },
+                                            const SizedBox(
+                                              height: 10.0,
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                children: [
+                                                  CircleAvatar(
+                                                    child: Text((user.firstName
+                                                                .split(
+                                                                    ' ')[0][0] +
+                                                            user.lastName.split(
+                                                                ' ')[0][0])
+                                                        .toUpperCase()),
+                                                    radius: 30.0,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 5.0,
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(user.firstName +
+                                                          ' ' +
+                                                          user.lastName),
+                                                      const SizedBox(
+                                                        height: 5.0,
+                                                      ),
+                                                      Text(
+                                                        user.nationality,
+                                                        style: TextStyle(
+                                                            color: Colors.grey,
+                                                            fontSize: 12.0),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 5.0,
+                                                      ),
+                                                      Row(
+                                                        // mainAxisAlignment: MainAxisAlignment.end,
+                                                        children: [
+                                                          Text(
+                                                            'Registration date:',
+                                                            style: TextStyle(
+                                                                color:
+                                                                    Colors.grey,
+                                                                fontSize: 12.0),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    right: 8.0),
+                                                            child: Text(
+                                                              DateFormat(
+                                                                      'dd MMMM yyyy')
+                                                                  .format(DateTime
+                                                                      .fromMicrosecondsSinceEpoch(
+                                                                          user.dateCreation)),
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      12.0),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10.0,
+                                            ),
+                                            const Divider(),
+                                            Container(
+                                              decoration: const BoxDecoration(
+                                                color: Colors.white,
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  children: [
+                                                    const Text(
+                                                      'Email Address: ',
+                                                      style: TextStyle(
+                                                        color: Colors.grey,
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      // width: 200,
+                                                      child: TextField(
+                                                        // autofocus: true,
+                                                        readOnly: true,
+                                                        enabled: false,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          disabledBorder:
+                                                              const OutlineInputBorder(),
+                                                          hintText: user.email,
+                                                          isDense: true,
+                                                          contentPadding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  5, 10, 10, 0),
+                                                          hintStyle:
+                                                              const TextStyle(
+                                                                  fontSize:
+                                                                      14.0,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                        ),
+                                                        style: const TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 8.0,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            UserProfileBioDetails(
+                                                color: Colors.grey[100]!,
+                                                textTitle: 'First Name: ',
+                                                updateObject: updateFirstName,
+                                                controller:
+                                                    _firstNameController,
+                                                userId: user.id,
+                                                object: 'firstName',
+                                                dataUser: user.firstName,
+                                                updateObjectError:
+                                                    updateFirstNameError),
+                                            UserProfileBioDetails(
+                                                color: Colors.white,
+                                                textTitle: 'Surname: ',
+                                                updateObject: updateSurname,
+                                                controller: _surnameController,
+                                                userId: user.id,
+                                                object: 'lastName',
+                                                dataUser: user.lastName,
+                                                updateObjectError:
+                                                    updateSurnameError),
+                                            UserProfileBioDetails(
+                                                color: Colors.grey[100]!,
+                                                textTitle: 'Phone number: ',
+                                                updateObject: updatePhoneNumber,
+                                                controller:
+                                                    _phoneNumberController,
+                                                userId: user.id,
+                                                object: 'phoneNumber',
+                                                dataUser: user.phoneNumber,
+                                                updateObjectError:
+                                                    updatePhoneNumberError),
+                                            UserProfileBioDetails(
+                                                color: Colors.white,
+                                                textTitle: 'Document number: ',
+                                                updateObject: updateDocument,
+                                                controller: _documentController,
+                                                userId: user.id,
+                                                object: 'documentNumber',
+                                                dataUser: user.documentNumber,
+                                                updateObjectError:
+                                                    updateDocumentError),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey[100],
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  children: [
+                                                    const Text(
+                                                      'Date of Birth: ',
+                                                      style: TextStyle(
+                                                        color: Colors.grey,
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      // width: 200,
+                                                      child: TextField(
+                                                        // autofocus: true,
+                                                        readOnly: true,
+                                                        enabled: false,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          disabledBorder:
+                                                              const OutlineInputBorder(),
+                                                          hintText: DateFormat(
+                                                                  'dd MMMM yyyy')
+                                                              .format(DateTime
+                                                                  .fromMicrosecondsSinceEpoch(
+                                                                      user.dateOfBirth)),
+                                                          isDense: true,
+                                                          contentPadding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  5, 10, 10, 0),
+                                                          hintStyle:
+                                                              const TextStyle(
+                                                                  fontSize:
+                                                                      14.0,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                        ),
+                                                        style: const TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 8.0,
+                                                    ),
+                                                    GestureDetector(
+                                                      child: const Text(
+                                                        'Update',
+                                                        style: TextStyle(
+                                                          color:
+                                                              Colors.blueAccent,
+                                                          fontSize: 14.0,
+                                                        ),
+                                                      ),
+                                                      onTap: () {
+                                                        _selectDOB(user.id);
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              decoration: const BoxDecoration(
+                                                color: Colors.white,
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  children: [
+                                                    const Text(
+                                                      'Nationality: ',
+                                                      style: TextStyle(
+                                                        color: Colors.grey,
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: TextField(
+                                                        // autofocus: true,
+                                                        readOnly: true,
+                                                        enabled: false,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          disabledBorder:
+                                                              const OutlineInputBorder(),
+                                                          hintText:
+                                                              user.nationality,
+                                                          isDense: true,
+                                                          contentPadding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  5, 10, 10, 0),
+                                                          hintStyle:
+                                                              const TextStyle(
+                                                                  fontSize:
+                                                                      14.0,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                        ),
+                                                        style: const TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 8.0,
+                                                    ),
+                                                    GestureDetector(
+                                                      child: const Text(
+                                                        'Update',
+                                                        style: TextStyle(
+                                                          color:
+                                                              Colors.blueAccent,
+                                                          fontSize: 14.0,
+                                                        ),
+                                                      ),
+                                                      onTap: () {
+                                                        _showCountries(user.id);
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                             ),
                                           ],
                                         ),
-                                      );
-                                    }
-                                  },
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      showServiceDetails
-                          ? Container(
-                              width: MediaQuery.of(context).size.width / 2,
-                              child: ServiceSelectedDetails(
-                                id: id,
-                                serviceName: serviceName,
-                                token: userDeviceToken,
                               ),
-                            )
-                          : Text('Select an Active Service'),
-                    ],
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Card(
+                                  child: Column(
+                                    children: [
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              'Active Services',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const Divider(
+                                        height: 20.0,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: StreamBuilder<
+                                                List<ServiceDetails>>(
+                                              stream:
+                                                  DatabaseService(uid: user.id)
+                                                      .readAllServices(),
+                                              builder: (context, snapshot) {
+                                                if (!snapshot.hasData ||
+                                                    snapshot.data!.isEmpty) {
+                                                  return Center(
+                                                    child: Text(
+                                                        'No Active Services'),
+                                                  );
+                                                } else {
+                                                  final service =
+                                                      snapshot.data!;
+                                                  return Column(
+                                                    children: [
+                                                      ListView.separated(
+                                                        shrinkWrap: true,
+                                                        separatorBuilder:
+                                                            (BuildContext
+                                                                        context,
+                                                                    int index) =>
+                                                                const Divider(),
+                                                        itemCount:
+                                                            service.length,
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          return GestureDetector(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                userDeviceToken =
+                                                                    user.token!;
+                                                                showServiceDetails =
+                                                                    true;
+                                                                id = user.id;
+                                                                serviceName = snapshot
+                                                                    .data![
+                                                                        index]
+                                                                    .serviceName;
+                                                              });
+                                                            },
+                                                            child: Row(
+                                                              children: [
+                                                                Icon(
+                                                                  Icons.label,
+                                                                  size: 18.0,
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          19,
+                                                                          38,
+                                                                          63,
+                                                                          1),
+                                                                ),
+                                                                const SizedBox(
+                                                                  width: 5.0,
+                                                                ),
+                                                                Text(snapshot
+                                                                    .data![
+                                                                        index]
+                                                                    .serviceName)
+                                                              ],
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                }
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Card(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Chat with ${user.firstName} ${user.lastName}',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          ],
+                                        ),
+                                        Expanded(
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: Column(
+                                                  children: [
+                                                    Expanded(
+                                                      child: UserChat(
+                                                        clientId: user.id,
+                                                        userDeviceToken:
+                                                            user.token!,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        showServiceDetails
+                            ? Container(
+                                width: MediaQuery.of(context).size.width / 2,
+                                child: ServiceSelectedDetails(
+                                  id: id,
+                                  serviceName: serviceName,
+                                  token: userDeviceToken,
+                                ),
+                              )
+                            : Text('Select an Active Service'),
+                      ],
+                    ),
                   ),
                 ],
               ),
+
+              //   Row(
+              //     children: [
+              //       Expanded(
+              //         child: Column(
+              //           children: [
+              //             Row(
+              //               children: [
+              //                 Padding(
+              //                   padding: const EdgeInsets.all(8.0),
+              //                   child: Column(
+              //                     children: [
+              //                       Container(
+              //                         // decoration: BoxDecoration(border: Border.all()),
+              //                         // width: MediaQuery.of(context).size.width / 3,
+              //                         height:
+              //                             MediaQuery.of(context).size.height / 2,
+              //                         child: Card(
+              //                           child: Row(
+              //                             children: [
+              //                               Column(
+              //                                 // mainAxisAlignment: MainAxisAlignment.center,
+              //                                 children: [
+              //                                   const SizedBox(
+              //                                     height: 10.0,
+              //                                   ),
+              //                                   Padding(
+              //                                     padding:
+              //                                         const EdgeInsets.all(8.0),
+              //                                     child: Row(
+              //                                       children: [
+              //                                         CircleAvatar(
+              //                                           child: Text((user
+              //                                                           .firstName
+              //                                                           .split(
+              //                                                               ' ')[
+              //                                                       0][0] +
+              //                                                   user.lastName
+              //                                                           .split(
+              //                                                               ' ')[
+              //                                                       0][0])
+              //                                               .toUpperCase()),
+              //                                           radius: 30.0,
+              //                                         ),
+              //                                         const SizedBox(
+              //                                           width: 5.0,
+              //                                         ),
+              //                                         Column(
+              //                                           crossAxisAlignment:
+              //                                               CrossAxisAlignment
+              //                                                   .start,
+              //                                           children: [
+              //                                             Text(user.firstName +
+              //                                                 ' ' +
+              //                                                 user.lastName),
+              //                                             const SizedBox(
+              //                                               height: 5.0,
+              //                                             ),
+              //                                             Text(
+              //                                               user.nationality,
+              //                                               style: TextStyle(
+              //                                                   color:
+              //                                                       Colors.grey,
+              //                                                   fontSize: 12.0),
+              //                                             ),
+              //                                             const SizedBox(
+              //                                               height: 5.0,
+              //                                             ),
+              //                                             Row(
+              //                                               // mainAxisAlignment: MainAxisAlignment.end,
+              //                                               children: [
+              //                                                 Text(
+              //                                                   'Registration date:',
+              //                                                   style: TextStyle(
+              //                                                       color: Colors
+              //                                                           .grey,
+              //                                                       fontSize:
+              //                                                           12.0),
+              //                                                 ),
+              //                                                 Padding(
+              //                                                   padding:
+              //                                                       const EdgeInsets
+              //                                                               .only(
+              //                                                           right:
+              //                                                               8.0),
+              //                                                   child: Text(
+              //                                                     DateFormat(
+              //                                                             'dd MMMM yyyy')
+              //                                                         .format(DateTime
+              //                                                             .fromMicrosecondsSinceEpoch(
+              //                                                                 user.dateCreation)),
+              //                                                     style: TextStyle(
+              //                                                         fontSize:
+              //                                                             12.0),
+              //                                                   ),
+              //                                                 ),
+              //                                               ],
+              //                                             ),
+              //                                           ],
+              //                                         )
+              //                                       ],
+              //                                     ),
+              //                                   ),
+              //                                   const SizedBox(
+              //                                     height: 10.0,
+              //                                   ),
+              //                                   // Row(
+              //                                   //   // mainAxisAlignment: MainAxisAlignment.end,
+              //                                   //   children: [
+              //                                   //     Text(
+              //                                   //       'Registration date:',
+              //                                   //       style: TextStyle(
+              //                                   //           color: Colors.grey, fontSize: 12.0),
+              //                                   //     ),
+              //                                   //     Padding(
+              //                                   //       padding:
+              //                                   //           const EdgeInsets.only(right: 8.0),
+              //                                   //       child: Text(
+              //                                   //         DateFormat('dd MMMM yyyy').format(
+              //                                   //             DateTime
+              //                                   //                 .fromMicrosecondsSinceEpoch(
+              //                                   //                     user.dateCreation)),
+              //                                   //         style: TextStyle(fontSize: 12.0),
+              //                                   //       ),
+              //                                   //     ),
+              //                                   //   ],
+              //                                   // ),
+              //                                   // Row(
+              //                                   //   children: const [
+              //                                   //     Padding(
+              //                                   //       padding: EdgeInsets.only(left: 8.0),
+              //                                   //       child: Text(
+              //                                   //         'Personal Details',
+              //                                   //         style: TextStyle(
+              //                                   //             color: Colors.black,
+              //                                   //             fontWeight: FontWeight.bold),
+              //                                   //         textAlign: TextAlign.center,
+              //                                   //       ),
+              //                                   //     ),
+              //                                   //   ],
+              //                                   // ),
+              //                                   const Divider(),
+              //                                   Container(
+              //                                     decoration: const BoxDecoration(
+              //                                       color: Colors.white,
+              //                                     ),
+              //                                     child: Padding(
+              //                                       padding:
+              //                                           const EdgeInsets.all(8.0),
+              //                                       child: Row(
+              //                                         children: [
+              //                                           const Text(
+              //                                             'Email Address: ',
+              //                                             style: TextStyle(
+              //                                               color: Colors.grey,
+              //                                             ),
+              //                                           ),
+              //                                           Expanded(
+              //                                             // width: 200,
+              //                                             child: TextField(
+              //                                               // autofocus: true,
+              //                                               readOnly: true,
+              //                                               enabled: false,
+              //                                               decoration:
+              //                                                   InputDecoration(
+              //                                                 disabledBorder:
+              //                                                     const OutlineInputBorder(),
+              //                                                 hintText:
+              //                                                     user.email,
+              //                                                 isDense: true,
+              //                                                 contentPadding:
+              //                                                     const EdgeInsets
+              //                                                             .fromLTRB(
+              //                                                         5,
+              //                                                         10,
+              //                                                         10,
+              //                                                         0),
+              //                                                 hintStyle:
+              //                                                     const TextStyle(
+              //                                                         fontSize:
+              //                                                             14.0,
+              //                                                         color: Colors
+              //                                                             .black,
+              //                                                         fontWeight:
+              //                                                             FontWeight
+              //                                                                 .bold),
+              //                                               ),
+              //                                               style: const TextStyle(
+              //                                                   color:
+              //                                                       Colors.black,
+              //                                                   fontWeight:
+              //                                                       FontWeight
+              //                                                           .bold),
+              //                                             ),
+              //                                           ),
+              //                                           const SizedBox(
+              //                                             width: 8.0,
+              //                                           ),
+              //                                         ],
+              //                                       ),
+              //                                     ),
+              //                                   ),
+              //                                   UserProfileBioDetails(
+              //                                       color: Colors.grey[100]!,
+              //                                       textTitle: 'First Name: ',
+              //                                       updateObject: updateFirstName,
+              //                                       controller:
+              //                                           _firstNameController,
+              //                                       userId: user.id,
+              //                                       object: 'firstName',
+              //                                       dataUser: user.firstName,
+              //                                       updateObjectError:
+              //                                           updateFirstNameError),
+              //                                   UserProfileBioDetails(
+              //                                       color: Colors.white,
+              //                                       textTitle: 'Surname: ',
+              //                                       updateObject: updateSurname,
+              //                                       controller:
+              //                                           _surnameController,
+              //                                       userId: user.id,
+              //                                       object: 'lastName',
+              //                                       dataUser: user.lastName,
+              //                                       updateObjectError:
+              //                                           updateSurnameError),
+              //                                   UserProfileBioDetails(
+              //                                       color: Colors.grey[100]!,
+              //                                       textTitle: 'Phone number: ',
+              //                                       updateObject:
+              //                                           updatePhoneNumber,
+              //                                       controller:
+              //                                           _phoneNumberController,
+              //                                       userId: user.id,
+              //                                       object: 'phoneNumber',
+              //                                       dataUser: user.phoneNumber,
+              //                                       updateObjectError:
+              //                                           updatePhoneNumberError),
+              //                                   UserProfileBioDetails(
+              //                                       color: Colors.white,
+              //                                       textTitle:
+              //                                           'Document number: ',
+              //                                       updateObject: updateDocument,
+              //                                       controller:
+              //                                           _documentController,
+              //                                       userId: user.id,
+              //                                       object: 'documentNumber',
+              //                                       dataUser: user.documentNumber,
+              //                                       updateObjectError:
+              //                                           updateDocumentError),
+              //                                   Container(
+              //                                     decoration: BoxDecoration(
+              //                                       color: Colors.grey[100],
+              //                                     ),
+              //                                     child: Padding(
+              //                                       padding:
+              //                                           const EdgeInsets.all(8.0),
+              //                                       child: Row(
+              //                                         children: [
+              //                                           const Text(
+              //                                             'Date of Birth: ',
+              //                                             style: TextStyle(
+              //                                               color: Colors.grey,
+              //                                             ),
+              //                                           ),
+              //                                           Expanded(
+              //                                             // width: 200,
+              //                                             child: TextField(
+              //                                               // autofocus: true,
+              //                                               readOnly: true,
+              //                                               enabled: false,
+              //                                               decoration:
+              //                                                   InputDecoration(
+              //                                                 disabledBorder:
+              //                                                     const OutlineInputBorder(),
+              //                                                 hintText: DateFormat(
+              //                                                         'dd MMMM yyyy')
+              //                                                     .format(DateTime
+              //                                                         .fromMicrosecondsSinceEpoch(
+              //                                                             user.dateOfBirth)),
+              //                                                 isDense: true,
+              //                                                 contentPadding:
+              //                                                     const EdgeInsets
+              //                                                             .fromLTRB(
+              //                                                         5,
+              //                                                         10,
+              //                                                         10,
+              //                                                         0),
+              //                                                 hintStyle:
+              //                                                     const TextStyle(
+              //                                                         fontSize:
+              //                                                             14.0,
+              //                                                         color: Colors
+              //                                                             .black,
+              //                                                         fontWeight:
+              //                                                             FontWeight
+              //                                                                 .bold),
+              //                                               ),
+              //                                               style: const TextStyle(
+              //                                                   color:
+              //                                                       Colors.black,
+              //                                                   fontWeight:
+              //                                                       FontWeight
+              //                                                           .bold),
+              //                                             ),
+              //                                           ),
+              //                                           const SizedBox(
+              //                                             width: 8.0,
+              //                                           ),
+              //                                           GestureDetector(
+              //                                             child: const Text(
+              //                                               'Update',
+              //                                               style: TextStyle(
+              //                                                 color: Colors
+              //                                                     .blueAccent,
+              //                                                 fontSize: 14.0,
+              //                                               ),
+              //                                             ),
+              //                                             onTap: () {
+              //                                               _selectDOB(user.id);
+              //                                             },
+              //                                           ),
+              //                                         ],
+              //                                       ),
+              //                                     ),
+              //                                   ),
+              //                                   Container(
+              //                                     decoration: const BoxDecoration(
+              //                                       color: Colors.white,
+              //                                     ),
+              //                                     child: Padding(
+              //                                       padding:
+              //                                           const EdgeInsets.all(8.0),
+              //                                       child: Row(
+              //                                         children: [
+              //                                           const Text(
+              //                                             'Nationality: ',
+              //                                             style: TextStyle(
+              //                                               color: Colors.grey,
+              //                                             ),
+              //                                           ),
+              //                                           Expanded(
+              //                                             child: TextField(
+              //                                               // autofocus: true,
+              //                                               readOnly: true,
+              //                                               enabled: false,
+              //                                               decoration:
+              //                                                   InputDecoration(
+              //                                                 disabledBorder:
+              //                                                     const OutlineInputBorder(),
+              //                                                 hintText: user
+              //                                                     .nationality,
+              //                                                 isDense: true,
+              //                                                 contentPadding:
+              //                                                     const EdgeInsets
+              //                                                             .fromLTRB(
+              //                                                         5,
+              //                                                         10,
+              //                                                         10,
+              //                                                         0),
+              //                                                 hintStyle:
+              //                                                     const TextStyle(
+              //                                                         fontSize:
+              //                                                             14.0,
+              //                                                         color: Colors
+              //                                                             .black,
+              //                                                         fontWeight:
+              //                                                             FontWeight
+              //                                                                 .bold),
+              //                                               ),
+              //                                               style: const TextStyle(
+              //                                                   color:
+              //                                                       Colors.black,
+              //                                                   fontWeight:
+              //                                                       FontWeight
+              //                                                           .bold),
+              //                                             ),
+              //                                           ),
+              //                                           const SizedBox(
+              //                                             width: 8.0,
+              //                                           ),
+              //                                           GestureDetector(
+              //                                             child: const Text(
+              //                                               'Update',
+              //                                               style: TextStyle(
+              //                                                 color: Colors
+              //                                                     .blueAccent,
+              //                                                 fontSize: 14.0,
+              //                                               ),
+              //                                             ),
+              //                                             onTap: () {
+              //                                               _showCountries(
+              //                                                   user.id);
+              //                                             },
+              //                                           ),
+              //                                         ],
+              //                                       ),
+              //                                     ),
+              //                                   ),
+              //                                   // SizedBox(
+              //                                   //   height: 30.0,
+              //                                   // ),
+              //                                   // Row(
+              //                                   //   children: [
+              //                                   //     Badge(
+              //                                   //       badgeContent: Text('1'),
+              //                                   //       showBadge: widget.showNewChatMessage,
+              //                                   //       child: ElevatedButton(
+              //                                   //         onPressed: () {
+              //                                   //           setState(() {
+              //                                   //             userDeviceToken = user.token!;
+              //                                   //           });
+              //                                   //           _showChatUser(
+              //                                   //               user.id, userDeviceToken);
+              //                                   //         },
+              //                                   //         child: Text('Show Chat'),
+              //                                   //       ),
+              //                                   //     ),
+              //                                   //   ],
+              //                                   // ),
+              //                                 ],
+              //                               ),
+              //                             ],
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     ],
+              //                   ),
+              //                 ),
+              //                 Column(
+              //                   children: [
+              //                     Container(
+              //                       // width: MediaQuery.of(context).size.width / 3,
+              //                       height:
+              //                           MediaQuery.of(context).size.height / 2,
+              // child: Card(
+              //   child: Column(
+              //     mainAxisSize: MainAxisSize.max,
+              //     children: [
+              //       const SizedBox(
+              //         height: 10.0,
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: Row(
+              //           children: [
+              //             Text(
+              //               'Active Services',
+              //               style: TextStyle(
+              //                   color: Colors.black,
+              //                   fontWeight:
+              //                       FontWeight.bold),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //       const Divider(
+              //         height: 20.0,
+              //       ),
+              //       Row(
+              //         children: [
+              //           Expanded(
+              //             child: StreamBuilder<
+              //                 List<ServiceDetails>>(
+              //               stream: DatabaseService(
+              //                       uid: user.id)
+              //                   .readAllServices(),
+              //               builder: (context, snapshot) {
+              //                 if (!snapshot.hasData ||
+              //                     snapshot.data!.isEmpty) {
+              //                   return Center(
+              //                     child: Text(
+              //                         'No Active Services'),
+              //                   );
+              //                 } else {
+              //                   final service =
+              //                       snapshot.data!;
+              //                   return Column(
+              //                     children: [
+              //                       ListView.separated(
+              //                         shrinkWrap: true,
+              //                         separatorBuilder:
+              //                             (BuildContext
+              //                                         context,
+              //                                     int index) =>
+              //                                 const Divider(),
+              //                         itemCount:
+              //                             service.length,
+              //                         itemBuilder:
+              //                             (context, index) {
+              //                           return GestureDetector(
+              //                             onTap: () {
+              //                               setState(() {
+              //                                 userDeviceToken =
+              //                                     user.token!;
+              //                                 showServiceDetails =
+              //                                     true;
+              //                                 id = user.id;
+              //                                 serviceName = snapshot
+              //                                     .data![
+              //                                         index]
+              //                                     .serviceName;
+              //                               });
+              //                             },
+              //                             child: Row(
+              //                               children: [
+              //                                 Icon(
+              //                                   Icons.label,
+              //                                   size: 18.0,
+              //                                   color: Color
+              //                                       .fromRGBO(
+              //                                           19,
+              //                                           38,
+              //                                           63,
+              //                                           1),
+              //                                 ),
+              //                                 const SizedBox(
+              //                                   width: 5.0,
+              //                                 ),
+              //                                 Text(snapshot
+              //                                     .data![
+              //                                         index]
+              //                                     .serviceName)
+              //                               ],
+              //                             ),
+              //                           );
+              //                           // TextButton(
+              //                           //   child: Text(snapshot
+              //                           //       .data![index]
+              //                           //       .serviceName),
+              //                           //   onPressed: () {
+              //                           //     setState(() {
+              //                           //       userDeviceToken =
+              //                           //           user.token!;
+              //                           //       showServiceDetails =
+              //                           //           true;
+              //                           //       id = user.id;
+              //                           //       serviceName = snapshot
+              //                           //           .data![index]
+              //                           //           .serviceName;
+              //                           //     });
+              //                           //   },
+              //                           // );
+              //                         },
+              //                       ),
+              //                     ],
+              //                   );
+              //                 }
+              //               },
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // ),
+              //                   ],
+              //                 ),
+              //                 Expanded(
+              //                   child: Column(
+              //                     children: [
+              //                       Container(
+              //                         // width: MediaQuery.of(context).size.width / 3,
+              //                         height:
+              //                             MediaQuery.of(context).size.height / 2,
+              // child: Card(
+              //   child: Row(
+              //     mainAxisSize: MainAxisSize.max,
+              //     children: [
+              //       Column(
+              //         children: [
+              //           Row(
+              //             children: [
+              //               ElevatedButton(
+              //                 onPressed: () {},
+              //                 child: Text('Chat'),
+              //               ),
+              //             ],
+              //           ),
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              //                       ),
+              //                     ],
+              //                   ),
+              //                 ),
+              //               ],
+              //             ),
+              //       Row(
+              //         mainAxisAlignment: MainAxisAlignment.center,
+              //         children: [
+              //           showServiceDetails
+              //               ? Container(
+              //                   width:
+              //                       MediaQuery.of(context).size.width / 2,
+              //                   child: ServiceSelectedDetails(
+              //                     id: id,
+              //                     serviceName: serviceName,
+              //                     token: userDeviceToken,
+              //                   ),
+              //                 )
+              //               : Text('Select an Active Service'),
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // //   ],
+              // // ),
             );
           }
         });

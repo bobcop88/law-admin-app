@@ -97,7 +97,7 @@ class _ServicesPageState extends State<ServicesPage> {
                             DataColumn(label: Text('Service')),
                             DataColumn(label: Text('User')),
                             DataColumn(label: Text('Status')),
-                            DataColumn(label: Text('')),
+                            // DataColumn(label: Text('')),
                           ],
                           rows:
                               ServicesClass().getRowsServices(service, context),

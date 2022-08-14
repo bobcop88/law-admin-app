@@ -10,6 +10,9 @@ class LogsPage extends StatefulWidget {
 }
 
 class _LogsPageState extends State<LogsPage> {
+  int? sortColumnIndex;
+  bool isAscending = false;
+  late List<Log> log;
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Log>>(
@@ -18,7 +21,8 @@ class _LogsPageState extends State<LogsPage> {
           if (!snapshot.hasData) {
             return CircularProgressIndicator();
           } else {
-            final log = snapshot.data!;
+            log = snapshot.data!;
+
             serviceSorted() {
               log.sort((a, b) => b.dateLog.compareTo(a.dateLog));
             }
@@ -31,14 +35,22 @@ class _LogsPageState extends State<LogsPage> {
                     children: [
                       Expanded(
                         child: DataTable(
+                          sortAscending: isAscending,
+                          sortColumnIndex: sortColumnIndex,
                           headingTextStyle: const TextStyle(
                               color: Colors.grey, fontSize: 12.0),
                           columns: [
-                            DataColumn(label: Text('Date')),
-                            DataColumn(label: Text('Type User')),
-                            DataColumn(label: Text('Email address')),
-                            DataColumn(label: Text('Log Type')),
-                            DataColumn(label: Text('Action')),
+                            DataColumn(
+                                label: Text(
+                                  'Date',
+                                ),
+                                onSort: onSort),
+                            DataColumn(
+                                label: Text('Type User'), onSort: onSort),
+                            DataColumn(
+                                label: Text('Email address'), onSort: onSort),
+                            DataColumn(label: Text('Log Type'), onSort: onSort),
+                            DataColumn(label: Text('Action'), onSort: onSort),
                           ],
                           rows: DatabaseLogs().getRowsLogs(log, context),
                         ),
@@ -50,5 +62,20 @@ class _LogsPageState extends State<LogsPage> {
             );
           }
         });
+  }
+
+  void onSort(int columnIndex, bool ascending) {
+    if (columnIndex == 1) {
+      log.sort((a, b) => b.typeUser.compareTo(a.typeUser));
+    }
+    if (columnIndex == 2) {
+      ascending
+          ? log.sort((a, b) => a.emailAddress.compareTo(b.emailAddress))
+          : log.sort((a, b) => b.emailAddress.compareTo(a.emailAddress));
+    }
+    setState(() {
+      sortColumnIndex = columnIndex;
+      isAscending = ascending;
+    });
   }
 }

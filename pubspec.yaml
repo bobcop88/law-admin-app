@@ -53,6 +53,7 @@ dependencies:
   #Date format
   intl: ^0.17.0
   badges: ^2.0.3
+  fl_chart: ^0.55.1
 
 dev_dependencies:
   flutter_test:

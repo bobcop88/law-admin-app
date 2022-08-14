@@ -3,6 +3,7 @@ import 'package:adminapp/utils/send_notifications_class.dart';
 import 'package:adminapp/utils/service_details.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ServiceSelectedDetails extends StatefulWidget {
   final String id;
@@ -39,28 +40,24 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
           return Center(child: Text(''));
         } else {
           final service = snapshot.data!;
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      'Service Details',
+                      'Service',
                       style: TextStyle(
                         color: Colors.grey,
-                        fontSize: 16.0,
+                        fontSize: 12.0,
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 8.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                    const SizedBox(
+                      width: 5.0,
+                    ),
                     Text(
                       service.serviceName,
                       style: TextStyle(
@@ -69,347 +66,396 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+              ),
+              const Divider(),
+              Expanded(
+                child: Row(
                   children: [
-                    Text(
-                      'Start Date: ',
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                    Text(
-                      DateFormat('dd MMMM yyyy').format(
-                          DateTime.fromMicrosecondsSinceEpoch(
-                              service.creationDate)),
-                    ),
-                  ],
-                ),
-                Divider(),
-                Row(
-                  children: [
-                    Text(
-                      'Current State: ',
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                    updateCurrentState
-                        ? Expanded(
-                            child: DropdownButtonHideUnderline(
-                              child: ButtonTheme(
-                                alignedDropdown: true,
-                                child: Container(
-                                  height: 20.0,
-                                  child: DropdownButton<String>(
-                                    isExpanded: true,
-                                    isDense: false,
-                                    value: currentState,
-                                    style: TextStyle(fontSize: 14.0),
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        currentState = newValue!;
-                                      });
-                                    },
-                                    items: <String>[
-                                      'Completed',
-                                      'Pending',
-                                      'Documents Requested',
-                                      'Started'
-                                    ].map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(
-                                          value,
-                                          style: TextStyle(
-                                            fontSize: 14.0,
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                'Details',
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Start Date: ',
+                                style: TextStyle(
+                                  color: Colors.grey,
                                 ),
                               ),
-                            ),
-                          )
-                        : Expanded(child: Text(service.currentState)),
-                    SizedBox(
-                      width: 5.0,
-                    ),
-                    InkWell(
-                      child: Text(
-                        updateCurrentState ? 'Save' : 'Update',
-                        style: TextStyle(
-                          color: Colors.blueAccent,
-                          fontSize: 14.0,
-                        ),
-                      ),
-                      onTap: () {
-                        setState(() {
-                          updateCurrentState
-                              ? updateCurrentState = false
-                              : updateCurrentState = true;
-                          if (updateCurrentState == false) {
-                            DatabaseServiceDetails(
-                                    uid: widget.id,
-                                    serviceName: widget.serviceName)
-                                .updateServiceDetails(
-                                    widget.id,
-                                    widget.serviceName,
-                                    'currentState',
-                                    currentState);
-                            Notifications().newNotificationUser(widget.id,
-                                'don.calogero88@gmail.com', widget.serviceName);
-                            SendNotification(userDeviceToken: widget.token)
-                                .sendPushNotifications(
-                                    title: 'Inscale Media App',
-                                    body: 'New update on your service');
-                          }
-                        });
-                      },
-                    ),
-                    SizedBox(
-                      width: 5.0,
-                    ),
-                    InkWell(
-                      child: Text(
-                        updateCurrentState ? 'Cancel' : '',
-                        style: TextStyle(
-                          color: Colors.blueAccent,
-                          fontSize: 14.0,
-                        ),
-                      ),
-                      onTap: () {
-                        setState(() {
-                          updateCurrentState
-                              ? updateCurrentState = false
-                              : updateCurrentState = true;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                Divider(),
-                Row(
-                  children: [
-                    Text(
-                      'Doc 1: ',
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        _showDocPreview(service.doc1Url);
-                      },
-                      child: Text('Show'),
-                    ),
-                  ],
-                ),
-                Divider(),
-                Row(
-                  children: [
-                    Text(
-                      'Doc 1 Status: ',
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                    updateDoc1Status
-                        ? Expanded(
-                            child: DropdownButtonHideUnderline(
-                              child: ButtonTheme(
-                                alignedDropdown: true,
-                                child: Container(
-                                  height: 20.0,
-                                  child: DropdownButton<String>(
-                                    isExpanded: true,
-                                    isDense: false,
-                                    value: doc1Status,
-                                    style: TextStyle(fontSize: 14.0),
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        doc1Status = newValue!;
-                                      });
-                                    },
-                                    items: <String>[
-                                      'Verified',
-                                      'Pending',
-                                      'Not Verified',
-                                      'Rejected'
-                                    ].map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(
-                                          value,
-                                          style: TextStyle(
-                                            fontSize: 14.0,
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
+                              Text(
+                                DateFormat('dd MMMM yyyy').format(
+                                    DateTime.fromMicrosecondsSinceEpoch(
+                                        service.creationDate)),
+                              ),
+                            ],
+                          ),
+                          Divider(),
+                          Row(
+                            children: [
+                              Text(
+                                'Current State: ',
+                                style: TextStyle(
+                                  color: Colors.grey,
                                 ),
                               ),
-                            ),
-                          )
-                        : Expanded(child: Text(service.doc1Status)),
-                    SizedBox(
-                      width: 5.0,
-                    ),
-                    InkWell(
-                      child: Text(
-                        updateDoc1Status ? 'Save' : 'Update',
-                        style: TextStyle(
-                          color: Colors.blueAccent,
-                          fontSize: 14.0,
-                        ),
-                      ),
-                      onTap: () {
-                        setState(() {
-                          updateDoc1Status
-                              ? updateDoc1Status = false
-                              : updateDoc1Status = true;
-                          if (updateDoc1Status == false) {
-                            DatabaseServiceDetails(
-                                    uid: widget.id,
-                                    serviceName: widget.serviceName)
-                                .updateServiceDetails(
-                                    widget.id,
-                                    widget.serviceName,
-                                    'doc1Status',
-                                    doc1Status);
-                          }
-                        });
-                      },
-                    ),
-                    SizedBox(
-                      width: 5.0,
-                    ),
-                    InkWell(
-                      child: Text(
-                        updateDoc1Status ? 'Cancel' : '',
-                        style: TextStyle(
-                          color: Colors.blueAccent,
-                          fontSize: 14.0,
-                        ),
-                      ),
-                      onTap: () {
-                        setState(() {
-                          updateDoc1Status
-                              ? updateDoc1Status = false
-                              : updateDoc1Status = true;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                Divider(),
-                Row(
-                  children: [
-                    Text(
-                      'Doc 2 Status: ',
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                    updateDoc2Status
-                        ? Expanded(
-                            child: DropdownButtonHideUnderline(
-                              child: ButtonTheme(
-                                alignedDropdown: true,
-                                child: Container(
-                                  height: 20.0,
-                                  child: DropdownButton<String>(
-                                    isExpanded: true,
-                                    isDense: false,
-                                    value: doc2Status,
-                                    style: TextStyle(fontSize: 14.0),
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        doc2Status = newValue!;
-                                      });
-                                    },
-                                    items: <String>[
-                                      'Verified',
-                                      'Pending',
-                                      'Not Verified',
-                                      'Rejected'
-                                    ].map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(
-                                          value,
-                                          style: TextStyle(
-                                            fontSize: 14.0,
+                              updateCurrentState
+                                  ? Expanded(
+                                      child: DropdownButtonHideUnderline(
+                                        child: ButtonTheme(
+                                          alignedDropdown: true,
+                                          child: Container(
+                                            height: 20.0,
+                                            child: DropdownButton<String>(
+                                              isExpanded: true,
+                                              isDense: false,
+                                              value: currentState,
+                                              style: TextStyle(fontSize: 14.0),
+                                              onChanged: (String? newValue) {
+                                                setState(() {
+                                                  currentState = newValue!;
+                                                });
+                                              },
+                                              items: <String>[
+                                                'Completed',
+                                                'Pending',
+                                                'Documents Requested',
+                                                'Started'
+                                              ].map<DropdownMenuItem<String>>(
+                                                  (String value) {
+                                                return DropdownMenuItem<String>(
+                                                  value: value,
+                                                  child: Text(
+                                                    value,
+                                                    style: TextStyle(
+                                                      fontSize: 14.0,
+                                                    ),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                            ),
                                           ),
                                         ),
-                                      );
-                                    }).toList(),
+                                      ),
+                                    )
+                                  : Expanded(child: Text(service.currentState)),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              InkWell(
+                                child: Text(
+                                  updateCurrentState ? 'Save' : 'Update',
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 14.0,
                                   ),
                                 ),
+                                onTap: () {
+                                  setState(() {
+                                    updateCurrentState
+                                        ? updateCurrentState = false
+                                        : updateCurrentState = true;
+                                    if (updateCurrentState == false) {
+                                      DatabaseServiceDetails(
+                                              uid: widget.id,
+                                              serviceName: widget.serviceName)
+                                          .updateServiceDetails(
+                                              widget.id,
+                                              widget.serviceName,
+                                              'currentState',
+                                              currentState);
+                                      Notifications().newNotificationUser(
+                                          widget.id,
+                                          'don.calogero88@gmail.com',
+                                          widget.serviceName);
+                                      SendNotification(
+                                              userDeviceToken: widget.token)
+                                          .sendPushNotifications(
+                                              title: 'Inscale Media App',
+                                              body:
+                                                  'New update on your service');
+                                    }
+                                  });
+                                },
+                              ),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              InkWell(
+                                child: Text(
+                                  updateCurrentState ? 'Cancel' : '',
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 14.0,
+                                  ),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    updateCurrentState
+                                        ? updateCurrentState = false
+                                        : updateCurrentState = true;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                          Divider(),
+                          // Row(
+                          //   children: [
+                          //     Text(
+                          //       'Doc 1: ',
+                          //       style: TextStyle(
+                          //         color: Colors.grey,
+                          //       ),
+                          //     ),
+                          //     TextButton(
+                          //       onPressed: () {
+                          //         _showDocPreview(service.doc1Url);
+                          //       },
+                          //       child: Text('Show'),
+                          //     ),
+                          //   ],
+                          // ),
+                          // Divider(),
+                          Row(
+                            children: [
+                              Text(
+                                'Doc 1 Status: ',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              updateDoc1Status
+                                  ? Expanded(
+                                      child: DropdownButtonHideUnderline(
+                                        child: ButtonTheme(
+                                          alignedDropdown: true,
+                                          child: Container(
+                                            height: 20.0,
+                                            child: DropdownButton<String>(
+                                              isExpanded: true,
+                                              isDense: false,
+                                              value: doc1Status,
+                                              style: TextStyle(fontSize: 14.0),
+                                              onChanged: (String? newValue) {
+                                                setState(() {
+                                                  doc1Status = newValue!;
+                                                });
+                                              },
+                                              items: <String>[
+                                                'Verified',
+                                                'Pending',
+                                                'Not Verified',
+                                                'Rejected'
+                                              ].map<DropdownMenuItem<String>>(
+                                                  (String value) {
+                                                return DropdownMenuItem<String>(
+                                                  value: value,
+                                                  child: Text(
+                                                    value,
+                                                    style: TextStyle(
+                                                      fontSize: 14.0,
+                                                    ),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : Expanded(child: Text(service.doc1Status)),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              InkWell(
+                                child: Text(
+                                  updateDoc1Status ? 'Save' : 'Update',
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 14.0,
+                                  ),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    updateDoc1Status
+                                        ? updateDoc1Status = false
+                                        : updateDoc1Status = true;
+                                    if (updateDoc1Status == false) {
+                                      DatabaseServiceDetails(
+                                              uid: widget.id,
+                                              serviceName: widget.serviceName)
+                                          .updateServiceDetails(
+                                              widget.id,
+                                              widget.serviceName,
+                                              'doc1Status',
+                                              doc1Status);
+                                    }
+                                  });
+                                },
+                              ),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              InkWell(
+                                child: Text(
+                                  updateDoc1Status ? 'Cancel' : '',
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 14.0,
+                                  ),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    updateDoc1Status
+                                        ? updateDoc1Status = false
+                                        : updateDoc1Status = true;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                          Divider(),
+                          Row(
+                            children: [
+                              Text(
+                                'Doc 2 Status: ',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              updateDoc2Status
+                                  ? Expanded(
+                                      child: DropdownButtonHideUnderline(
+                                        child: ButtonTheme(
+                                          alignedDropdown: true,
+                                          child: Container(
+                                            height: 20.0,
+                                            child: DropdownButton<String>(
+                                              isExpanded: true,
+                                              isDense: false,
+                                              value: doc2Status,
+                                              style: TextStyle(fontSize: 14.0),
+                                              onChanged: (String? newValue) {
+                                                setState(() {
+                                                  doc2Status = newValue!;
+                                                });
+                                              },
+                                              items: <String>[
+                                                'Verified',
+                                                'Pending',
+                                                'Not Verified',
+                                                'Rejected'
+                                              ].map<DropdownMenuItem<String>>(
+                                                  (String value) {
+                                                return DropdownMenuItem<String>(
+                                                  value: value,
+                                                  child: Text(
+                                                    value,
+                                                    style: TextStyle(
+                                                      fontSize: 14.0,
+                                                    ),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : Expanded(child: Text(service.doc2Status)),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              InkWell(
+                                child: Text(
+                                  updateDoc2Status ? 'Save' : 'Update',
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 14.0,
+                                  ),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    updateDoc2Status
+                                        ? updateDoc2Status = false
+                                        : updateDoc2Status = true;
+                                    if (updateDoc2Status == false) {
+                                      DatabaseServiceDetails(
+                                              uid: widget.id,
+                                              serviceName: widget.serviceName)
+                                          .updateServiceDetails(
+                                              widget.id,
+                                              widget.serviceName,
+                                              'doc2Status',
+                                              doc2Status);
+                                    }
+                                  });
+                                },
+                              ),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              InkWell(
+                                child: Text(
+                                  updateDoc2Status ? 'Cancel' : '',
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 14.0,
+                                  ),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    updateDoc2Status
+                                        ? updateDoc2Status = false
+                                        : updateDoc2Status = true;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        controller: ScrollController(),
+                        child: Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                _showDocPreview(service.doc1Url);
+                              },
+                              child: Image.network(
+                                service.doc1Url,
+                                height: 200,
                               ),
                             ),
-                          )
-                        : Expanded(child: Text(service.doc2Status)),
-                    SizedBox(
-                      width: 5.0,
-                    ),
-                    InkWell(
-                      child: Text(
-                        updateDoc2Status ? 'Save' : 'Update',
-                        style: TextStyle(
-                          color: Colors.blueAccent,
-                          fontSize: 14.0,
+                            GestureDetector(
+                              onTap: () {
+                                _showDocPreview(service.doc2Url);
+                              },
+                              child: Image.network(
+                                service.doc2Url,
+                                height: 200,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      onTap: () {
-                        setState(() {
-                          updateDoc2Status
-                              ? updateDoc2Status = false
-                              : updateDoc2Status = true;
-                          if (updateDoc2Status == false) {
-                            DatabaseServiceDetails(
-                                    uid: widget.id,
-                                    serviceName: widget.serviceName)
-                                .updateServiceDetails(
-                                    widget.id,
-                                    widget.serviceName,
-                                    'doc2Status',
-                                    doc2Status);
-                          }
-                        });
-                      },
-                    ),
-                    SizedBox(
-                      width: 5.0,
-                    ),
-                    InkWell(
-                      child: Text(
-                        updateDoc2Status ? 'Cancel' : '',
-                        style: TextStyle(
-                          color: Colors.blueAccent,
-                          fontSize: 14.0,
-                        ),
-                      ),
-                      onTap: () {
-                        setState(() {
-                          updateDoc2Status
-                              ? updateDoc2Status = false
-                              : updateDoc2Status = true;
-                        });
-                      },
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         }
       },
@@ -422,6 +468,16 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
         builder: (BuildContext context) {
           return SimpleDialog(
             children: [
+              Row(
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      launchUrl(Uri.parse(docUrl));
+                    },
+                    child: Text('Download'),
+                  ),
+                ],
+              ),
               Image.network(
                 docUrl,
               ),

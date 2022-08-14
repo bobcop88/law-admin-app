@@ -1,4 +1,4 @@
-import 'package:adminapp/users/user_profile_page.dart';
+import 'package:adminapp/profile_page_user/user_profile_page.dart';
 import 'package:adminapp/users/utils/country_class.dart';
 import 'package:adminapp/utils/database.dart';
 import 'package:adminapp/utils/users_profile_class.dart';

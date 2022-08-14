@@ -14,9 +14,12 @@ class DatabaseLogs {
     return log
         .map((Log log) => DataRow(cells: [
               DataCell(
-                Text(DateFormat('dd/MM/yy')
-                    .format(DateTime.fromMicrosecondsSinceEpoch(log.dateLog))
-                    .toString()),
+                Text(
+                  DateFormat('dd/MM/yy HH:ss')
+                      .format(DateTime.fromMicrosecondsSinceEpoch(log.dateLog))
+                      .toString(),
+                  style: TextStyle(fontSize: 12.0, color: Colors.grey),
+                ),
               ),
               DataCell(Text(log.typeUser)),
               DataCell(Text(log.emailAddress)),

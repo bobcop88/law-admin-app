@@ -264,6 +264,23 @@ class DatabaseChat {
     });
   }
 
+  Future<bool> chatExists(userId) async {
+    bool exists;
+    exists = await FirebaseFirestore.instance
+        .collection('chats')
+        .doc(userId)
+        .get()
+        .then((value) => value.exists);
+    return exists;
+  }
+
+  Future updateLastMessage(userId) {
+    return FirebaseFirestore.instance
+        .collection('chats')
+        .doc(userId)
+        .update({'isRead': true});
+  }
+
   Stream<List<ChatMessage>> readChatMessages(id) {
     return FirebaseFirestore.instance
         .collection('chats/$id/messages')
@@ -291,6 +308,14 @@ class DatabaseChat {
         .map((snapshot) => snapshot.docs
             .map((doc) => LastChatMessage.fromJson(doc.data()))
             .toList());
+  }
+
+  Stream<LastChatMessage> readLastMessage(id) {
+    return FirebaseFirestore.instance
+        .collection('chats/')
+        .doc(id)
+        .snapshots()
+        .map((snapshot) => LastChatMessage.fromJson(snapshot.data()!));
   }
 
   Stream<UserCompleteProfile> fetchName(id) {

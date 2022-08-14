@@ -117,6 +117,7 @@ class _UserChatState extends State<UserChat> {
           children: [
             Expanded(
               child: TextField(
+                autofocus: true,
                 controller: _messageController,
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(

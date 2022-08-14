@@ -1,4 +1,4 @@
-import 'package:adminapp/users/user_profile_page.dart';
+import 'package:adminapp/profile_page_user/user_profile_page.dart';
 import 'package:adminapp/utils/service_details.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

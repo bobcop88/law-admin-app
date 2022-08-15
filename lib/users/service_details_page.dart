@@ -7,6 +7,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ServiceSelectedDetails extends StatefulWidget {
   final String id;
+  final String firstName;
+  final String email;
   final String serviceName;
   final String token;
 
@@ -14,7 +16,9 @@ class ServiceSelectedDetails extends StatefulWidget {
       {Key? key,
       required this.id,
       required this.serviceName,
-      required this.token})
+      required this.token,
+      required this.firstName,
+      required this.email})
       : super(key: key);
 
   @override
@@ -37,7 +41,7 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
           .readUserServices(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Center(child: Text(''));
+          return const Center(child: Text(''));
         } else {
           final service = snapshot.data!;
           return Column(
@@ -48,7 +52,7 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                   // mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(
+                    const Text(
                       'Service',
                       style: TextStyle(
                         color: Colors.grey,
@@ -60,7 +64,7 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                     ),
                     Text(
                       service.serviceName,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -75,7 +79,7 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                       child: Column(
                         children: [
                           Row(
-                            children: [
+                            children: const [
                               Text(
                                 'Details',
                                 style: TextStyle(color: Colors.grey),
@@ -85,7 +89,7 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Start Date: ',
                                 style: TextStyle(
                                   color: Colors.grey,
@@ -98,10 +102,10 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                               ),
                             ],
                           ),
-                          Divider(),
+                          const Divider(),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 'Current State: ',
                                 style: TextStyle(
                                   color: Colors.grey,
@@ -112,13 +116,14 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                                       child: DropdownButtonHideUnderline(
                                         child: ButtonTheme(
                                           alignedDropdown: true,
-                                          child: Container(
+                                          child: SizedBox(
                                             height: 20.0,
                                             child: DropdownButton<String>(
                                               isExpanded: true,
                                               isDense: false,
                                               value: currentState,
-                                              style: TextStyle(fontSize: 14.0),
+                                              style: const TextStyle(
+                                                  fontSize: 14.0),
                                               onChanged: (String? newValue) {
                                                 setState(() {
                                                   currentState = newValue!;
@@ -135,7 +140,7 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                                                   value: value,
                                                   child: Text(
                                                     value,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 14.0,
                                                     ),
                                                   ),
@@ -147,13 +152,13 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                                       ),
                                     )
                                   : Expanded(child: Text(service.currentState)),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5.0,
                               ),
-                              InkWell(
+                              GestureDetector(
                                 child: Text(
                                   updateCurrentState ? 'Save' : 'Update',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.blueAccent,
                                     fontSize: 14.0,
                                   ),
@@ -163,36 +168,39 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                                     updateCurrentState
                                         ? updateCurrentState = false
                                         : updateCurrentState = true;
-                                    if (updateCurrentState == false) {
-                                      DatabaseServiceDetails(
-                                              uid: widget.id,
-                                              serviceName: widget.serviceName)
-                                          .updateServiceDetails(
-                                              widget.id,
-                                              widget.serviceName,
-                                              'currentState',
-                                              currentState);
-                                      Notifications().newNotificationUser(
-                                          widget.id,
-                                          'don.calogero88@gmail.com',
-                                          widget.serviceName);
-                                      SendNotification(
-                                              userDeviceToken: widget.token)
-                                          .sendPushNotifications(
-                                              title: 'Inscale Media App',
-                                              body:
-                                                  'New update on your service');
-                                    }
                                   });
+                                  if (updateCurrentState == false) {
+                                    DatabaseServiceDetails(
+                                            uid: widget.id,
+                                            serviceName: widget.serviceName)
+                                        .updateServiceDetails(
+                                            widget.id,
+                                            widget.serviceName,
+                                            'currentState',
+                                            currentState);
+                                    Notifications().newNotificationUser(
+                                        widget.id,
+                                        'don.calogero88@gmail.com',
+                                        widget.serviceName);
+                                    SendNotification(
+                                            userDeviceToken: widget.token)
+                                        .sendPushNotifications(
+                                            title: 'Inscale Media App',
+                                            body: 'New update on your service');
+                                    EmailNotification().sendEmailUpdateService(
+                                        widget.firstName,
+                                        widget.serviceName,
+                                        widget.email);
+                                  }
                                 },
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5.0,
                               ),
                               InkWell(
                                 child: Text(
                                   updateCurrentState ? 'Cancel' : '',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.blueAccent,
                                     fontSize: 14.0,
                                   ),
@@ -207,7 +215,7 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                               ),
                             ],
                           ),
-                          Divider(),
+                          const Divider(),
                           // Row(
                           //   children: [
                           //     Text(
@@ -227,8 +235,8 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                           // Divider(),
                           Row(
                             children: [
-                              Text(
-                                'Doc 1 Status: ',
+                              const Text(
+                                'Doc 1 : ',
                                 style: TextStyle(
                                   color: Colors.grey,
                                 ),
@@ -238,13 +246,14 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                                       child: DropdownButtonHideUnderline(
                                         child: ButtonTheme(
                                           alignedDropdown: true,
-                                          child: Container(
+                                          child: SizedBox(
                                             height: 20.0,
                                             child: DropdownButton<String>(
                                               isExpanded: true,
                                               isDense: false,
                                               value: doc1Status,
-                                              style: TextStyle(fontSize: 14.0),
+                                              style: const TextStyle(
+                                                  fontSize: 14.0),
                                               onChanged: (String? newValue) {
                                                 setState(() {
                                                   doc1Status = newValue!;
@@ -261,7 +270,7 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                                                   value: value,
                                                   child: Text(
                                                     value,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 14.0,
                                                     ),
                                                   ),
@@ -273,13 +282,13 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                                       ),
                                     )
                                   : Expanded(child: Text(service.doc1Status)),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5.0,
                               ),
                               InkWell(
                                 child: Text(
                                   updateDoc1Status ? 'Save' : 'Update',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.blueAccent,
                                     fontSize: 14.0,
                                   ),
@@ -302,13 +311,13 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                                   });
                                 },
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5.0,
                               ),
                               InkWell(
                                 child: Text(
                                   updateDoc1Status ? 'Cancel' : '',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.blueAccent,
                                     fontSize: 14.0,
                                   ),
@@ -323,10 +332,10 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                               ),
                             ],
                           ),
-                          Divider(),
+                          const Divider(),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 'Doc 2 Status: ',
                                 style: TextStyle(
                                   color: Colors.grey,
@@ -337,13 +346,14 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                                       child: DropdownButtonHideUnderline(
                                         child: ButtonTheme(
                                           alignedDropdown: true,
-                                          child: Container(
+                                          child: SizedBox(
                                             height: 20.0,
                                             child: DropdownButton<String>(
                                               isExpanded: true,
                                               isDense: false,
                                               value: doc2Status,
-                                              style: TextStyle(fontSize: 14.0),
+                                              style: const TextStyle(
+                                                  fontSize: 14.0),
                                               onChanged: (String? newValue) {
                                                 setState(() {
                                                   doc2Status = newValue!;
@@ -360,7 +370,7 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                                                   value: value,
                                                   child: Text(
                                                     value,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 14.0,
                                                     ),
                                                   ),
@@ -372,13 +382,13 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                                       ),
                                     )
                                   : Expanded(child: Text(service.doc2Status)),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5.0,
                               ),
                               InkWell(
                                 child: Text(
                                   updateDoc2Status ? 'Save' : 'Update',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.blueAccent,
                                     fontSize: 14.0,
                                   ),
@@ -401,13 +411,13 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                                   });
                                 },
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5.0,
                               ),
                               InkWell(
                                 child: Text(
                                   updateDoc2Status ? 'Cancel' : '',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.blueAccent,
                                     fontSize: 14.0,
                                   ),
@@ -474,7 +484,7 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                     onPressed: () {
                       launchUrl(Uri.parse(docUrl));
                     },
-                    child: Text('Download'),
+                    child: const Text('Download'),
                   ),
                 ],
               ),

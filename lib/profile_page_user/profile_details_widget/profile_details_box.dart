@@ -60,9 +60,9 @@ class _ProfileDetailsBoxState extends State<ProfileDetailsBox> {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
+                    children: const [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0),
                         child: Text(
                           'Profile Details',
                           style: TextStyle(
@@ -94,8 +94,8 @@ class _ProfileDetailsBoxState extends State<ProfileDetailsBox> {
                             ),
                             Text(
                               widget.nationality,
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12.0),
+                              style: const TextStyle(
+                                  color: Colors.grey, fontSize: 12.0),
                             ),
                             const SizedBox(
                               height: 5.0,
@@ -103,7 +103,7 @@ class _ProfileDetailsBoxState extends State<ProfileDetailsBox> {
                             Row(
                               // mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Text(
+                                const Text(
                                   'Registration date:',
                                   style: TextStyle(
                                       color: Colors.grey, fontSize: 12.0),
@@ -114,7 +114,7 @@ class _ProfileDetailsBoxState extends State<ProfileDetailsBox> {
                                     DateFormat('dd MMMM yyyy').format(
                                         DateTime.fromMicrosecondsSinceEpoch(
                                             widget.dateCreation)),
-                                    style: TextStyle(fontSize: 12.0),
+                                    style: const TextStyle(fontSize: 12.0),
                                   ),
                                 ),
                               ],
@@ -347,7 +347,7 @@ class _ProfileDetailsBoxState extends State<ProfileDetailsBox> {
               const SizedBox(
                 height: 10.0,
               ),
-              Container(
+              SizedBox(
                 height: 500.0,
                 width: 300.0,
                 child: FutureBuilder<List<Country>>(

@@ -1,12 +1,8 @@
-import 'dart:convert';
-
 import 'package:adminapp/utils/chat_message_class.dart';
 import 'package:adminapp/utils/database.dart';
 import 'package:adminapp/utils/send_notifications_class.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:http/http.dart' as http;
 
 class UserChat extends StatefulWidget {
   final String clientId;
@@ -44,7 +40,11 @@ class _UserChatState extends State<UserChat> {
               return const Center(
                 child: Text('No Messages'),
               );
-            } else if (snapshot.data!.length >= 0) {
+            } else if (snapshot.data!.isEmpty) {
+              return const Expanded(
+                child: Text(''),
+              );
+            } else {
               return Expanded(
                 child: ListView.separated(
                   reverse: true,
@@ -105,10 +105,6 @@ class _UserChatState extends State<UserChat> {
                     );
                   },
                 ),
-              );
-            } else {
-              return const Center(
-                child: Text('No Messages'),
               );
             }
           },

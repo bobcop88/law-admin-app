@@ -44,3 +44,23 @@ class SendNotification {
     }
   }
 }
+
+class EmailNotification {
+  Future sendEmailUpdateService(
+      String name, String service, String email) async {
+    final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+    final response = await http.post(url,
+        headers: {'Content-type': 'application/json'},
+        body: json.encode({
+          'service_id': 'notifications_inscale',
+          'template_id': 'template_service_update',
+          'user_id': 'tXmRQi1qQBn4qBEm8',
+          'template_params': {
+            'to_name': name,
+            'serviceName': service,
+            'to_userEmail': email,
+            'from_name': 'Inscale Media App'
+          }
+        }));
+  }
+}

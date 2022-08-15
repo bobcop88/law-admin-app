@@ -1,5 +1,4 @@
 import 'package:adminapp/profile_page_user/user_profile_page.dart';
-import 'package:adminapp/users/utils/country_class.dart';
 import 'package:adminapp/utils/database.dart';
 import 'package:adminapp/utils/users_profile_class.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,7 @@ class UserRows {
                         .format(DateTime.fromMicrosecondsSinceEpoch(
                             user.dateCreation))
                         .toString(),
-                    style: TextStyle(fontSize: 12.0),
+                    style: const TextStyle(fontSize: 12.0),
                   ),
                 ),
               ),
@@ -33,7 +32,7 @@ class UserRows {
                   fit: BoxFit.fitWidth,
                   child: Text(
                     user.email!,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12.0,
                       color: Colors.blue,
                     ),
@@ -44,14 +43,14 @@ class UserRows {
                 fit: BoxFit.fitWidth,
                 child: Text(
                   user.firstName,
-                  style: TextStyle(fontSize: 12.0),
+                  style: const TextStyle(fontSize: 12.0),
                 ),
               )),
               DataCell(FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
                   user.lastName,
-                  style: TextStyle(fontSize: 12.0),
+                  style: const TextStyle(fontSize: 12.0),
                 ),
               )),
               // DataCell(ElevatedButton(
@@ -72,15 +71,22 @@ class UserRows {
   List<DataRow> getRowsUsersComplete(List<UserCompleteProfile> user, context) {
     return user
         .map((UserCompleteProfile user) => DataRow(cells: [
-              DataCell(Text(user.firstName)),
-              DataCell(Text(user.lastName)),
-              DataCell(Text(user.email!)),
-              DataCell(Text(user.phoneNumber)),
               DataCell(
-                Text(DateFormat('dd/MM/yy')
-                    .format(
-                        DateTime.fromMicrosecondsSinceEpoch(user.dateCreation))
-                    .toString()),
+                  Text(user.firstName, style: const TextStyle(fontSize: 12.0))),
+              DataCell(
+                  Text(user.lastName, style: const TextStyle(fontSize: 12.0))),
+              DataCell(
+                Text(user.email!, style: const TextStyle(fontSize: 12.0)),
+              ),
+              DataCell(Text(user.phoneNumber,
+                  style: const TextStyle(fontSize: 12.0))),
+              DataCell(
+                Text(
+                    DateFormat('dd/MM/yy')
+                        .format(DateTime.fromMicrosecondsSinceEpoch(
+                            user.dateCreation))
+                        .toString(),
+                    style: const TextStyle(fontSize: 12.0)),
               ),
               DataCell(ElevatedButton(
                 style: const ButtonStyle(visualDensity: VisualDensity.compact),
@@ -149,11 +155,12 @@ class _UserProfileBioDetailsState extends State<UserProfileBioDetails> {
                       ? TextField(
                           autofocus: true,
                           controller: widget.controller,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'Insert new value',
                             isDense: true,
-                            contentPadding: EdgeInsets.fromLTRB(5, 10, 10, 0),
+                            contentPadding:
+                                EdgeInsets.fromLTRB(5, 10, 10, 0),
                             hintStyle: TextStyle(
                               fontSize: 14.0,
                             ),
@@ -166,11 +173,12 @@ class _UserProfileBioDetailsState extends State<UserProfileBioDetails> {
                           readOnly: true,
                           enabled: false,
                           decoration: InputDecoration(
-                            disabledBorder: OutlineInputBorder(),
+                            disabledBorder: const OutlineInputBorder(),
                             hintText: widget.dataUser,
                             isDense: true,
-                            contentPadding: EdgeInsets.fromLTRB(5, 10, 10, 0),
-                            hintStyle: TextStyle(
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(5, 10, 10, 0),
+                            hintStyle: const TextStyle(
                                 fontSize: 14.0,
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold),

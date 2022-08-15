@@ -1,4 +1,3 @@
-import 'package:adminapp/dashboard/utils/admin_profile_class.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AdminComment {

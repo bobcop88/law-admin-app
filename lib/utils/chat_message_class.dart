@@ -1,4 +1,3 @@
-import 'package:adminapp/dashboard/utils/admin_profile_class.dart';
 
 class ChatMessage {
   final int timeMessage;

@@ -1,4 +1,3 @@
-import 'package:adminapp/profile_page_user/user_profile_page.dart';
 import 'package:adminapp/utils/service_details.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -15,7 +14,7 @@ class ServicesClass {
                         .format(DateTime.fromMicrosecondsSinceEpoch(
                             service.creationDate))
                         .toString(),
-                    style: TextStyle(fontSize: 12.0),
+                    style: const TextStyle(fontSize: 12.0),
                   ),
                 ),
               ),
@@ -28,7 +27,7 @@ class ServicesClass {
                   fit: BoxFit.fitWidth,
                   child: Text(
                     service.serviceName,
-                    style: TextStyle(fontSize: 12.0),
+                    style: const TextStyle(fontSize: 12.0),
                   ),
                 ),
               )),
@@ -37,13 +36,13 @@ class ServicesClass {
                   fit: BoxFit.fitWidth,
                   child: Text(
                     service.emailUser,
-                    style: TextStyle(fontSize: 12.0),
+                    style: const TextStyle(fontSize: 12.0),
                   ),
                 ),
               ),
               DataCell(Text(
                 service.currentState,
-                style: TextStyle(fontSize: 12.0),
+                style: const TextStyle(fontSize: 12.0),
               )),
               // DataCell(ElevatedButton(
               //   style: ButtonStyle(visualDensity: VisualDensity.compact),

@@ -1,18 +1,14 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:adminapp/main.dart';
-
 
 class ForgotPassword extends StatefulWidget {
-  const ForgotPassword({ Key? key }) : super(key: key);
+  const ForgotPassword({Key? key}) : super(key: key);
 
   @override
   State<ForgotPassword> createState() => _ForgotPasswordState();
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
-
   final emailController = TextEditingController();
 
   @override
@@ -21,27 +17,23 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Reset Password'
-        ),
+        title: const Text('Reset Password'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Receive an email to reset your password'
-              ),
+            children: const [
+              Text('Receive an email to reset your password'),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10.0,
           ),
           Row(
@@ -52,21 +44,19 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   child: TextFormField(
                     controller: emailController,
                     textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                      labelText: 'Email address'
-                    ),
+                    decoration:
+                        const InputDecoration(labelText: 'Email address'),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (email) => 
-                      email != null && !EmailValidator.validate(email)
-                      ? 'Enter a valid email address'
-                      : null
-                      ,
+                    validator: (email) =>
+                        email != null && !EmailValidator.validate(email)
+                            ? 'Enter a valid email address'
+                            : null,
                   ),
                 ),
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20.0,
           ),
           Row(
@@ -74,9 +64,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             children: [
               ElevatedButton(
                 onPressed: () {},
-                child: Text(
-                  'Reset Password'
-                ),
+                child: const Text('Reset Password'),
               ),
             ],
           ),
@@ -92,7 +80,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   //     barrierDismissible: false,
   //     builder: (context) => Center(child: CircularProgressIndicator()),
   //   );
-    
+
   //   try {await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text.trim());
 
   //   final snackBar = SnackBar(

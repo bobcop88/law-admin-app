@@ -21,7 +21,7 @@ class CountryList {
 
     final response = await http.get(url);
     final List countries =
-        json.decode(Utf8Decoder().convert(response.bodyBytes));
+        json.decode(const Utf8Decoder().convert(response.bodyBytes));
     // countries.sort(((a, b) => a.name.compareTo(b.name)));
     countries
         .sort(((a, b) => a['name']['common'].compareTo(b['name']['common'])));

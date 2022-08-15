@@ -38,69 +38,81 @@ class _UsersListPageState extends State<UsersListPage> {
             }
 
             // var user = snapshot.data!;
-            return Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 300.0,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 2.0, right: 2.0),
-                              child: TextField(
-                                controller: _userController,
-                                style: const TextStyle(
-                                  fontSize: 15.0,
-                                ),
-                                decoration: const InputDecoration(
-                                  isDense: true,
-                                  contentPadding:
-                                      EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 0),
-                                  prefixIcon: Icon(Icons.search_outlined),
-                                  hintText: 'Search User',
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.blueAccent,
-                                    ),
+            return Column(
+              children: [
+                Row(
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Users',
+                        style: TextStyle(
+                            fontSize: 20.0, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                Row(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 300.0,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(left: 2.0, right: 2.0),
+                            child: TextField(
+                              controller: _userController,
+                              style: const TextStyle(
+                                fontSize: 15.0,
+                              ),
+                              decoration: const InputDecoration(
+                                isDense: true,
+                                contentPadding:
+                                    EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 0),
+                                prefixIcon: Icon(Icons.search_outlined),
+                                hintText: 'Search User',
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.blueAccent,
                                   ),
                                 ),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _searchUser = value;
-                                  });
-                                },
                               ),
+                              onChanged: (value) {
+                                setState(() {
+                                  _searchUser = value;
+                                });
+                              },
                             ),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: DataTable(
-                          headingTextStyle: const TextStyle(
-                              color: Colors.grey, fontSize: 12.0),
-                          columns: const [
-                            DataColumn(label: Text('First Name')),
-                            DataColumn(label: Text('Last Name')),
-                            DataColumn(label: Text('Email Address')),
-                            DataColumn(label: Text('Phone Number')),
-                            DataColumn(label: Text('Date')),
-                            DataColumn(label: Text('')),
-                          ],
-                          rows: UserRows().getRowsUsersComplete(user, context),
                         ),
+                      ],
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: DataTable(
+                        headingTextStyle:
+                            const TextStyle(color: Colors.grey, fontSize: 12.0),
+                        columns: const [
+                          DataColumn(label: Text('First Name')),
+                          DataColumn(label: Text('Last Name')),
+                          DataColumn(label: Text('Email Address')),
+                          DataColumn(label: Text('Phone Number')),
+                          DataColumn(label: Text('Date')),
+                          DataColumn(label: Text('')),
+                        ],
+                        rows: UserRows().getRowsUsersComplete(user, context),
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             );
           }
         });

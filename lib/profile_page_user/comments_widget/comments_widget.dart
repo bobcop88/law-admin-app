@@ -22,7 +22,7 @@ class _CommentsBoxState extends State<CommentsBox> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: [
+              children: const [
                 Text(
                   'Comments',
                   style: TextStyle(
@@ -41,13 +41,24 @@ class _CommentsBoxState extends State<CommentsBox> {
                           .getAdminComments(widget.user),
                       builder: ((context, snapshot) {
                         if (!snapshot.hasData) {
-                          return Center(
+                          return const Center(
                             child: CircularProgressIndicator(),
                           );
                         } else {
                           final comments = snapshot.data!;
                           if (comments.isEmpty) {
-                            return Text('No comments');
+                            return Column(
+                              children: [
+                                Row(
+                                  children: const [
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text('No comments'),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            );
                           } else {
                             return ListView.separated(
                               controller: ScrollController(),
@@ -73,7 +84,7 @@ class _CommentsBoxState extends State<CommentsBox> {
                                                       comments[index]
                                                           .dateComment),
                                             ),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Colors.grey,
                                                 fontSize: 10.0),
                                           ),
@@ -104,7 +115,7 @@ class _CommentsBoxState extends State<CommentsBox> {
               Expanded(
                 child: TextField(
                   controller: _commentController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     isDense: true,
                     border: OutlineInputBorder(),
                   ),
@@ -119,7 +130,7 @@ class _CommentsBoxState extends State<CommentsBox> {
                         _commentController.text.trim(), widget.admin);
                     _commentController.clear();
                   },
-                  label: Icon(Icons.add),
+                  label: const Icon(Icons.add),
                 ),
               ),
             ],

@@ -37,7 +37,7 @@ class _ChatBoxState extends State<ChatBox> {
               children: [
                 Text(
                   'Chat with ${widget.firstName} ${widget.lastName}',
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold),
                 )
               ],
@@ -71,14 +71,14 @@ class _ChatBoxState extends State<ChatBox> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           widget.showNewChatMessage
-                              ? Text(
+                              ? const Text(
                                   'New Message',
                                   style: TextStyle(color: Colors.red),
                                 )
-                              : Text(''),
+                              : const Text(''),
                           Badge(
                             showBadge: widget.showNewChatMessage,
-                            badgeContent: Text('1'),
+                            badgeContent: const Text('1'),
                             child: ElevatedButton(
                               onPressed: () async {
                                 setState(() {
@@ -95,7 +95,7 @@ class _ChatBoxState extends State<ChatBox> {
                                 // print(await DatabaseChat()
                                 //     .chatExists(widget.user));
                               },
-                              child: Text('Show Chat'),
+                              child: const Text('Show Chat'),
                             ),
                           ),
                         ],

@@ -18,13 +18,17 @@ class DatabaseLogs {
                   DateFormat('dd/MM/yy HH:ss')
                       .format(DateTime.fromMicrosecondsSinceEpoch(log.dateLog))
                       .toString(),
-                  style: TextStyle(fontSize: 12.0, color: Colors.grey),
+                  style: const TextStyle(fontSize: 12.0, color: Colors.grey),
                 ),
               ),
-              DataCell(Text(log.typeUser)),
-              DataCell(Text(log.emailAddress)),
-              DataCell(Text(log.logType)),
-              DataCell(Text(log.action)),
+              DataCell(
+                  Text(log.typeUser, style: const TextStyle(fontSize: 12.0))),
+              DataCell(Text(log.emailAddress,
+                  style: const TextStyle(fontSize: 12.0))),
+              DataCell(
+                  Text(log.logType, style: const TextStyle(fontSize: 12.0))),
+              DataCell(
+                  Text(log.action, style: const TextStyle(fontSize: 12.0))),
             ]))
         .toList();
   }

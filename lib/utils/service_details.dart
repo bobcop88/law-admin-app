@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 class ServiceDetails {
   final String serviceName;
   final String currentState;

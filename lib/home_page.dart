@@ -1,10 +1,7 @@
 import 'package:adminapp/dashboard/dashboard.dart';
-import 'package:adminapp/dashboard/logs/log_page.dart';
-import 'package:adminapp/old_pages/users_home.dart';
+import 'package:adminapp/logs/log_page.dart';
 import 'package:adminapp/services/services_page.dart';
 import 'package:adminapp/users/users_list_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -34,8 +31,9 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                    color: Color.fromRGBO(19, 38, 63, 1),
-                    border: Border.all(color: Color.fromRGBO(19, 38, 63, 1))),
+                    color: const Color.fromRGBO(19, 38, 63, 1),
+                    border:
+                        Border.all(color: const Color.fromRGBO(19, 38, 63, 1))),
                 // width: 250,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -66,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                                 DateFormat('dd-MM-yyyy HH:mm:ss')
                                     .format(DateTime.now()),
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 12.0),
                               );
                             }),
@@ -84,8 +82,8 @@ class _HomePageState extends State<HomePage> {
                       child: Container(
                         decoration: BoxDecoration(
                             color: _selectedIndex == 0
-                                ? Color.fromARGB(46, 54, 102, 165)
-                                : Color.fromRGBO(19, 38, 63, 1)),
+                                ? const Color.fromARGB(46, 54, 102, 165)
+                                : const Color.fromRGBO(19, 38, 63, 1)),
                         child: Padding(
                           padding:
                               const EdgeInsets.only(top: 12.0, bottom: 12.0),
@@ -94,10 +92,10 @@ class _HomePageState extends State<HomePage> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 12.0),
                                 child: Row(
-                                  children: [
+                                  children: const [
                                     Icon(Icons.home_outlined,
                                         color: Colors.white, size: 18.0),
-                                    const SizedBox(
+                                    SizedBox(
                                       width: 8.0,
                                     ),
                                     Text(
@@ -124,8 +122,8 @@ class _HomePageState extends State<HomePage> {
                       child: Container(
                         decoration: BoxDecoration(
                             color: _selectedIndex == 1
-                                ? Color.fromARGB(46, 54, 102, 165)
-                                : Color.fromRGBO(19, 38, 63, 1)),
+                                ? const Color.fromARGB(46, 54, 102, 165)
+                                : const Color.fromRGBO(19, 38, 63, 1)),
                         child: Padding(
                           padding:
                               const EdgeInsets.only(top: 12.0, bottom: 12.0),
@@ -134,10 +132,10 @@ class _HomePageState extends State<HomePage> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 12.0),
                                 child: Row(
-                                  children: [
+                                  children: const [
                                     Icon(Icons.people,
                                         color: Colors.white, size: 18.0),
-                                    const SizedBox(
+                                    SizedBox(
                                       width: 8.0,
                                     ),
                                     Text(
@@ -161,8 +159,8 @@ class _HomePageState extends State<HomePage> {
                       child: Container(
                         decoration: BoxDecoration(
                             color: _selectedIndex == 2
-                                ? Color.fromARGB(46, 54, 102, 165)
-                                : Color.fromRGBO(19, 38, 63, 1)),
+                                ? const Color.fromARGB(46, 54, 102, 165)
+                                : const Color.fromRGBO(19, 38, 63, 1)),
                         child: Padding(
                           padding:
                               const EdgeInsets.only(top: 12.0, bottom: 12.0),
@@ -171,10 +169,10 @@ class _HomePageState extends State<HomePage> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 12.0),
                                 child: Row(
-                                  children: [
+                                  children: const [
                                     Icon(Icons.assignment,
                                         color: Colors.white, size: 18.0),
-                                    const SizedBox(
+                                    SizedBox(
                                       width: 8.0,
                                     ),
                                     Text(
@@ -198,8 +196,8 @@ class _HomePageState extends State<HomePage> {
                       child: Container(
                         decoration: BoxDecoration(
                             color: _selectedIndex == 3
-                                ? Color.fromARGB(46, 54, 102, 165)
-                                : Color.fromRGBO(19, 38, 63, 1)),
+                                ? const Color.fromARGB(46, 54, 102, 165)
+                                : const Color.fromRGBO(19, 38, 63, 1)),
                         child: Padding(
                           padding:
                               const EdgeInsets.only(top: 12.0, bottom: 12.0),
@@ -208,15 +206,16 @@ class _HomePageState extends State<HomePage> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 12.0),
                                 child: Row(
-                                  children: [
+                                  children: const [
                                     Icon(Icons.tune,
                                         color: Colors.white, size: 18.0),
-                                    const SizedBox(
+                                    SizedBox(
                                       width: 8.0,
                                     ),
                                     Text(
                                       'Logs',
-                                      style: TextStyle(color: Colors.white),
+                                      style:
+                                          TextStyle(color: Colors.white),
                                     ),
                                   ],
                                 ),

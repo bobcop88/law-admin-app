@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:adminapp/dashboard/widgets/cards_top_dashboard.dart';
+import 'package:adminapp/dashboard/widgets/data_charts.dart';
 import 'package:adminapp/services/utils/services_classes.dart';
 import 'package:adminapp/profile_page_user/user_profile_page.dart';
 import 'package:adminapp/users/utils/user_classes.dart';
@@ -6,6 +10,7 @@ import 'package:adminapp/utils/service_details.dart';
 import 'package:adminapp/utils/users_profile_class.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -18,8 +23,7 @@ class DashboardAdmin extends StatefulWidget {
 
 class _DashboardAdminState extends State<DashboardAdmin> {
   final adminUser = FirebaseAuth.instance.currentUser!;
-  // final verifiedUsers = [];
-  List nationalityUsers = [];
+  List<ServiceDetails> servicesList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +49,31 @@ class _DashboardAdminState extends State<DashboardAdmin> {
 
             // List<DataItem> listNationality = [];
 
-            // mapNationality.forEach((key, value) {
-            //   listNationality.add(DataItem(1, value, key));
+            // mapNationality.entries.forEach((e) {
+            //   listNationality.add(DataItem(1, e.value, e.key));
             // });
+            // Widget getTitles(double values, TitleMeta meta) {
+            //   const style = TextStyle(
+            //     color: Color(0xff7589a2),
+            //     fontWeight: FontWeight.bold,
+            //     fontSize: 14,
+            //   );
+            //   List<String> titles = [];
+
+            //   listNationality.forEach((e) {
+            //     titles.add(e.name);
+            //   });
+
+            //   Widget text = Text(titles[values.toInt()],
+            //       style: const TextStyle(
+            //         color: Color(0xff7589a2),
+            //         fontWeight: FontWeight.bold,
+            //       ));
+            //   return SideTitleWidget(
+            //     axisSide: meta.axisSide,
+            //     child: text,
+            //   );
+            // }
 
             return Row(
               children: [
@@ -64,24 +90,41 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
-                            children: const [
-                              Icon(
-                                Icons.notifications,
-                                color: Colors.white,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Icon(
+                                    Icons.notifications,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  CircleAvatar(
+                                    child: Text('A'),
+                                  ),
+                                  SizedBox(
+                                    width: 5.0,
+                                  ),
+                                  Text(
+                                    'Admin',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      FirebaseAuth.instance.signOut();
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.logout),
+                                        Text('Log out'),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                width: 10.0,
-                              ),
-                              CircleAvatar(
-                                child: Text('A'),
-                              ),
-                              SizedBox(
-                                width: 5.0,
-                              ),
-                              Text(
-                                'Admin',
-                                style: TextStyle(color: Colors.white),
-                              )
                             ],
                           ),
                         ),
@@ -111,171 +154,157 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                     ),
                                   ),
                                   Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Card(
-                                        child: Row(
-                                          children: [
-                                            Column(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                        color: const Color
-                                                                .fromRGBO(
-                                                            250, 169, 22, 1),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5)),
-                                                    child: const Padding(
-                                                      padding:
-                                                          EdgeInsets.all(8.0),
-                                                      child: Icon(
-                                                        Icons.group_rounded,
-                                                        size: 30.0,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      8.0, 8.0, 30.0, 8.0),
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        users.length.toString(),
-                                                        style: const TextStyle(
-                                                            fontSize: 30.0,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    children: const [
-                                                      Text(
-                                                        'Registered Users',
-                                                        style: TextStyle(
-                                                            color: Colors.grey,
-                                                            fontSize: 12.0),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Card(
-                                        child: Row(
-                                          children: [
-                                            Column(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                        color: const Color
-                                                                .fromARGB(
-                                                            255, 140, 39, 32),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5)),
-                                                    child: const Padding(
-                                                      padding:
-                                                          EdgeInsets.all(8.0),
-                                                      child: Icon(
-                                                        Icons.assignment,
-                                                        size: 30.0,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      8.0, 8.0, 30.0, 8.0),
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      StreamBuilder<
-                                                              QuerySnapshot>(
-                                                          stream: Dashboard()
-                                                              .readAllServices(),
-                                                          builder: (context,
-                                                              snapshot) {
-                                                            if (!snapshot
-                                                                .hasData) {
-                                                              return const Text(
-                                                                  'Not available');
-                                                            } else {
-                                                              return Text(
-                                                                snapshot
-                                                                    .data!.size
-                                                                    .toString(),
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        30.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              );
-                                                            }
-                                                          }),
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    children: const [
-                                                      Text(
-                                                        'Services Requested',
-                                                        style: TextStyle(
-                                                            color: Colors.grey,
-                                                            fontSize: 12.0),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      // Card(
-                                      //   child: SizedBox(
-                                      //     height: 100,
-                                      //     width: 300,
-                                      //     child: BarChart(
-                                      //       BarChartData(
-                                      //         groupsSpace: 12,
-                                      //         barGroups: listNationality
-                                      //             .map((e) => BarChartGroupData(
-                                      //                     x: e.x,
-                                      //                     barRods: [
-                                      //                       BarChartRodData(
-                                      //                         toY: e.y,
-                                      //                       )
-                                      //                     ]))
-                                      //             .toList(),
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
+                                      TopCardsDashboard(users: users),
                                     ],
                                   ),
+                                  // Row(
+                                  //   children: [
+                                  //     Card(
+                                  //       child: Row(
+                                  //         children: [
+                                  //           Column(
+                                  //             children: [
+                                  //               Padding(
+                                  //                 padding:
+                                  //                     const EdgeInsets.all(8.0),
+                                  //                 child: Container(
+                                  //                   decoration: BoxDecoration(
+                                  //                       color: const Color
+                                  //                               .fromRGBO(
+                                  //                           250, 169, 22, 1),
+                                  //                       borderRadius:
+                                  //                           BorderRadius
+                                  //                               .circular(5)),
+                                  //                   child: const Padding(
+                                  //                     padding:
+                                  //                         EdgeInsets.all(8.0),
+                                  //                     child: Icon(
+                                  //                       Icons.group_rounded,
+                                  //                       size: 30.0,
+                                  //                       color: Colors.white,
+                                  //                     ),
+                                  //                   ),
+                                  //                 ),
+                                  //               ),
+                                  //             ],
+                                  //           ),
+                                  //           Padding(
+                                  //             padding:
+                                  //                 const EdgeInsets.fromLTRB(
+                                  //                     8.0, 8.0, 30.0, 8.0),
+                                  //             child: Column(
+                                  //               children: [
+                                  //                 Row(
+                                  //                   children: [
+                                  //                     Text(
+                                  //                       users.length.toString(),
+                                  //                       style: const TextStyle(
+                                  //                           fontSize: 30.0,
+                                  //                           fontWeight:
+                                  //                               FontWeight
+                                  //                                   .bold),
+                                  //                     ),
+                                  //                   ],
+                                  //                 ),
+                                  //                 Row(
+                                  //                   children: const [
+                                  //                     Text(
+                                  //                       'Registered Users',
+                                  //                       style: TextStyle(
+                                  //                           color: Colors.grey,
+                                  //                           fontSize: 12.0),
+                                  //                     )
+                                  //                   ],
+                                  //                 ),
+                                  //               ],
+                                  //             ),
+                                  //           ),
+                                  //         ],
+                                  //       ),
+                                  //     ),
+                                  //     Card(
+                                  //       child: Row(
+                                  //         children: [
+                                  //           Column(
+                                  //             children: [
+                                  //               Padding(
+                                  //                 padding:
+                                  //                     const EdgeInsets.all(8.0),
+                                  //                 child: Container(
+                                  //                   decoration: BoxDecoration(
+                                  //                       color: const Color
+                                  //                               .fromARGB(
+                                  //                           255, 140, 39, 32),
+                                  //                       borderRadius:
+                                  //                           BorderRadius
+                                  //                               .circular(5)),
+                                  //                   child: const Padding(
+                                  //                     padding:
+                                  //                         EdgeInsets.all(8.0),
+                                  //                     child: Icon(
+                                  //                       Icons.assignment,
+                                  //                       size: 30.0,
+                                  //                       color: Colors.white,
+                                  //                     ),
+                                  //                   ),
+                                  //                 ),
+                                  //               ),
+                                  //             ],
+                                  //           ),
+                                  //           Padding(
+                                  //             padding:
+                                  //                 const EdgeInsets.fromLTRB(
+                                  //                     8.0, 8.0, 30.0, 8.0),
+                                  //             child: Column(
+                                  //               children: [
+                                  //                 Row(
+                                  //                   children: [
+                                  //                     StreamBuilder<
+                                  //                             QuerySnapshot>(
+                                  //                         stream: Dashboard()
+                                  //                             .readAllServices(),
+                                  //                         builder: (context,
+                                  //                             snapshot) {
+                                  //                           if (!snapshot
+                                  //                               .hasData) {
+                                  //                             return const Text(
+                                  //                                 'Not available');
+                                  //                           } else {
+                                  //                             return Text(
+                                  //                               snapshot
+                                  //                                   .data!.size
+                                  //                                   .toString(),
+                                  //                               style: const TextStyle(
+                                  //                                   fontSize:
+                                  //                                       30.0,
+                                  //                                   fontWeight:
+                                  //                                       FontWeight
+                                  //                                           .bold),
+                                  //                             );
+                                  //                           }
+                                  //                         }),
+                                  //                   ],
+                                  //                 ),
+                                  //                 Row(
+                                  //                   children: const [
+                                  //                     Text(
+                                  //                       'Services Requested',
+                                  //                       style: TextStyle(
+                                  //                           color: Colors.grey,
+                                  //                           fontSize: 12.0),
+                                  //                     )
+                                  //                   ],
+                                  //                 ),
+                                  //               ],
+                                  //             ),
+                                  //           ),
+                                  //         ],
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  // ),
                                   Expanded(
                                     child: Row(
                                       children: [
@@ -351,7 +380,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                                                             child:
                                                                                 FittedBox(
                                                                               child: DataTable(
-                                                                                headingTextStyle: const TextStyle(color: Colors.grey, fontSize: 12.0),
+                                                                                headingTextStyle: const TextStyle(color: Colors.grey, fontSize: 10.0),
                                                                                 columns: const [
                                                                                   DataColumn(label: FittedBox(fit: BoxFit.fitWidth, child: Text('Date'))),
                                                                                   DataColumn(label: FittedBox(fit: BoxFit.fitWidth, child: Text('Email Address'))),
@@ -361,7 +390,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                                                                   //     label: Text(
                                                                                   //         '')),
                                                                                 ],
-                                                                                rows: UserRows().getRowsUsers(user, context),
+                                                                                rows: UserRows().getRowsUsers(user.sublist(0, 5), context),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -478,7 +507,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                                                                   //     label: Text(
                                                                                   //         '')),
                                                                                 ],
-                                                                                rows: ServicesClass().getRowsServices(service, context),
+                                                                                rows: ServicesClass().getRowsServices(service.sublist(0, 5), context),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -499,7 +528,106 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                         ),
                                         Expanded(
                                           child: Column(
-                                            children: const [Text('test')],
+                                            children: [
+                                              Expanded(
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child:
+                                                          BarChartNationality(
+                                                        users: users,
+                                                      ),
+                                                      // Card(
+                                                      //   child: BarChart(
+                                                      //     BarChartData(
+                                                      //       groupsSpace: 12,
+                                                      //       titlesData:
+                                                      //           FlTitlesData(
+                                                      //               rightTitles:
+                                                      //                   AxisTitles(
+                                                      //                 sideTitles:
+                                                      //                     SideTitles(
+                                                      //                         showTitles: false),
+                                                      //               ),
+                                                      //               leftTitles:
+                                                      //                   AxisTitles(
+                                                      //                 sideTitles:
+                                                      //                     SideTitles(
+                                                      //                         showTitles: false),
+                                                      //               ),
+                                                      //               topTitles:
+                                                      //                   AxisTitles(
+                                                      //                 sideTitles:
+                                                      //                     SideTitles(
+                                                      //                         showTitles: false),
+                                                      //               ),
+                                                      //               bottomTitles:
+                                                      //                   AxisTitles(
+                                                      //                 sideTitles:
+                                                      //                     SideTitles(
+                                                      //                   showTitles:
+                                                      //                       true,
+                                                      //                   getTitlesWidget:
+                                                      //                       getTitles,
+                                                      //                 ),
+                                                      //               )),
+                                                      //       barGroups:
+                                                      //           listNationality
+                                                      //               .map((e) =>
+                                                      //                   BarChartGroupData(
+                                                      //                       x: listNationality.indexOf(e),
+                                                      //                       barRods: [
+                                                      //                         BarChartRodData(
+                                                      //                           toY: e.y,
+                                                      //                         )
+                                                      //                       ]))
+                                                      //               .toList(),
+                                                      //     ),
+                                                      //   ),
+                                                      // ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Row(
+                                                        children: [
+                                                          Expanded(
+                                                            child: StreamBuilder<
+                                                                    List<
+                                                                        ServiceDetails>>(
+                                                                stream: Dashboard()
+                                                                    .readAllServicesNew(),
+                                                                builder: (context,
+                                                                    snapshot) {
+                                                                  if (!snapshot
+                                                                      .hasData) {
+                                                                    return Center(
+                                                                      child:
+                                                                          CircularProgressIndicator(),
+                                                                    );
+                                                                  } else {
+                                                                    final servicesList =
+                                                                        snapshot
+                                                                            .data!;
+
+                                                                    return PieChartServices(
+                                                                      services:
+                                                                          servicesList,
+                                                                    );
+                                                                  }
+                                                                }),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
@@ -514,6 +642,9 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                     const BoxDecoration(color: Colors.white),
                                 child: Column(
                                   children: [
+                                    const SizedBox(
+                                      height: 20.0,
+                                    ),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -526,6 +657,9 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                         ),
                                       ],
                                     ),
+                                    const Divider(
+                                      height: 20.0,
+                                    ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: StreamBuilder<QuerySnapshot>(
@@ -533,8 +667,17 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                         builder: (context, snapshot) {
                                           if (!snapshot.hasData) {
                                             return const Center(
-                                              child:
-                                                  CircularProgressIndicator(),
+                                              child: Text('No Active Chats'),
+                                            );
+                                          } else if (snapshot
+                                              .data!.docs.isEmpty) {
+                                            return const Center(
+                                              child: Text(
+                                                'No Active Chats',
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 12.0),
+                                              ),
                                             );
                                           } else {
                                             return ListView.separated(
@@ -682,11 +825,4 @@ class _DashboardAdminState extends State<DashboardAdmin> {
           }
         });
   }
-}
-
-class ChartData {
-  final String country;
-  final int count;
-
-  ChartData({required this.country, required this.count});
 }

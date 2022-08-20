@@ -16,7 +16,7 @@ class UserRows {
                         .format(DateTime.fromMicrosecondsSinceEpoch(
                             user.dateCreation))
                         .toString(),
-                    style: const TextStyle(fontSize: 12.0),
+                    style: const TextStyle(fontSize: 10.0),
                   ),
                 ),
               ),
@@ -33,7 +33,7 @@ class UserRows {
                   child: Text(
                     user.email!,
                     style: const TextStyle(
-                      fontSize: 12.0,
+                      fontSize: 10.0,
                       color: Colors.blue,
                     ),
                   ),
@@ -43,14 +43,14 @@ class UserRows {
                 fit: BoxFit.fitWidth,
                 child: Text(
                   user.firstName,
-                  style: const TextStyle(fontSize: 12.0),
+                  style: const TextStyle(fontSize: 10.0),
                 ),
               )),
               DataCell(FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
                   user.lastName,
-                  style: const TextStyle(fontSize: 12.0),
+                  style: const TextStyle(fontSize: 10.0),
                 ),
               )),
               // DataCell(ElevatedButton(
@@ -159,8 +159,7 @@ class _UserProfileBioDetailsState extends State<UserProfileBioDetails> {
                             border: OutlineInputBorder(),
                             hintText: 'Insert new value',
                             isDense: true,
-                            contentPadding:
-                                EdgeInsets.fromLTRB(5, 10, 10, 0),
+                            contentPadding: EdgeInsets.fromLTRB(5, 10, 10, 0),
                             hintStyle: TextStyle(
                               fontSize: 14.0,
                             ),

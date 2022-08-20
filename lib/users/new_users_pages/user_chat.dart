@@ -1,6 +1,7 @@
 import 'package:adminapp/utils/chat_message_class.dart';
 import 'package:adminapp/utils/database.dart';
 import 'package:adminapp/utils/send_notifications_class.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -17,6 +18,7 @@ class UserChat extends StatefulWidget {
 
 class _UserChatState extends State<UserChat> {
   final _messageController = TextEditingController();
+  final adminUser = FirebaseAuth.instance.currentUser!.uid;
   String message = '';
 
   @override
@@ -148,8 +150,8 @@ class _UserChatState extends State<UserChat> {
   void sendMessage() async {
     FocusScope.of(context).unfocus();
 
-    await DatabaseChat().startChat(widget.clientId,
-        'QeyX9YxNuUOqBMABs3QsoiTNdqR2', _messageController.text.trim());
+    await DatabaseChat()
+        .startChat(widget.clientId, adminUser, _messageController.text.trim());
 
     _messageController.clear();
     SendNotification(userDeviceToken: widget.userDeviceToken)

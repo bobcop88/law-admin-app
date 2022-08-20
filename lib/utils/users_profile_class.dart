@@ -9,6 +9,7 @@ class UserCompleteProfile {
   final String? email;
   final int dateCreation;
   final String? token;
+  final bool userCompleted;
 
   UserCompleteProfile(
       {required this.firstName,
@@ -20,7 +21,8 @@ class UserCompleteProfile {
       required this.id,
       required this.email,
       required this.dateCreation,
-      required this.token});
+      required this.token,
+      required this.userCompleted});
 
   Map<String, dynamic> toJson() => {
         'firstName': firstName,
@@ -32,6 +34,7 @@ class UserCompleteProfile {
         'id': id,
         'email': email,
         'dateCreation': dateCreation,
+        'userCompleted': userCompleted,
       };
 
   static UserCompleteProfile fromJson(Map<String, dynamic> json) =>
@@ -45,7 +48,8 @@ class UserCompleteProfile {
           id: json['id'],
           email: json['email'],
           dateCreation: json['dateCreation'],
-          token: json['token']);
+          token: json['token'],
+          userCompleted: json['userCompleted']);
 }
 
 class UserAllDetails {

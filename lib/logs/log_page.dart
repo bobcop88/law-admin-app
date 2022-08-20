@@ -11,8 +11,8 @@ class LogsPage extends StatefulWidget {
 
 class _LogsPageState extends State<LogsPage> {
   int? sortColumnIndex;
-  bool isAscending = true;
-  // List<Log> log = [];
+  bool isAscending = false;
+  List<Log> log = [];
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Log>>(
@@ -21,24 +21,17 @@ class _LogsPageState extends State<LogsPage> {
           if (!snapshot.hasData) {
             return const CircularProgressIndicator();
           } else {
-            List<Log> log = snapshot.data!;
-
-            serviceSorted() {
-              log.sort((a, b) => b.dateLog.compareTo(a.dateLog));
-            }
-
-            serviceSorted();
-
-            // serviceSorted2() {
-            //   print('called');
-            //   isAscending
-            //       ? log.sort((a, b) => b.typeUser.compareTo(a.typeUser))
-            //       : log.sort((a, b) => a.typeUser.compareTo(b.typeUser));
-
-            //   setState(() {
-            //     isAscending ? isAscending = false : isAscending = true;
-            //   });
+            log = snapshot.data!;
+            // createList() {
+            //   log = [];
+            //   for (var element in allLogs50) {
+            //     log.add(element);
+            //   }
             // }
+
+            // createList();
+
+            // serviceSorted();
 
             return SingleChildScrollView(
               child: Column(
@@ -62,8 +55,8 @@ class _LogsPageState extends State<LogsPage> {
                     children: [
                       Expanded(
                         child: DataTable(
-                          // sortAscending: isAscending,
-                          // sortColumnIndex: sortColumnIndex,
+                          sortAscending: isAscending,
+                          sortColumnIndex: sortColumnIndex,
                           headingTextStyle: const TextStyle(
                               color: Colors.grey, fontSize: 12.0),
                           columns: [
@@ -73,21 +66,16 @@ class _LogsPageState extends State<LogsPage> {
                                   const Text(
                                     'Date',
                                   ),
-                                  GestureDetector(
-                                      onTap: () {
-                                        // print('clicked');
-                                        // print(isAscending);
-                                        // serviceSorted2();
-                                      },
-                                      child: const Icon(Icons.sort))
                                 ],
                               ),
+                              // onSort: onSort,
                             ),
-                            const DataColumn(
+                            DataColumn(
                               label: Text('Type User'),
                             ),
-                            const DataColumn(
+                            DataColumn(
                               label: Text('Email address'),
+                              // onSort: onSort,
                             ),
                             const DataColumn(
                               label: Text('Log Type'),
@@ -108,11 +96,31 @@ class _LogsPageState extends State<LogsPage> {
         });
   }
 
+  // serviceSorted() {
+  //   log.sort((a, b) => b.dateLog.compareTo(a.dateLog));
+  // }
+
+  // serviceSorted2() {
+  //   print('called');
+  //   // isAscending
+  //   //     ? log.sort((a, b) => b.emailAddress.compareTo(a.emailAddress))
+  //   //     : log.sort((a, b) => a.emailAddress.compareTo(b.emailAddress));
+
+  //   return log.sort((a, b) => a.emailAddress.compareTo(b.emailAddress));
+
+  //   // setState(() {
+  //   //   isAscending ? isAscending = false : isAscending = true;
+  //   // });
+  // }
+
   // void onSort(int columnIndex, bool ascending) {
-  //   if (columnIndex == 1) {
+  //   if (columnIndex == 0) {
+  //     ascending
+  //         ? log.sort((a, b) => b.dateLog.compareTo(a.dateLog))
+  //         : log.sort((a, b) => a.dateLog.compareTo(b.dateLog));
+  //   } else if (columnIndex == 1) {
   //     log.sort((a, b) => b.typeUser.compareTo(a.typeUser));
-  //   }
-  //   if (columnIndex == 2) {
+  //   } else if (columnIndex == 2) {
   //     ascending
   //         ? log.sort((a, b) => a.emailAddress.compareTo(b.emailAddress))
   //         : log.sort((a, b) => b.emailAddress.compareTo(a.emailAddress));
@@ -122,5 +130,4 @@ class _LogsPageState extends State<LogsPage> {
   //     isAscending = ascending;
   //   });
   // }
-
 }

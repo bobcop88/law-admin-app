@@ -153,7 +153,7 @@ class Dashboard {
     return FirebaseFirestore.instance
         .collection('clients')
         .orderBy('dateCreation', descending: true)
-        .limit(5)
+        // .limit(5)
         .snapshots()
         .map((snapshot) => snapshot.docs
             .map((doc) => UserCompleteProfile.fromJson(doc.data()))
@@ -167,8 +167,10 @@ class Dashboard {
   Stream<List<ServiceDetails>> readAllServicesNew() {
     return FirebaseFirestore.instance
         .collectionGroup('myServices')
+        // .where('currentState', isEqualTo: 'Started')
+        // .where('creationDate', isNull: false)
         // .orderBy('creationDate', descending: true)
-        .limit(5)
+        // .limit(5)
         .snapshots()
         .map((snapshot) => snapshot.docs
             .map((doc) => ServiceDetails.fromJson(doc.data()))
@@ -296,7 +298,7 @@ class DatabaseChat {
     return FirebaseFirestore.instance
         .collection('chats')
         .where('senderLastMessage',
-            isNotEqualTo: 'QeyX9YxNuUOqBMABs3QsoiTNdqR2')
+            isNotEqualTo: 'rVu8FOvKC3aoBcOiq4FKinZY42p1')
         .snapshots();
   }
 

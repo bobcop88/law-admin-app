@@ -5,9 +5,22 @@ import 'package:intl/intl.dart';
 
 class DatabaseLogs {
   Stream<List<Log>> readAllLogs() {
-    return FirebaseFirestore.instance.collection('logs').snapshots().map(
-        (snapshot) =>
+    return FirebaseFirestore.instance
+        .collection('logs')
+        .orderBy('dateLog', descending: true)
+        .snapshots()
+        .map((snapshot) =>
             snapshot.docs.map((doc) => Log.fromJson(doc.data())).toList());
+  }
+
+  Future<List<Log>> getAllLogs() async {
+    final List<Log> list = await FirebaseFirestore.instance
+        .collection('logs')
+        .get()
+        .then(
+            (value) => value.docs.map((e) => Log.fromJson(e.data())).toList());
+
+    return list;
   }
 
   List<DataRow> getRowsLogs(List<Log> log, context) {

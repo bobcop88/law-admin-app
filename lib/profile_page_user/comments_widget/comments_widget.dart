@@ -116,23 +116,50 @@ class _CommentsBoxState extends State<CommentsBox> {
                 child: TextField(
                   controller: _commentController,
                   decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.all(15),
                     isDense: true,
                     border: OutlineInputBorder(),
                   ),
                 ),
               ),
-              SizedBox(
-                child: FloatingActionButton.extended(
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onPressed: () {
-                    if (_commentController.text.trim().isEmpty) return;
-                    DatabaseComments(clientId: widget.user).createComment(
-                        _commentController.text.trim(), widget.admin);
-                    _commentController.clear();
-                  },
-                  label: const Icon(Icons.add),
+              const SizedBox(
+                width: 10.0,
+              ),
+              GestureDetector(
+                onTap: () {
+                  if (_commentController.text.trim().isEmpty) return;
+                  DatabaseComments(clientId: widget.user).createComment(
+                      _commentController.text.trim(), widget.admin);
+                  _commentController.clear();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(15)),
+                    child: const Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
+              // SizedBox(
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(10.0),
+              //     child: FloatingActionButton.extended(
+              //       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              //       onPressed: () {
+              //         if (_commentController.text.trim().isEmpty) return;
+              //         DatabaseComments(clientId: widget.user).createComment(
+              //             _commentController.text.trim(), widget.admin);
+              //         _commentController.clear();
+              //       },
+              //       label: const Icon(Icons.add),
+              //     ),
+              //   ),
+              // ),
             ],
           )
         ],

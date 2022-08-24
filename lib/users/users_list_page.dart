@@ -23,13 +23,14 @@ class _UsersListPageState extends State<UsersListPage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<UserCompleteProfile>>(
-        stream: FirebaseFirestore.instance
-            .collection('clients')
-            .orderBy(field, descending: descending)
-            .snapshots()
-            .map((snapshot) => snapshot.docs
-                .map((doc) => UserCompleteProfile.fromJson(doc.data()))
-                .toList()),
+        stream: DatabaseUsers().readAllUsers(field, descending),
+        // FirebaseFirestore.instance
+        //     .collection('clients')
+        //     .orderBy(field, descending: descending)
+        //     .snapshots()
+        //     .map((snapshot) => snapshot.docs
+        //         .map((doc) => UserCompleteProfile.fromJson(doc.data()))
+        //         .toList()),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const CircularProgressIndicator();

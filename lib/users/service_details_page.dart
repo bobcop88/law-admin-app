@@ -33,6 +33,8 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
   String currentState = 'Pending';
   String doc1Status = 'Verified';
   String doc2Status = 'Verified';
+  bool isCheckedTrue = false;
+  bool isCheckedFalse = true;
 
   @override
   Widget build(BuildContext context) {
@@ -82,10 +84,15 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
-                              children: const [
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
                                 Text(
                                   'Details',
                                   style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                ElevatedButton(
+                                  onPressed: showRejectPopUp,
+                                  child: Text('Reject'),
                                 ),
                               ],
                             ),
@@ -199,9 +206,10 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                                                 widget.serviceName,
                                                 'currentState',
                                                 currentState);
+
                                         Notifications().newNotificationUser(
                                             widget.id,
-                                            'don.calogero88@gmail.com',
+                                            widget.email,
                                             widget.serviceName);
                                         SendNotification(
                                                 userDeviceToken: widget.token)
@@ -234,6 +242,7 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                                             ? updateCurrentState = false
                                             : updateCurrentState = true;
                                       });
+                                      currentState = service.currentState;
                                     },
                                   ),
                                 ],
@@ -243,6 +252,107 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                           const Divider(
                             height: 0,
                           ),
+                          // currentState == 'Documents Requested' ||
+                          //         service.currentState == 'Documents Requested'
+                          //     ? Padding(
+                          //         padding: const EdgeInsets.all(8.0),
+                          //         child: Column(
+                          //           children: [
+                          //             Row(
+                          //               children: [
+                          //                 Text(
+                          //                   'Rejected Reason',
+                          //                   style: TextStyle(
+                          //                     color: Colors.grey,
+                          //                   ),
+                          //                 ),
+                          //                 Flexible(
+                          //                   child: TextField(
+                          //                     style: TextStyle(fontSize: 12.0),
+                          //                     enabled: service.currentState ==
+                          //                             'Documents Requested'
+                          //                         ? false
+                          //                         : true,
+                          //                     controller:
+                          //                         rejectedReasonController,
+                          //                     decoration: InputDecoration(
+                          //                       isDense: true,
+                          //                       contentPadding:
+                          //                           EdgeInsets.all(10),
+                          //                       border: OutlineInputBorder(),
+                          //                       hintText: service
+                          //                                   .currentState ==
+                          //                               'Documents Requested'
+                          //                           ? service.rejectedReason
+                          //                           : 'Enter reason',
+                          //                     ),
+                          //                   ),
+                          //                 ),
+                          //               ],
+                          //             ),
+                          //             Visibility(
+                          //               visible: missingRejectedReason,
+                          //               child: Row(
+                          //                 children: [
+                          //                   Text(
+                          //                     'Please enter a reason for rejection',
+                          //                     style: TextStyle(
+                          //                         fontSize: 12.0,
+                          //                         color: Colors.red),
+                          //                   )
+                          //                 ],
+                          //               ),
+                          //             ),
+                          //             Row(
+                          //               children: [
+                          //                 Text('Need Document?'),
+                          //                 Flexible(
+                          //                   child: CheckboxListTile(
+                          //                     value: isCheckedTrue,
+                          //                     onChanged: (bool? value) {
+                          //                       service.currentState ==
+                          //                               'Documents Requested'
+                          //                           ? null
+                          //                           : setState(() {
+                          //                               isCheckedTrue = value!;
+                          //                               isCheckedFalse = !value;
+                          //                             });
+                          //                     },
+                          //                     title: Text('Yes'),
+                          //                     controlAffinity:
+                          //                         ListTileControlAffinity
+                          //                             .leading,
+                          //                   ),
+                          //                 ),
+                          //                 Flexible(
+                          //                   child: CheckboxListTile(
+                          //                     value: isCheckedFalse,
+                          //                     onChanged: (bool? value) {
+                          //                       service.currentState ==
+                          //                               'Documents Requested'
+                          //                           ? null
+                          //                           : setState(() {
+                          //                               isCheckedFalse = value!;
+                          //                               isCheckedTrue = !value;
+                          //                             });
+                          //                     },
+                          //                     title: Text('No'),
+                          //                     controlAffinity:
+                          //                         ListTileControlAffinity
+                          //                             .leading,
+                          //                   ),
+                          //                 ),
+                          //               ],
+                          //             )
+                          //           ],
+                          //         ),
+                          //       )
+                          //     : Container(),
+                          // currentState == 'Documents Requested'
+                          //     ? const Divider(
+                          //         height: 0,
+                          //       )
+                          //     : Container(),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Row(
@@ -555,35 +665,6 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                         ],
                       ),
                     ),
-                    // Expanded(
-                    //   child: SingleChildScrollView(
-                    //     controller: ScrollController(),
-                    //     child: Column(
-                    //       children: [
-                    //         GestureDetector(
-                    //           onTap: () {
-                    //             launchUrl(Uri.parse(service.doc1Url),
-                    //                 webOnlyWindowName: '_blank');
-                    //           },
-                    //           child: Image.network(
-                    //             service.doc1Url,
-                    //             height: 200,
-                    //           ),
-                    //         ),
-                    //         GestureDetector(
-                    //           onTap: () {
-                    //             launchUrl(Uri.parse(service.doc2Url),
-                    //                 webOnlyWindowName: '_blank');
-                    //           },
-                    //           child: Image.network(
-                    //             service.doc2Url,
-                    //             height: 200,
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
@@ -591,6 +672,229 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
           );
         }
       },
+    );
+  }
+
+  showRejectPopUp() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return RejectedWidget(
+            id: widget.id,
+            firstName: widget.firstName,
+            email: widget.email,
+            serviceName: widget.serviceName,
+            token: widget.token,
+          );
+        });
+  }
+}
+
+class RejectedWidget extends StatefulWidget {
+  final String id;
+  final String firstName;
+  final String email;
+  final String serviceName;
+  final String token;
+  const RejectedWidget(
+      {Key? key,
+      required this.id,
+      required this.firstName,
+      required this.email,
+      required this.serviceName,
+      required this.token})
+      : super(key: key);
+
+  @override
+  State<RejectedWidget> createState() => _RejectedWidgetState();
+}
+
+class _RejectedWidgetState extends State<RejectedWidget> {
+  bool isCheckedTrue = false;
+  bool isCheckedFalse = true;
+  final rejectedReasonController = TextEditingController();
+  bool missingRejectedReason = false;
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      title: Text(
+        'The service is going to be rejected',
+        textAlign: TextAlign.center,
+      ),
+      children: [
+        SizedBox(
+          width: 400,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Enter the reason of rejected',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Flexible(
+                        child: TextField(
+                          controller: rejectedReasonController,
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(10),
+                              border: OutlineInputBorder(),
+                              hintText: 'Enter reason'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: missingRejectedReason,
+                  child: Row(
+                    children: [
+                      Text(
+                        'Please enter a reason for rejection',
+                        style: TextStyle(fontSize: 12.0, color: Colors.red),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  'New document needed?',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    'If select Yes, the client will need to upload a new document. You can specify the document needed in the reason field. If select No, the client will be required to enter details as Text',
+                                    style: TextStyle(
+                                        fontSize: 12.0, color: Colors.grey),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Flexible(
+                                  child: CheckboxListTile(
+                                    value: isCheckedTrue,
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        isCheckedTrue = value!;
+                                        isCheckedFalse = !value;
+                                      });
+                                    },
+                                    title: Text('Yes'),
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                  ),
+                                ),
+                                Flexible(
+                                  child: CheckboxListTile(
+                                    value: isCheckedFalse,
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        isCheckedFalse = value!;
+                                        isCheckedTrue = !value;
+                                      });
+                                    },
+                                    title: Text('No'),
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('Cancel'),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    if (rejectedReasonController.text
+                                        .trim()
+                                        .isEmpty) {
+                                      setState(() {
+                                        missingRejectedReason == false
+                                            ? missingRejectedReason = true
+                                            : missingRejectedReason = false;
+                                      });
+                                    } else {
+                                      Navigator.of(context).pop();
+                                      missingRejectedReason == false
+                                          ? missingRejectedReason = true
+                                          : missingRejectedReason = false;
+                                      DatabaseServiceDetails(
+                                              uid: widget.id,
+                                              serviceName: widget.serviceName)
+                                          .updateServiceRejected(
+                                        widget.id,
+                                        widget.serviceName,
+                                        'currentState',
+                                        'Documents Requested',
+                                        rejectedReasonController.text.trim(),
+                                        isCheckedTrue ? true : false,
+                                      );
+
+                                      Notifications().newNotificationUser(
+                                          widget.id,
+                                          widget.email,
+                                          widget.serviceName);
+                                      SendNotification(
+                                              userDeviceToken: widget.token)
+                                          .sendPushNotifications(
+                                              title: 'Inscale Media App',
+                                              body:
+                                                  'New update on your service');
+                                      EmailNotification()
+                                          .sendEmailUpdateService(
+                                              widget.firstName,
+                                              widget.serviceName,
+                                              widget.email);
+                                    }
+                                  },
+                                  child: Text('Confirm Reject Service'),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

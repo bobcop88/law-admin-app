@@ -116,6 +116,7 @@ class _CommentsBoxState extends State<CommentsBox> {
                 child: TextField(
                   controller: _commentController,
                   decoration: const InputDecoration(
+                    hintText: 'Enter your comment here',
                     contentPadding: EdgeInsets.all(15),
                     isDense: true,
                     border: OutlineInputBorder(),

@@ -28,7 +28,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<UserCompleteProfile>>(
-        stream: DatabaseUsers().readAllUsers(),
+        stream: DatabaseUsers().readAllUsers('dateCreation', true),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -141,7 +141,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                     child: Row(
                                       children: const [
                                         Text(
-                                          'Dahsboard',
+                                          'Dashboard',
                                           style: TextStyle(
                                               fontSize: 24.0,
                                               fontWeight: FontWeight.bold),
@@ -357,11 +357,9 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                                                                     fit: BoxFit.fitWidth,
                                                                                     child: Text('Status'),
                                                                                   )),
-                                                                                  // DataColumn(
-                                                                                  //     label: Text(
-                                                                                  //         '')),
+                                                                                  // DataColumn(label: Text('')),
                                                                                 ],
-                                                                                rows: ServicesClass().getRowsServices(service.sublist(0, 6), context),
+                                                                                rows: ServicesClass().getRowsServicesDashboard(service.sublist(0, 5), context),
                                                                               ),
                                                                             ),
                                                                           ),

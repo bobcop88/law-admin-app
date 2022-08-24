@@ -46,10 +46,11 @@ class DatabaseAdmin {
 //Users Full List
 
 class DatabaseUsers {
-  Stream<List<UserCompleteProfile>> readAllUsers() {
+  Stream<List<UserCompleteProfile>> readAllUsers(
+      String field, bool descending) {
     return FirebaseFirestore.instance
         .collection('clients')
-        .orderBy('dateCreation', descending: true)
+        .orderBy(field, descending: descending)
         .snapshots()
         .map((snapshot) => snapshot.docs
             .map((doc) => UserCompleteProfile.fromJson(doc.data()))
@@ -144,6 +145,20 @@ class DatabaseServiceDetails {
         .doc(serviceName)
         .update({
       doc: newValue,
+    });
+  }
+
+  Future updateServiceRejected(String uid, String serviceName, String doc,
+      String newValue, String rejectedReason, bool rejectedNeedDocument) async {
+    await FirebaseFirestore.instance
+        .collection('clients')
+        .doc(uid)
+        .collection('myServices')
+        .doc(serviceName)
+        .update({
+      doc: newValue,
+      'rejectedReason': rejectedReason,
+      'rejectedNeedDocument': rejectedNeedDocument,
     });
   }
 }

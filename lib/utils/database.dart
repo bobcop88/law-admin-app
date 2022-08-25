@@ -1,6 +1,6 @@
 import 'package:adminapp/dashboard/utils/admin_profile_class.dart';
 import 'package:adminapp/utils/chat_message_class.dart';
-import 'package:adminapp/utils/notifications_class.dart';
+import 'package:adminapp/utils/notifications/notifications_class.dart';
 import 'package:adminapp/utils/service_details.dart';
 import 'package:adminapp/utils/users_profile_class.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

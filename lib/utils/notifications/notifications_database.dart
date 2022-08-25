@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:adminapp/utils/notifications/notifications_class.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
 class SendNotification {
@@ -62,5 +65,25 @@ class EmailNotification {
             'from_name': 'Inscale Media App'
           }
         }));
+  }
+}
+
+class NotificationsFromUsers {
+  final adminUser = FirebaseAuth.instance.currentUser!.uid;
+
+  Stream<List<NotificationsUserToAdmin>> readNotificationsFromUsers() {
+    return FirebaseFirestore.instance
+        .collection('adminUsers/$adminUser/notificationsFromUsers')
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => NotificationsUserToAdmin.fromJson(doc.data()))
+            .toList());
+  }
+
+  updateNotificationNew(notification) {
+    return FirebaseFirestore.instance
+        .collection('adminUsers/$adminUser/notificationsFromUsers')
+        .doc(notification)
+        .update({'isNew': false});
   }
 }

@@ -24,7 +24,6 @@ class DashboardAdmin extends StatefulWidget {
 class _DashboardAdminState extends State<DashboardAdmin> {
   final adminUser = FirebaseAuth.instance.currentUser!;
   List<ServiceDetails> servicesList = [];
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<UserCompleteProfile>>(
@@ -34,101 +33,64 @@ class _DashboardAdminState extends State<DashboardAdmin> {
             return const Center(child: CircularProgressIndicator());
           } else {
             final users = snapshot.data!;
-            // users.forEach((element) {
-            //   nationalityUsers.add(element.nationality);
-            // });
-            // Map<String, dynamic> mapNationality = {};
-
-            // nationalityUsers.forEach((element) {
-            //   if (!mapNationality.containsKey(element)) {
-            //     mapNationality[element] = 1;
-            //   } else {
-            //     mapNationality[element] += 1;
-            //   }
-            // });
-
-            // List<DataItem> listNationality = [];
-
-            // mapNationality.entries.forEach((e) {
-            //   listNationality.add(DataItem(1, e.value, e.key));
-            // });
-            // Widget getTitles(double values, TitleMeta meta) {
-            //   const style = TextStyle(
-            //     color: Color(0xff7589a2),
-            //     fontWeight: FontWeight.bold,
-            //     fontSize: 14,
-            //   );
-            //   List<String> titles = [];
-
-            //   listNationality.forEach((e) {
-            //     titles.add(e.name);
-            //   });
-
-            //   Widget text = Text(titles[values.toInt()],
-            //       style: const TextStyle(
-            //         color: Color(0xff7589a2),
-            //         fontWeight: FontWeight.bold,
-            //       ));
-            //   return SideTitleWidget(
-            //     axisSide: meta.axisSide,
-            //     child: text,
-            //   );
-            // }
 
             return Row(
               children: [
                 Expanded(
                   child: Column(
                     children: [
-                      Container(
-                        // height: 60,
-                        decoration: BoxDecoration(
-                            color: const Color.fromRGBO(19, 38, 63, 1),
-                            border: Border.all(
-                                color: const Color.fromRGBO(19, 38, 63, 1))),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Icon(
-                                    Icons.notifications,
-                                    color: Colors.white,
-                                  ),
-                                  SizedBox(
-                                    width: 10.0,
-                                  ),
-                                  CircleAvatar(
-                                    child: Text('A'),
-                                  ),
-                                  SizedBox(
-                                    width: 5.0,
-                                  ),
-                                  Text(
-                                    'Admin',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      FirebaseAuth.instance.signOut();
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.logout),
-                                        Text('Log out'),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      // Container(
+                      //   // height: 60,
+                      //   decoration: BoxDecoration(
+                      //       color: const Color.fromRGBO(19, 38, 63, 1),
+                      //       border: Border.all(
+                      //           color: const Color.fromRGBO(19, 38, 63, 1))),
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.all(8.0),
+                      //     child: Row(
+                      //       mainAxisAlignment: MainAxisAlignment.end,
+                      //       children: [
+                      //         Row(
+                      //           mainAxisAlignment:
+                      //               MainAxisAlignment.spaceBetween,
+                      //           children: [
+                      //             GestureDetector(
+                      //               onTap: () {},
+                      //               child: Icon(
+                      //                 Icons.notifications,
+                      //                 color: Colors.white,
+                      //               ),
+                      //             ),
+                      //             SizedBox(
+                      //               width: 10.0,
+                      //             ),
+                      //             CircleAvatar(
+                      //               child: Text('A'),
+                      //             ),
+                      //             SizedBox(
+                      //               width: 5.0,
+                      //             ),
+                      //             Text(
+                      //               'Admin',
+                      //               style: TextStyle(color: Colors.white),
+                      //             ),
+                      //             GestureDetector(
+                      //               onTap: () {
+                      //                 FirebaseAuth.instance.signOut();
+                      //               },
+                      //               child: Row(
+                      //                 children: [
+                      //                   Icon(Icons.logout),
+                      //                   Text('Log out'),
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                       Expanded(
                         child: Row(
                           children: [

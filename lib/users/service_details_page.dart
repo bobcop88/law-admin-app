@@ -1,5 +1,5 @@
 import 'package:adminapp/utils/database.dart';
-import 'package:adminapp/utils/send_notifications_class.dart';
+import 'package:adminapp/utils/notifications/notifications_database.dart';
 import 'package:adminapp/utils/service_details.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -156,7 +156,6 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                                                   items: <String>[
                                                     'Completed',
                                                     'Pending',
-                                                    'Documents Requested',
                                                     'Started'
                                                   ].map<
                                                           DropdownMenuItem<
@@ -252,107 +251,6 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                           const Divider(
                             height: 0,
                           ),
-                          // currentState == 'Documents Requested' ||
-                          //         service.currentState == 'Documents Requested'
-                          //     ? Padding(
-                          //         padding: const EdgeInsets.all(8.0),
-                          //         child: Column(
-                          //           children: [
-                          //             Row(
-                          //               children: [
-                          //                 Text(
-                          //                   'Rejected Reason',
-                          //                   style: TextStyle(
-                          //                     color: Colors.grey,
-                          //                   ),
-                          //                 ),
-                          //                 Flexible(
-                          //                   child: TextField(
-                          //                     style: TextStyle(fontSize: 12.0),
-                          //                     enabled: service.currentState ==
-                          //                             'Documents Requested'
-                          //                         ? false
-                          //                         : true,
-                          //                     controller:
-                          //                         rejectedReasonController,
-                          //                     decoration: InputDecoration(
-                          //                       isDense: true,
-                          //                       contentPadding:
-                          //                           EdgeInsets.all(10),
-                          //                       border: OutlineInputBorder(),
-                          //                       hintText: service
-                          //                                   .currentState ==
-                          //                               'Documents Requested'
-                          //                           ? service.rejectedReason
-                          //                           : 'Enter reason',
-                          //                     ),
-                          //                   ),
-                          //                 ),
-                          //               ],
-                          //             ),
-                          //             Visibility(
-                          //               visible: missingRejectedReason,
-                          //               child: Row(
-                          //                 children: [
-                          //                   Text(
-                          //                     'Please enter a reason for rejection',
-                          //                     style: TextStyle(
-                          //                         fontSize: 12.0,
-                          //                         color: Colors.red),
-                          //                   )
-                          //                 ],
-                          //               ),
-                          //             ),
-                          //             Row(
-                          //               children: [
-                          //                 Text('Need Document?'),
-                          //                 Flexible(
-                          //                   child: CheckboxListTile(
-                          //                     value: isCheckedTrue,
-                          //                     onChanged: (bool? value) {
-                          //                       service.currentState ==
-                          //                               'Documents Requested'
-                          //                           ? null
-                          //                           : setState(() {
-                          //                               isCheckedTrue = value!;
-                          //                               isCheckedFalse = !value;
-                          //                             });
-                          //                     },
-                          //                     title: Text('Yes'),
-                          //                     controlAffinity:
-                          //                         ListTileControlAffinity
-                          //                             .leading,
-                          //                   ),
-                          //                 ),
-                          //                 Flexible(
-                          //                   child: CheckboxListTile(
-                          //                     value: isCheckedFalse,
-                          //                     onChanged: (bool? value) {
-                          //                       service.currentState ==
-                          //                               'Documents Requested'
-                          //                           ? null
-                          //                           : setState(() {
-                          //                               isCheckedFalse = value!;
-                          //                               isCheckedTrue = !value;
-                          //                             });
-                          //                     },
-                          //                     title: Text('No'),
-                          //                     controlAffinity:
-                          //                         ListTileControlAffinity
-                          //                             .leading,
-                          //                   ),
-                          //                 ),
-                          //               ],
-                          //             )
-                          //           ],
-                          //         ),
-                          //       )
-                          //     : Container(),
-                          // currentState == 'Documents Requested'
-                          //     ? const Divider(
-                          //         height: 0,
-                          //       )
-                          //     : Container(),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Row(
@@ -574,97 +472,107 @@ class _ServiceSelectedDetailsState extends State<ServiceSelectedDetails> {
                       ),
                     ),
                     const VerticalDivider(),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 20.0,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Card(
-                                shape: RoundedRectangleBorder(
-                                    side: BorderSide(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Column(
-                                    children: [
-                                      const Text(
-                                        'Document 1',
-                                        style: const TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 17.0,
+                    service.doc1Url != 'not-applicable'
+                        ? Expanded(
+                            child: Column(
+                              children: [
+                                const SizedBox(
+                                  height: 20.0,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Card(
+                                      shape: RoundedRectangleBorder(
+                                          side: BorderSide(color: Colors.grey),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: Column(
+                                          children: [
+                                            const Text(
+                                              'Document 1',
+                                              style: const TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 17.0,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 20.0,
+                                            ),
+                                            const Icon(
+                                              Icons.image,
+                                              color: Colors.grey,
+                                              size: 30.0,
+                                            ),
+                                            const SizedBox(
+                                              height: 20.0,
+                                            ),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                launchUrl(
+                                                    Uri.parse(service.doc1Url),
+                                                    webOnlyWindowName:
+                                                        '_blank');
+                                              },
+                                              child:
+                                                  const Text('View Document'),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      const SizedBox(
-                                        height: 20.0,
-                                      ),
-                                      const Icon(
-                                        Icons.image,
-                                        color: Colors.grey,
-                                        size: 30.0,
-                                      ),
-                                      const SizedBox(
-                                        height: 20.0,
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          launchUrl(Uri.parse(service.doc1Url),
-                                              webOnlyWindowName: '_blank');
-                                        },
-                                        child: const Text('View Document'),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 10.0,
-                              ),
-                              Card(
-                                shape: RoundedRectangleBorder(
-                                    side: BorderSide(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Column(
-                                    children: [
-                                      const Text(
-                                        'Document 2',
-                                        style: const TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 17.0,
+                                    ),
+                                    const SizedBox(
+                                      width: 10.0,
+                                    ),
+                                    Card(
+                                      shape: RoundedRectangleBorder(
+                                          side: BorderSide(color: Colors.grey),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: Column(
+                                          children: [
+                                            const Text(
+                                              'Document 2',
+                                              style: const TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 17.0,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 20.0,
+                                            ),
+                                            const Icon(
+                                              Icons.image,
+                                              color: Colors.grey,
+                                              size: 30.0,
+                                            ),
+                                            const SizedBox(
+                                              height: 20.0,
+                                            ),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                launchUrl(
+                                                    Uri.parse(service.doc2Url),
+                                                    webOnlyWindowName:
+                                                        '_blank');
+                                              },
+                                              child:
+                                                  const Text('View Document'),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      const SizedBox(
-                                        height: 20.0,
-                                      ),
-                                      const Icon(
-                                        Icons.image,
-                                        color: Colors.grey,
-                                        size: 30.0,
-                                      ),
-                                      const SizedBox(
-                                        height: 20.0,
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          launchUrl(Uri.parse(service.doc2Url),
-                                              webOnlyWindowName: '_blank');
-                                        },
-                                        child: const Text('View Document'),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                              ],
+                            ),
+                          )
+                        : Expanded(child: Container()),
                   ],
                 ),
               ),

@@ -179,7 +179,10 @@ class _EndDrawerNotificationsState extends State<EndDrawerNotifications> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        NotificationsFromUsers().deleteNotification(
+                            notifications.dateNotification.toString());
+                      },
                       child: Row(
                         children: [
                           Icon(

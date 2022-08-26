@@ -351,54 +351,6 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                                                           BarChartNationality(
                                                         users: users,
                                                       ),
-                                                      // Card(
-                                                      //   child: BarChart(
-                                                      //     BarChartData(
-                                                      //       groupsSpace: 12,
-                                                      //       titlesData:
-                                                      //           FlTitlesData(
-                                                      //               rightTitles:
-                                                      //                   AxisTitles(
-                                                      //                 sideTitles:
-                                                      //                     SideTitles(
-                                                      //                         showTitles: false),
-                                                      //               ),
-                                                      //               leftTitles:
-                                                      //                   AxisTitles(
-                                                      //                 sideTitles:
-                                                      //                     SideTitles(
-                                                      //                         showTitles: false),
-                                                      //               ),
-                                                      //               topTitles:
-                                                      //                   AxisTitles(
-                                                      //                 sideTitles:
-                                                      //                     SideTitles(
-                                                      //                         showTitles: false),
-                                                      //               ),
-                                                      //               bottomTitles:
-                                                      //                   AxisTitles(
-                                                      //                 sideTitles:
-                                                      //                     SideTitles(
-                                                      //                   showTitles:
-                                                      //                       true,
-                                                      //                   getTitlesWidget:
-                                                      //                       getTitles,
-                                                      //                 ),
-                                                      //               )),
-                                                      //       barGroups:
-                                                      //           listNationality
-                                                      //               .map((e) =>
-                                                      //                   BarChartGroupData(
-                                                      //                       x: listNationality.indexOf(e),
-                                                      //                       barRods: [
-                                                      //                         BarChartRodData(
-                                                      //                           toY: e.y,
-                                                      //                         )
-                                                      //                       ]))
-                                                      //               .toList(),
-                                                      //     ),
-                                                      //   ),
-                                                      // ),
                                                     ),
                                                   ],
                                                 ),

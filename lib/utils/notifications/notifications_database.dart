@@ -86,4 +86,11 @@ class NotificationsFromUsers {
         .doc(notification)
         .update({'isNew': false});
   }
+
+  deleteNotification(notification) {
+    return FirebaseFirestore.instance
+        .collection('adminUsers/$adminUser/notificationsFromUsers')
+        .doc(notification)
+        .delete();
+  }
 }

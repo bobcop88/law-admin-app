@@ -41,6 +41,13 @@ class DatabaseAdmin {
         .snapshots()
         .map((snapshot) => Admin.fromJson(snapshot.data()!));
   }
+
+  updateAdmin(String field, String newValue) {
+    return FirebaseFirestore.instance
+        .collection('adminUsers')
+        .doc(uid)
+        .update({field: newValue});
+  }
 }
 
 //Users Full List

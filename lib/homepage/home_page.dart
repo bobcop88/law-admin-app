@@ -1,6 +1,7 @@
 import 'package:adminapp/dashboard/dashboard.dart';
 import 'package:adminapp/dashboard/utils/admin_profile_class.dart';
 import 'package:adminapp/homepage/endDrawerNotifications.dart';
+import 'package:adminapp/homepage/profileAdmin_drawer.dart';
 import 'package:adminapp/logs/log_page.dart';
 import 'package:adminapp/services/services_page.dart';
 import 'package:adminapp/users/users_list_page.dart';
@@ -34,6 +35,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.grey[100],
       key: scaffoldKey,
       endDrawer: const EndDrawerNotifications(),
+      drawer: ProfileDrawer(),
       body: SafeArea(
         child: Row(
           children: [
@@ -358,7 +360,27 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                                 const SizedBox(
-                                  height: 20.0,
+                                  height: 10.0,
+                                ),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          scaffoldKey.currentState!
+                                              .openDrawer();
+                                        },
+                                        child: Text('See Profile',
+                                            style: TextStyle(
+                                              fontSize: 12.0,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              color: Colors.white,
+                                            )),
+                                      ),
+                                    ]),
+                                const SizedBox(
+                                  height: 30.0,
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -375,7 +397,9 @@ class _HomePageState extends State<HomePage> {
                                                       BorderRadius.circular(10),
                                                   side: BorderSide(
                                                       color: Colors.white)))),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        FirebaseAuth.instance.signOut();
+                                      },
                                       child: Row(
                                         children: [
                                           Icon(

@@ -105,36 +105,31 @@ class _EndDrawerNotificationsState extends State<EndDrawerNotifications> {
               height: 5.0,
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      const Text('User: '),
-                      GestureDetector(
-                        child: Text(
-                          notifications.nameUser,
-                          style: const TextStyle(
-                            color: Colors.blueAccent,
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => UserProfilePage(
-                                    id: notifications.userId,
-                                    showNewChatMessage: false,
-                                  )));
-                        },
+                Flexible(
+                  child: GestureDetector(
+                    child: Text(
+                      notifications.emailUser,
+                      style: const TextStyle(
+                        color: Colors.blueAccent,
                       ),
-                      const SizedBox(
-                        width: 8.0,
-                      ),
-                      Text(
-                        notifications.emailUser,
-                        style: TextStyle(fontSize: 12.0, color: Colors.grey),
-                      ),
-                    ],
+                    ),
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => UserProfilePage(
+                                id: notifications.userId,
+                                showNewChatMessage: false,
+                              )));
+                    },
                   ),
+                ),
+                const SizedBox(
+                  width: 3.0,
+                ),
+                Text(
+                  notifications.nameUser,
+                  style: TextStyle(fontSize: 10.0, color: Colors.grey),
                 ),
               ],
             ),

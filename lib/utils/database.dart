@@ -372,5 +372,7 @@ class Notifications {
 
     final json = notification.toJson();
     await notificationId.set(json);
+
+    notificationFolder.doc('first').delete();
   }
 }

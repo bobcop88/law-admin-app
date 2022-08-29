@@ -74,6 +74,7 @@ class NotificationsFromUsers {
   Stream<List<NotificationsUserToAdmin>> readNotificationsFromUsers() {
     return FirebaseFirestore.instance
         .collection('adminUsers/$adminUser/notificationsFromUsers')
+        .orderBy('dateNotification', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs
             .map((doc) => NotificationsUserToAdmin.fromJson(doc.data()))
